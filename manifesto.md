@@ -6,15 +6,13 @@ That sentence belongs to Craig, from an early conversation with Claude (Sonnet 4
 
 The thesis of this portfolio falls out of that moment.
 
-AI changes what a product manager can do. It does not equalize. The "great equalizer" framing is wrong, or at minimum imprecise: AI does not give everyone the same outputs. AI is a multiplier—it amplifies the depth of thinking the operator brings to it. A product manager with rigorous habits—eval-driven correction, encoded discipline, structured retrospection—gets a step-change. A product manager without those habits gets faster bad outputs. The system around the AI does most of the work; the AI itself is a smaller fraction than the marketing language suggests.
+AI changes what a product manager can do. It does not equalize. The "great equalizer" framing is wrong, or at minimum imprecise: AI does not give everyone the same outputs. AI is a multiplier—it amplifies the depth of thinking the operator brings to it. A product manager with rigorous habits—eval-driven correction, encoded discipline, structured retrospection—gets a step-change. A product manager without those habits gets faster bad outputs. The system around the AI does most of the work; the AI itself is a smaller fraction.
 
-This portfolio is the operational evidence for that claim. The job-materials skill alone has shipped 23 evals (regression-test records, one per applied job), runs about 39 detectors against every draft, and has caught hundreds of errors per month in the last quarter. Those numbers come from the corrections logs and the eval archive in the underlying system; the [redacted artifact tier](./artifacts/) is where a reader can verify the claim directly.
+This portfolio is the operational evidence for that claim. The job-materials skill alone has shipped 26 evals (regression-test records, one per applied job), runs about 40 detectors against every draft, and has caught and fixed hundreds of errors autonomously per month in the last quarter. Those numbers come from the corrections logs and the eval archive in the underlying system; the [redacted artifact tier](./artifacts/) is where a reader can verify the claim directly.
 
-Craig designed the architecture: the priority hierarchy that governs every decision, the behavioral primitives that encode discipline into source files, the eight-session arc that produced this site, the failure modes the system was built to defend against. Claude is the runtime—the executor under the rules, the drafter, the redactor, the verifier subagent. Both names matter. The work compounds because the relationship between the designer and the runtime is explicit, durable, and written down.
+Craig designed the architecture: the priority hierarchy that governs every decision, the behavioral primitives that encode discipline into source files, the eight-session arc that produced this site, the failure modes the system was built to defend against. Claude is the runtime—the executor under the rules, the drafter, the redactor, the verifier subagent. The work compounds because the relationship between the designer and the runtime is explicit, durable, and written down.
 
-What follows is a tour of how the system works and what it produces. The numbers are real and verifiable. The artifacts are real and redacted. The case studies are written for product hiring managers who want to see craft, and for fellow PMs who want to reuse patterns. The thesis stays in the prose: AI is a multiplier. The depth of thinking the operator brings determines the depth of work the system produces.
-
-Read on if any of that sounds like a working relationship you'd want to study.
+What follows is a tour of how the system works and what it produces. The numbers come from the corrections logs and eval archive; the artifacts are redacted copies of operational source files. The case studies are written for product hiring managers and for fellow PMs who want to reuse patterns.
 
 ---
 

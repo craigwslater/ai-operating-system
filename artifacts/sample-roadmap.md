@@ -3,7 +3,7 @@
 > **Designed by Craig—runtime: Claude (Sonnet/Opus).**
 > **What this is.** The `skill-ROADMAP.md` template—the canonical scaffold every custom skill in `~/.claude-local/skills/` uses to track its outstanding follow-ups, planned improvements, and historical work. Defines four lifecycle sections (Open Considerations / Candidate Bundles for Next Improvement Project / Standing Deferrals / Completed) with the schema the `/audit` slash-command checks for cross-section drift.
 > **What was redacted.** Nothing—the registry sweep produced zero substitutions. This is a structural template; no PII, target-company names, third-party individuals, or prior-employer narrative are present.
-> **Why it's included.** Backs the case-study claim that ROADMAP-driven improvement is an explicit discipline, not implicit drift. A reader looking at any of the per-skill ROADMAP.md files referenced from the case-study tier sees it instantiated; this template shows the underlying structure that every skill inherits.
+> **Why it's included.** Backs the case-study claim that ROADMAP-driven improvement is a documented discipline: this template shows the underlying structure that every per-skill ROADMAP.md inherits, referenced from the case-study tier.
 
 ---
 

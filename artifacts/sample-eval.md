@@ -3,7 +3,7 @@
 > **Designed by Craig—runtime: Claude (Sonnet/Opus).**
 > **What this is.** One eval from the `job-materials` skill's eval suite—Eval 18 (a behavioral-health digital-app target). Walks the full eval framework: Hook Bench / Intersection Test / Register Match / JD-Bonus-Qual / Verifier Pass 1 / Verifier Pass 2 / Step 5.6 composer-side semantic audit / shipping decision.
 > **What was redacted.** 36 substitutions across 10 patterns. Active-target-company names (8 distinct companies) substituted to `[REDACTED COMPANY]` per the registry; one short-form variant caught as a registry gap during this Session 6 port (tgt-062). One prior-employer internal product name and one prior-employer protocol-adoption phrase substituted per registry rows prior-001 and prior-009. Prior-employer company names CentralReach, Charli Charging, Knowledge to Practice / KTP remain visible per Session 0 Q3 (LinkedIn-public).
-> **Why it's included.** Direct evidence of CS#3 (eval-driven correction loops). A reader who wants to see what one eval looks like end-to-end—what the framework checks, what passes, what fails, how a fix gets encoded back to source—reads this file.
+> **Why it's included.** Direct evidence of CS#3 (eval-driven correction loops): what one eval looks like end-to-end—what the framework checks, what passes, what fails, how a fix gets encoded back to source.
 
 ---
 

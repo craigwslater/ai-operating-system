@@ -3,7 +3,7 @@
 > **Designed by Craig—runtime: Claude (Sonnet/Opus).**
 > **What this is.** The new-project-intake workflow protocol—what `/start-project` runs when a new multi-session effort kicks off. Defines the scope-gathering interview, the folder scaffolding from `templates/`, and the MEMORY.md Active Projects registration.
 > **What was redacted.** Nothing—the registry sweep produced zero substitutions.
-> **Why it's included.** Backs the case-study claim that multi-session work is structured up front rather than improvised. Every project folder under `projects/` exists because this protocol ran on it at kickoff.
+> **Why it's included.** Backs the case-study claim that multi-session work is structured up front: every project folder under `projects/` exists because this protocol ran on it at kickoff.
 
 ---
 

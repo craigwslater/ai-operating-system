@@ -3,7 +3,7 @@
 > **Designed by Craig—runtime: Claude (Sonnet/Opus).**
 > **What this is.** The global behavioral-rules file that governs every Claude session against `~/.claude-local/`. Defines the priority hierarchy, the behavioral primitives, the anti-patterns, the folder-structure summary, and pointers into the workflow protocols.
 > **What was redacted.** Nothing—the registry sweep produced zero substitutions. PII (phone, full home location, private email) lives in `MEMORY.md`, which is excluded from this portfolio per the Session 1 classification. Craig's name and the LinkedIn URL remain visible by design—they are the portfolio's authorship signal.
-> **Why it's included.** The priority hierarchy and the behavioral primitives are the architecture that produced everything else in this portfolio. A reader wanting to verify the "system around the AI" claim reads this file first.
+> **Why it's included.** Backs the "system around the AI" claim across the portfolio: the priority hierarchy and the behavioral primitives are the architecture that produced everything else in this portfolio.
 
 ---
 

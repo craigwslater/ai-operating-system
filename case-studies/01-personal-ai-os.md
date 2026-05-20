@@ -23,7 +23,7 @@ A platform product manager thinks about composability, versioning, observability
 This system is what those concepts look like when the platform under management is the operator's own AI workflow.
 
 - **Composability.** Rules live in a priority hierarchy where earlier-numbered items beat later-numbered items, and behavioral primitives are named and reusable across sessions.
-- **Versioning.** Projects ship as numbered releases—a job-materials v2, then v3, v4, v5; a claude-local-frontier, then a claude-local-frontier-v2. Each version is a separate folder with its own CLAUDE.md plan and CONTEXT.md status.
+- **Versioning.** Projects ship as numbered releases—a job-materials v2, then v3, v4, v5, v6, v7; a claude-local-frontier, then a claude-local-frontier-v2. Each version is a separate folder with its own CLAUDE.md plan and CONTEXT.md status.
 - **Observability.** A Commitment-Verification Audit at session-end re-reads each commitment against the work shipped. The session log records what changed and why.
 - **Contracts.** Every file write to a mounted directory is read-back-verified. Every skill edit goes to the persistent path under `~/.claude-local/skills/`, never to a sandbox.
 - **Eventual consistency.** The encode-into-source primitive moves every correction from conversation context into a source file (CLAUDE.md, a skill reference, or a policy) before session-end.
@@ -52,7 +52,7 @@ The encode-into-source primitive ties them together. Every correction lands in a
 
 `~/.claude-local/projects/` holds the per-project work containers. Each project gets a folder with its own CLAUDE.md plan (the binding scope and sequencing for the multi-session arc—the plan you're reading the meta-version of right now), a CONTEXT.md status file (the session handoff contract—read at session start, updated at session end, always reflects reality), a `log.md` (the session-by-session record), and `inputs/` plus `outputs/` for source material and deliverables.
 
-Versioned releases live at the projects layer. The job-materials skill has shipped through four release projects—`projects/job-materials-v2/`, `v3/`, `v4/`, `v5/`—each closed cleanly with its own retrospective and improvement bundle. The claude-local-frontier meta-project has a v1 and a v2; v2 closed in three sessions. Versioning happens because closing a release is the discipline that forces a clean stopping point and an explicit commitment to what the next version owes.
+Versioned releases live at the projects layer. The job-materials skill has shipped through six release projects—`projects/job-materials-v2/`, `v3/`, `v4/`, `v5/`, `v6/`, `v7/`—each closed cleanly with its own retrospective and improvement bundle. The claude-local-frontier meta-project has a v1 and a v2; v2 closed in three sessions. Versioning happens because closing a release is the discipline that forces a clean stopping point and an explicit commitment to what the next version owes.
 
 ### Layer 3—Policies and templates
 
@@ -80,9 +80,9 @@ The system produces three things that a hiring manager can verify.
 
 **Compounding source files.** CLAUDE.md has grown not by accumulation but by encode-into-source: every recurring correction has become a primitive. Every skill's references-corrections-log holds the WRONG/RIGHT records that promoted the skill's rules. Conversation context is ephemeral. Source files compound.
 
-**Versioned project releases.** The job-materials skill has shipped 23 evals across four release projects. The claude-local-frontier meta-project shipped seven structural improvements across two versions. Each release closes with a retrospective and a commitment-verification audit. The discipline produces visible cadence.
+**Versioned project releases.** The job-materials skill has shipped 26 evals across six release projects. The claude-local-frontier meta-project shipped seven structural improvements across two versions. Each release closes with a retrospective and a commitment-verification audit. The discipline produces visible cadence.
 
-**Quantitative output.** The job-materials skill alone runs about 39 detectors against every draft, has shipped 23 evals, and catches hundreds of errors per month—measured directly from the corrections logs. Those numbers anchor the headline metric on the [metrics dashboard](../metrics.md). The depth on the operational mechanics—composer/verifier separation, eval-driven correction, hooks as enforcement—lives in [Case Study #2](./02-composer-verifier.md), [Case Study #3](./03-eval-driven-loops.md), and [Case Study #4](./04-discipline-to-machinery.md).
+**Quantitative output.** The job-materials skill alone runs about 40 detectors against every draft, has shipped 26 evals, and catches and fixes hundreds of errors autonomously per month—measured directly from the corrections logs. Those numbers anchor the headline metric on the [metrics dashboard](../metrics.md). The depth on the operational mechanics—composer/verifier separation, eval-driven correction, hooks as enforcement—lives in [Case Study #2](./02-composer-verifier.md), [Case Study #3](./03-eval-driven-loops.md), and [Case Study #4](./04-discipline-to-machinery.md).
 
 ## Failure modes that drove the design
 
@@ -105,8 +105,6 @@ The redacted artifact tier in [`artifacts/`](../artifacts/) is where a reader ca
 The [metrics dashboard](../metrics.md) is where the system's compounding effect is tracked over time. Baseline date: 2026-05-08.
 
 [`Surprises`](../surprises.md) names two things a reader unfamiliar with this kind of work might miss: AI as a willing collaborator on its own working relationship, and the fact that most of what gets called "AI quality" is the system around the AI, not the AI itself.
-
-If those frame the work in a way that's worth a deeper look, the rest of this portfolio is built to reward it.
 
 ---
 

@@ -3,7 +3,7 @@
 > **Designed by Craig—runtime: Claude (Sonnet/Opus).**
 > **What this is.** The Commitment-Verification Audit protocol—the verification framework that runs at session-end to confirm every commitment made during the session was actually executed. Compares stated work against shipped work; flags partial or unfulfilled commitments before close.
 > **What was redacted.** One active-target-company name (a healthcare data company referenced in a worked-example narrative) substituted to `[REDACTED COMPANY]` per registry entries tgt-017 and tgt-062 (the latter is the bare-form short variant of the same company, both audit-matching the single occurrence). The surrounding failure-mode story remains readable; only the named entity is masked.
-> **Why it's included.** Direct evidence for the "verify-before-claim-complete" primitive in `artifacts/CLAUDE.md`. A reader who wants to see how "looks good is not verification" translates into machinery reads this file.
+> **Why it's included.** Direct evidence for the "verify-before-claim-complete" primitive in `artifacts/CLAUDE.md`: how "looks good is not verification" translates into machinery.
 
 ---
 

@@ -10,11 +10,11 @@ The architecture in this case study is the answer to a single observation Craig 
 
 > "AI can hallucinate in all sorts of predictable ways, impacting ongoing quality and accuracy if not improved under a systematized evaluation and regression process. Early failures were around improving the skill but not producing the appropriate evaluation framework and regression testing to scale the skill. This was my biggest long-term quality unlock."
 
-What follows is what the systematic-evaluation answer looks like in operating form: a two-agent pattern with mechanical detectors and an eval-driven correction loop that has shipped 23 applications, runs about 39 detectors against every draft, and catches hundreds of errors per month. The job-materials skill is the example. The pattern is the unit.
+What follows is what the systematic-evaluation answer looks like in operating form: a two-agent pattern with mechanical detectors and an eval-driven correction loop that has shipped 26 applications, runs about 40 detectors against every draft, and catches and fixes hundreds of errors autonomously per month. The job-materials skill is the example. The pattern is the unit.
 
 ## What this is
 
-The job-materials skill is a composer/verifier system that produces tailored cover letters and resumes for senior product-management roles. It runs inside `~/.claude-local/skills/job-materials/`. Each applied job becomes one *eval*—a regression-test record that captures the JD, the briefing research, the composed deliverables, the verifier's verdict, the corrections promoted to source rules, and the open follow-ups for the next eval. There are 23 evals to date. The detector count stands at 39 after v5 Session 3 closed clean on 2026-05-06. The empirical headline is Craig's: hundreds of errors caught per month easily, dozens of tailored applications shipped, and the experiential delta from "cognitive dissonance" to "minimal pressure" on every application.
+The job-materials skill is a composer/verifier system that produces tailored cover letters and resumes for senior product-management roles. It runs inside `~/.claude-local/skills/job-materials/`. Each applied job becomes one *eval*—a regression-test record that captures the JD, the briefing research, the composed deliverables, the verifier's verdict, the corrections promoted to source rules, and the open follow-ups for the next eval. There are 26 evals to date. The detector count stands at 40. The system catches and fixes hundreds of errors autonomously per month and has shipped dozens of tailored applications; the experiential delta Craig describes as moving from "cognitive dissonance" to "minimal pressure" on every application.
 
 This is the skill where eval-driven correction earned its place. The same patterns appear in other skills, but the volume and the live-application stakes make this the one to study.
 
@@ -117,7 +117,7 @@ The detector population stratifies into three tiers.
 
 **Tier 3—Step 5.6 quality lens.** Five evaluative dimensions: Hook quality (1–5), Intersection density (1–5), Register Pass / Fail, JD bonus-qualification Pass / Fail, plus a marked-defensible interpretive-flag count. The quality lens is the last gate before ship.
 
-The detector count at 39 lives within a working ceiling of 40. The ceiling exists because detector inflation has its own failure mode: a verifier with too many checks slows composition without improving outputs, and the rule set becomes unreadable. v5 Session 3 (closed 2026-05-06) shipped seven items inside the ceiling, including the Section 20(h) preflight and the Check #10b adjacency extension, and the count moved 38→39.
+The detector count is at 40, sitting at the working ceiling of 40. The ceiling exists because detector inflation has its own failure mode: a verifier with too many checks slows composition without improving outputs, and the rule set becomes unreadable. v5 Session 3 (closed 2026-05-06) shipped seven items inside the ceiling, including the Section 20(h) preflight and the Check #10b adjacency extension, and the count moved 38→39; v7 (closed 2026-05-19) added one more detector to reach the ceiling.
 
 ## The eval-driven correction loop
 
@@ -135,7 +135,7 @@ Recurrence counters appear in the eval files explicitly. Each eval that ships cl
 
 ## What it produces
 
-23 evals shipped across the job-materials skill. About 39 detectors active in the verifier. Hundreds of errors caught per month easily, in Craig's words. Dozens of tailored applications shipped. The experiential delta is captured in Craig's own framing: applying for a job used to carry "a lot of cognitive dissonance, especially whether or not to write a cover letter in the first place"; with the system, "each application takes minimal pressure from a materials perspective." The decision-overhead removal is the under-appreciated half of the story. The visible half is quality. The under-the-surface half is that "should I even write a cover letter for this one?" stops being a question.
+26 evals shipped across the job-materials skill. About 40 detectors active in the verifier. Hundreds of errors caught and fixed autonomously per month. Dozens of tailored applications shipped. The experiential delta is captured in Craig's own framing: applying for a job used to carry "a lot of cognitive dissonance, especially whether or not to write a cover letter in the first place"; with the system, "each application takes minimal pressure from a materials perspective." The decision-overhead removal is the under-appreciated half of the story. The visible half is quality. The under-the-surface half is that "should I even write a cover letter for this one?" stops being a question.
 
 ## Failure modes that drove the design
 
@@ -151,9 +151,9 @@ The next two case studies extend the pattern outward. [Eval-Driven Correction Lo
 
 The redacted operational artifacts in [`artifacts/sample-skill/`](../artifacts/sample-skill/), [`artifacts/sample-eval.md`](../artifacts/sample-eval.md), and [`artifacts/sample-roadmap.md`](../artifacts/sample-roadmap.md) are where any claim in this case study can be verified against actual source files—with PII, target-company names, third-party individuals, and prior-employer narrative redacted, but the operating system intact.
 
-The [metrics dashboard](../metrics.md) tracks the four headline metrics over time: errors caught per month, evals shipped per quarter, detector count plus regression-test pass rate, and rules added per month across the global rule set and the skill rule sets. Baseline date 2026-05-08. The metric that reads like marketing is the one to verify against the corrections logs, which are linked there.
+The [metrics dashboard](../metrics.md) tracks the four headline metrics over time: errors caught per month, evals shipped per quarter, detector count plus regression-test pass rate, and rules added per month across the global rule set and the skill rule sets. Baseline date 2026-05-08.
 
-If the architecture in [Case Study #1](./01-personal-ai-os.md) makes the meta-system legible, this case study makes the operating loop legible: composer drafts, verifier audits in a separate context, every correction encodes back to source, recurrence counters escalate when the same gap returns. The output is production-grade because the machinery is.
+If the architecture in [Case Study #1](./01-personal-ai-os.md) makes the meta-system legible, this case study makes the operating loop legible: composer drafts, verifier audits in a separate context, every correction encodes back to source, recurrence counters escalate when the same gap returns.
 
 ---
 

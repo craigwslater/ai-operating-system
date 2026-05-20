@@ -21,7 +21,7 @@ Eval-driven correction is software-engineering rigor applied to AI work. The dis
 - **Library versioning** is the rule-promotion lifecycle. A verbal rule moves through stages: prose with worked example, qa-checklist gate at composer-time, verifier-prompt sub-check at audit-time, mechanical pre-flight detector that catches the failure shape before the verifier subagent runs at all.
 - **Observability** is drift detection. Hooks scan source files for cross-file inconsistencies—a fix in CONTEXT.md but missing in the corresponding skill SKILL.md, a ROADMAP.md item moved to Completed in one place but not the canonical inventory.
 
-The job-materials skill is where these patterns earned their place. The skill has shipped 23 evals, runs about 39 detectors, catches hundreds of errors per month easily, and produces dozens of tailored applications. The patterns transfer outward; the volume and the live-application stakes are what made this the skill that proved them.
+The job-materials skill is where these patterns earned their place. The skill has shipped 26 evals, runs about 40 detectors, catches and fixes hundreds of errors autonomously per month, and produces dozens of tailored applications. The patterns transfer outward; the volume and the live-application stakes are what made this the skill that proved them.
 
 ## The corrections-log and the WRONG/RIGHT pair
 
@@ -117,11 +117,11 @@ The next case study is the runtime layer. [From Discipline to Machinery](./04-di
 
 The redacted operational artifacts in [`artifacts/sample-skill/`](../artifacts/sample-skill/), [`artifacts/sample-eval.md`](../artifacts/sample-eval.md), and [`artifacts/sample-roadmap.md`](../artifacts/sample-roadmap.md) are where any claim in this case study can be verified against actual source files—with PII, target-company names, third-party individuals, and prior-employer narrative redacted, but the corrections-log structure, the rule-promotion stages, and the era-shard pattern intact.
 
-The [metrics dashboard](../metrics.md) tracks the four headline metrics over time: errors caught per month, evals shipped per quarter, detector count plus regression-test pass rate, and rules added per month across the global rule set and the skill rule sets. The headline metric—hundreds of errors caught per month easily, in Craig's words—is the rate at which WRONG/RIGHT pairs land in the corrections-log shards. Baseline date 2026-05-08.
+The [metrics dashboard](../metrics.md) tracks the four headline metrics over time: errors caught per month, evals shipped per quarter, detector count plus regression-test pass rate, and rules added per month across the global rule set and the skill rule sets. The headline metric—hundreds of errors caught and fixed autonomously per month—is the rate at which WRONG/RIGHT pairs land in the corrections-log shards. Baseline date 2026-05-08.
 
 For a peer PM who wants to reuse the patterns above, [`for-pms-reusing.md`](../for-pms-reusing.md) walks the smallest-viable-version of each: the WRONG/RIGHT format as a working unit, the rule-promotion lifecycle as a lightweight template, and the era-shard pattern as a refactor trigger keyed to file size and consult-cost rather than aesthetic preference.
 
-If [Case Study #1](./01-personal-ai-os.md) makes the meta-system legible and [Case Study #2](./02-composer-verifier.md) makes the operating loop legible, this case study makes the data structures legible: WRONG/RIGHT as the unit of correction, the rule-promotion lifecycle as the path from prose to machinery, the era-shard pattern as the refactoring discipline that keeps the rule set readable as it grows. Software-engineering rigor is what production-grade AI work looks like underneath the prose.
+If [Case Study #1](./01-personal-ai-os.md) makes the meta-system legible and [Case Study #2](./02-composer-verifier.md) makes the operating loop legible, this case study makes the data structures legible: WRONG/RIGHT as the unit of correction, the rule-promotion lifecycle as the path from prose to machinery, the era-shard pattern as the refactoring discipline that keeps the rule set readable as it grows.
 
 ---
 

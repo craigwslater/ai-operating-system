@@ -1,7 +1,7 @@
 <!-- AUTHOR'S NOTE—this header is appended at port time; the original file does not contain it. -->
 
 > **Designed by Craig—runtime: Claude (Sonnet/Opus).**
-> **What this is.** The publish-portfolio workflow protocol—what `/publish-portfolio` runs to ship content from the working portfolio-repo at `projects/ai-operating-system/outputs/portfolio-repo/` to the public GitHub repo. Defines preconditions, the redactor verify + sanity-grep gate, the diff-review hard gate, commit/push, and the sync-state update on success. Init-mode is the Session 8 first-publish branch; standard mode is every subsequent commit-and-push.
+> **What this is.** The publish-portfolio workflow protocol—what `/publish-portfolio` runs to ship content from the working portfolio-repo at `~/.claude-local/repos/ai-operating-system/` to the public GitHub repo. Defines preconditions, the redactor verify + sanity-grep gate, the diff-review hard gate, commit/push, and the sync-state update on success. Init-mode is the Session 8 first-publish branch; standard mode is every subsequent commit-and-push.
 > **What was redacted.** Nothing—the registry sweep produced zero substitutions. This file references workflow steps, file paths, and the project's binding non-negotiables only; no PII, target companies, third-party individuals, or prior-employer narrative are present.
 > **Why it's included.** This is the protocol behind `/publish-portfolio`. It pairs with `session-end-portfolio-sync.sh` (one of the six hooks registered in `artifacts/install-scripts/install-hooks-to-claude-code.sh`) to form the complete sync mechanism: the hook detects portfolio-worthy signals at session-end; this protocol is the only path that updates the public repo and the only path that updates the sync state. The per-push diff-review hard gate is the runtime expression of project non-negotiable #5.
 
@@ -9,9 +9,9 @@
 
 # Publish-Portfolio Protocol
 
-Workflow for shipping content from `~/.claude-local/projects/ai-operating-system/outputs/portfolio-repo/` to the public GitHub repo `craigwslater/ai-operating-system`.
+Workflow for shipping content from `~/.claude-local/repos/ai-operating-system/` to the public GitHub repo `craigwslater/ai-operating-system`.
 
-**Architecture (locked Session 7 kickoff 2026-05-08):** Commit-and-push only. This protocol does NOT regenerate source-to-portfolio content. Source regeneration (re-running redactor on artifact-tier files after a CLAUDE.md primitive was added, etc.) happens in dedicated sessions BEFORE invocation. The protocol operates on `outputs/portfolio-repo/` as-is.
+**Architecture (locked Session 7 kickoff 2026-05-08):** Commit-and-push only. This protocol does NOT regenerate source-to-portfolio content. Source regeneration (re-running redactor on artifact-tier files after a CLAUDE.md primitive was added, etc.) happens in dedicated sessions BEFORE invocation. The protocol operates on `repos/ai-operating-system/` as-is.
 
 **Bound by.** Project `projects/ai-operating-system/CLAUDE.md` §4 Non-Negotiables — especially #1 (Privacy is binding, both strict-floor and triangulation-defense sub-bullets) and #5 (Sync requires explicit per-push approval). The diff-review step is unbypassable.
 
@@ -23,8 +23,8 @@ Workflow for shipping content from `~/.claude-local/projects/ai-operating-system
 
 Verify before doing anything that touches git state:
 
-- `outputs/portfolio-repo/` exists.
-- Git is initialized inside `outputs/portfolio-repo/` (`git rev-parse --is-inside-work-tree` returns true).
+- `repos/ai-operating-system/` exists.
+- Git is initialized inside `repos/ai-operating-system/` (`git rev-parse --is-inside-work-tree` returns true).
 - A remote named `origin` is configured pointing at `github.com/craigwslater/ai-operating-system` (or whatever public URL is locked in Session 8).
 - Working tree state: `git status --short` runs cleanly. If there are uncommitted changes, that is expected (this protocol is the commit step).
 
@@ -32,11 +32,11 @@ If git is NOT initialized, this is the Session 8 prerequisite case. Surface to C
 
 ### Step 1 — Final verification suite
 
-Run the redactor's `verify` mode + `sanity-grep` mode against every `.md` and `.sh` file under `outputs/portfolio-repo/`. Both modes must exit 0 for every file before proceeding.
+Run the redactor's `verify` mode + `sanity-grep` mode against every `.md` and `.sh` file under `repos/ai-operating-system/`. Both modes must exit 0 for every file before proceeding.
 
 ```bash
 cd ~/.claude-local/projects/ai-operating-system
-find outputs/portfolio-repo \( -name '*.md' -o -name '*.sh' \) -type f \
+find repos/ai-operating-system \( -name '*.md' -o -name '*.sh' \) -type f \
   | while read -r f; do
       python3 scripts/redact.py verify "$f" || exit 1
       python3 scripts/redact.py sanity-grep "$f" || exit 1
@@ -45,17 +45,32 @@ find outputs/portfolio-repo \( -name '*.md' -o -name '*.sh' \) -type f \
 
 If any file fails either mode: STOP. Do not proceed to commit. Surface the failures to Craig and disposition them (apply registry substitution, apply defensive-margin substitution, or re-port the file from source) before retrying. The verification suite is a hard gate per project §4 NN #1 strict-floor reading.
 
-### Step 1.5 — Staleness check (advisory)
+### Step 1.5 — Staleness check + claim verify (advisory)
 
-For each portfolio-repo file with a `**Sources:**` / `**Last refreshed:**` footer, compare the declared `Last refreshed` date against the mtime of each listed source file in `~/.claude-local/`. If any source-file mtime exceeds the file's declared `Last refreshed` date by **≥90 days**, surface the drift to Craig as a staleness flag.
+Run the auto-walkers built in `projects/ai-operating-system-maintenance/` Session 1 (2026-05-09). Both checks are **advisory** — non-zero exit does NOT block the push, but prompts a Craig disposition.
 
-This step is **advisory only** — it does NOT block the push. The flag prompts Craig to decide between: (a) regenerate the portfolio file from current source in a dedicated session before push; (b) accept the drift and document the decision in the commit message; or (c) update the file's `Last refreshed` date inline if a quick spot-check confirms the content is still accurate against current source.
+**(a) Staleness check.** Walks every `*.md` file under `repos/ai-operating-system/` (excluding `artifacts/`), parses each file's `**Sources:**` / `**Last refreshed:**` footer, resolves source paths under `$CLAUDE_LOCAL_ROOT`, computes mtime deltas against declared `Last refreshed` dates, and emits a tabular drift report.
 
-For v1 the check is manual. Auto-detection (parse footers → compute source mtime deltas → emit a staleness report) is a `projects/ai-operating-system-maintenance/` Session 1 deliverable, tracked in `skills/publish-portfolio/ROADMAP.md` "Per-file provenance + staleness automation."
+```bash
+python3 ~/.claude-local/skills/publish-portfolio/scripts/staleness-check.py
+```
+
+The script's default target is `$CLAUDE_LOCAL_ROOT/repos/ai-operating-system` (resolved via the hooks-layer fallback chain). Pass an explicit positional arg to override. Exit 0 if no source has drifted ≥90 days; exit 1 with the report otherwise. Default threshold is 90 days; override with `--threshold-days N`. Use `--verbose` to surface all checked sources, not just drifted.
+
+**(b) Claim verify.** Parses the master tables in `.claim-register.md` (sidecar; never committed), runs each row's `verify` shell command against `~/.claude-local/`, and compares output to the row's `Expected` value.
+
+```bash
+cd ~/.claude-local/projects/ai-operating-system
+python3 ~/.claude-local/skills/publish-portfolio/scripts/claim-verify.py .claim-register.md
+```
+
+Exit 0 if every mechanical row PASS; exit 1 if any row DRIFT or ERROR. Manual rows (`` `manual` `` marker) and frozen-historical rows (`` `N/A (frozen historical)` `` marker) are reported informationally and never block exit.
+
+**Disposition on flag:** (a) regenerate the affected portfolio file from current source in a dedicated session before push, (b) accept the drift and document the decision in the commit message, or (c) update the file's `Last refreshed` date / register row inline if a quick spot-check confirms the content is still accurate against current source. Path-resolution conventions for both scripts live alongside the script source headers; both honor the hooks-layer fallback chain (`${HOME}/.claude-local` → `${HOME}/mnt/.claude-local` → `${CLAUDE_LOCAL_ROOT}`).
 
 ### Step 2 — Stage changes
 
-Inside `outputs/portfolio-repo/`:
+Inside `repos/ai-operating-system/`:
 
 ```bash
 git add -A
@@ -112,9 +127,12 @@ One-line summary: commit SHA + branch + new state-file timestamp + cleared-pendi
 
 ## Init mode (Session 8)
 
-If Step 0 found an uninitialized portfolio-repo, the init flow is:
+If Step 0 found an uninitialized `repos/ai-operating-system/` working tree, the init flow is:
 
-1. `cd outputs/portfolio-repo/ && git init -b main`
+1. `cd repos/ai-operating-system/ && git init -b main`. The `-b main` flag requires git ≥2.28 (released 2020-07-27); on older git versions the init fails with "unknown switch `b'." Cross-version fallback (behaviorally identical):
+   ```bash
+   cd repos/ai-operating-system/ && git init && git symbolic-ref HEAD refs/heads/main
+   ```
 2. Configure remote: `git remote add origin git@github.com:craigwslater/ai-operating-system.git` (Craig provides the exact URL).
 3. Run Step 1 (verification suite) on every file before the initial commit. Hard gate.
 4. Run Step 2 (stage all).
@@ -141,5 +159,5 @@ These are the failure modes this protocol exists to prevent:
 ## Known v1 limitations
 
 - **Multi-session signal noise.** The session-end hook re-fires the same signals on every session-end run between publishes (state is updated only by /publish-portfolio). The pending-file accumulates `## Detected YYYY-MM-DD` stanzas; this protocol's Step 1-5 dedupes by reading the union and clearing on push. Dedup-at-detection-time is a v2 candidate.
-- **No automated source regeneration.** Per the locked architecture, this protocol does not run the redactor against source files to refresh artifact-tier content. New CLAUDE.md primitives, for example, require a dedicated session to re-port the artifact-tier `outputs/portfolio-repo/artifacts/CLAUDE.md` before the next publish.
+- **No automated source regeneration.** Per the locked architecture, this protocol does not run the redactor against source files to refresh artifact-tier content. New CLAUDE.md primitives, for example, require a dedicated session to re-port the artifact-tier `repos/ai-operating-system/artifacts/CLAUDE.md` before the next publish.
 - **Init mode is Session 8 work.** Step 0's not-initialized branch defers to Session 8; init flow is documented above but has not been run end-to-end.

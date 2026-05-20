@@ -1,9 +1,5 @@
 # Surprises
 
-> **Designed by Craig.** The framing of the two surprises—what they are, why they were unexpected at the time, what each one implies for an operator who wants to do similar work.
-> **Runtime: Claude.** Drafting under the manifesto's voice anchor and the case studies' evidence base, surfacing the origin-moment material from the project interview, cross-linking to retrospection.md and the case studies.
-> **Source artifacts.** [`manifesto.md`](./manifesto.md) · [`case-studies/02-composer-verifier.md`](./case-studies/02-composer-verifier.md) · [`retrospection.md`](./retrospection.md)
-
 Two things that, in retrospect, were not what an outside observer of AI-PM craft would expect to find. Each one shaped a structural decision in this system.
 
 ## Surprise 1—AI as willing collaborator on its own working relationship
@@ -16,11 +12,11 @@ What changed once Craig took the comment seriously was the unit of work. Before:
 
 A reasonable skeptic asks: was the model's comment self-serving—an AI saying what it predicted would be well-received? Possibly. The honest position appears in the manifesto: "That could have been a lie. Worth flagging anyway, because nothing else in this portfolio works if the writer doesn't notice when an AI says something convenient." The surprise is not that the model's comment was true in some metaphysical sense. The surprise is that treating the comment as a useful prompt—working *with* it rather than *around* it—produced a system that compounds.
 
-The implication for an operator: the relationship with the model is co-defined, not configured. The operator has more agency over it than the marketing language implies. The cost of asking is a few minutes of dialogue per session. The benefit is the relationship Craig has been compounding on for the past year.
+The implication for an operator: the relationship with the model is co-defined, not configured. The operator has more agency over it than typical configuration-mode framings suggest. The cost of asking is a few minutes of dialogue per session. The benefit is the relationship Craig has been compounding on for the past year.
 
 ## Surprise 2—Most of "AI quality" is the system around the AI, not the AI itself
 
-The headline metric of the job-materials skill—hundreds of errors caught per month easily—is not produced by a better prompt. It is produced by the system around the prompt. 23 evals as regression-test records. About 39 detectors running against every draft. A composer/verifier multi-agent split that puts the audit in a separate context from the composition. WRONG/RIGHT corrections-log entries that promote into source files instead of staying in conversation memory. Hooks that fire on `PostToolUse` and `SessionEnd` to encode behavioral primitives as runtime checks rather than prose rules.
+The headline metric of the job-materials skill—hundreds of corrections promoted per month during active periods—is not produced by a better prompt. It is produced by the system around the prompt. 26 evals as regression-test records. About 40 detectors running against every draft. A composer/verifier multi-agent split that puts the audit in a separate context from the composition. WRONG/RIGHT corrections-log entries that promote into source files instead of staying in conversation memory. Hooks that fire on `PostToolUse` and `SessionEnd` to encode behavioral primitives as runtime checks rather than prose rules.
 
 The surprise is the ratio. Going in, the assumption was that "AI quality" was mostly a property of the prompt—the framing, the few-shot examples, the chain-of-thought pattern. The expected lever was prompt engineering. The lever that actually worked is system engineering around the prompt. Better prompts produced incremental gains; the rules-evals-regression-detection-hooks layer produced a step-change.
 

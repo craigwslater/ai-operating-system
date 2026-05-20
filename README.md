@@ -1,12 +1,12 @@
 # AI Operating System
 
-> A personal AI operating system: the rules, identity, projects, skills, policies, and machinery for working with Claude as a long-term partner. AI is a multiplier—this is the system that does the multiplying.
+> A personal AI operating system: the rules, identity, projects, skills, policies, and machinery for working with Claude as a long-term partner.
 
 ---
 
 ## What this is
 
-This portfolio documents a personal AI operating system: a single source-of-truth folder, `~/.claude-local/`, that holds the rules, identity, projects, skills, policies, and machinery for working with Claude as a long-term partner. Designed by Craig Slater—a senior product manager with six-plus years in regulated B2B health tech—with Claude as the runtime executing under the rules. The system runs the operational evidence behind a multiplied PM career: 23 evals (regression-test records, one per applied job) across the job-materials skill, about 39 detectors that catch returning failure modes on every draft, hundreds of errors caught per month, and dozens of tailored applications shipped under minimal pressure. AI is a multiplier—it amplifies the depth of thinking the operator brings to it. This is the system that does the amplifying.
+This portfolio documents a personal AI operating system: a single source-of-truth folder, `~/.claude-local/`, that holds the rules, identity, projects, skills, policies, and machinery for working with Claude as a long-term partner. Designed by Craig Slater, with Claude as the runtime executing under the rules. The job-materials skill in this system has produced 26 evals (regression-test records, one per applied job), runs about 40 detectors that catch returning failure modes on every draft, has caught and fixed hundreds of errors autonomously per month, and has shipped dozens of tailored applications.
 
 ---
 
@@ -16,11 +16,11 @@ This repo serves three readers. Pick the path that matches.
 
 ### If you're a recruiter—60 seconds
 
-If you have one minute: read the headline above and skim the [manifesto](./manifesto.md). The numbers—23 evals, ~39 detectors, hundreds of errors caught per month—come from the corrections logs and eval archive of the underlying system, not from marketing claims. The [`Personal AI Operating System` case study](./case-studies/01-personal-ai-os.md) is the natural next read; it walks the meta-architecture in 10-15 minutes. Contact details are in the footer below.
+If you have one minute: read the headline above and skim the [manifesto](./manifesto.md). The numbers—26 evals, ~40 detectors, hundreds of errors caught and fixed autonomously per month—come from the corrections logs and eval archive of the underlying system. The [`Personal AI Operating System` case study](./case-studies/01-personal-ai-os.md) is the natural next read; it walks the meta-architecture in 10-15 minutes. Contact details are in the footer below.
 
 ### If you're a product hiring manager—10-20 minutes
 
-If you have 10-20 minutes: read one or two case studies. [`Personal AI Operating System`](./case-studies/01-personal-ai-os.md) walks the meta-architecture—priority hierarchy, encode-into-source, the four-layer structure, dual-environment portability—and is the right entry point for assessing platform-PM thinking applied inward. [`Composer/Verifier`](./case-studies/02-composer-verifier.md) walks the two-agent pattern that takes AI drafts to production-grade output. Each case study links to the redacted operational artifacts that back its claims. The [methodology overview](./methodology.md) is the layered alternative if you'd rather see the architecture in one read instead of through a case study.
+If you have 10-20 minutes: read one or two case studies. [`Personal AI Operating System`](./case-studies/01-personal-ai-os.md) walks the meta-architecture—priority hierarchy, encode-into-source, the four-layer structure, dual-environment portability—and is the right entry point for assessing platform-PM thinking applied inward. [`Composer/Verifier`](./case-studies/02-composer-verifier.md) walks the two-agent pattern that runs the composer and the verifier in separate contexts so the audit can fail the draft. Each case study links to the redacted operational artifacts that back its claims. The [methodology overview](./methodology.md) is the layered alternative if you'd rather see the architecture in one read instead of through a case study.
 
 ### If you're a fellow PM curious about the methodology
 
@@ -47,7 +47,7 @@ Keep relative links so the repo is browseable on github.com without configuratio
 ### Case studies
 
 - [`case-studies/01-personal-ai-os.md`](./case-studies/01-personal-ai-os.md)—Personal AI Operating System: meta-architecture (priority hierarchy, MEMORY.md, projects/policies/templates, encode-into-source, dual-environment portability). *(Session 3.)*
-- [`case-studies/02-composer-verifier.md`](./case-studies/02-composer-verifier.md)—Composer/Verifier: production-grade outputs from AI through a two-agent pattern + 23 evals + ~39 detectors. *(Session 4.)*
+- [`case-studies/02-composer-verifier.md`](./case-studies/02-composer-verifier.md)—Composer/Verifier: a two-agent pattern + 26 evals + ~40 detectors. *(Session 4.)*
 - [`case-studies/03-eval-driven-loops.md`](./case-studies/03-eval-driven-loops.md)—Eval-Driven Correction Loops: WRONG/RIGHT corrections-log, rule promotion, drift detection, era-shard pattern. *(Session 5.)*
 - [`case-studies/04-discipline-to-machinery.md`](./case-studies/04-discipline-to-machinery.md)—From Discipline to Machinery: hooks layer encoding behavioral primitives. *(Session 5.)*
 

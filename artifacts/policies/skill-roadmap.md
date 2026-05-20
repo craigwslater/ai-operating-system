@@ -3,7 +3,7 @@
 > **Designed by Craig—runtime: Claude (Sonnet/Opus).**
 > **What this is.** The skill-ROADMAP.md lifecycle protocol—the canonical inventory mechanism for outstanding follow-ups, planned improvements, and historical work on each custom skill. Defines `Open Considerations` → `Completed` lifecycle states; specifies the `Candidate Bundles` pre-grouping for next-improvement-project scoping.
 > **What was redacted.** Nothing—the registry sweep produced zero substitutions.
-> **Why it's included.** Backs the case-study claim that ROADMAP-driven improvement is an explicit discipline, not implicit drift. A reader wanting to verify the "rules added per month" metric reads this file and follows links to the per-skill ROADMAP.md instances it governs.
+> **Why it's included.** Backs the case-study claim that ROADMAP-driven improvement is a documented discipline and the "rules added per month" metric: the per-skill ROADMAP.md instances it governs are linked from the case-study tier.
 
 ---
 

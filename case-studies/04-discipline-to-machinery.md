@@ -78,7 +78,7 @@ The [metrics dashboard](../metrics.md) tracks the four headline metrics over tim
 
 For a peer PM who wants to reuse these patterns, [`for-pms-reusing.md`](../for-pms-reusing.md) names the smallest-viable-version of each: one hook (file-write verification) is enough to demonstrate the prose-to-machinery move at a starter scale; the dual-install pattern can wait until a second environment is in play; the commitment-log JSONL ground truth is worth the implementation cost only when the audit volume justifies it.
 
-If [Case Study #1](./01-personal-ai-os.md) makes the meta-system legible and [Case Study #3](./03-eval-driven-loops.md) makes the skill-level rule machinery legible, this case study makes the runtime layer legible: every behavioral primitive promoted from prose to hook, the same source running on Claude Code and Cowork, the audit moving from self-report to ground truth. Production-grade AI work is what discipline looks like once the discipline has been written down as code.
+If [Case Study #1](./01-personal-ai-os.md) makes the meta-system legible and [Case Study #3](./03-eval-driven-loops.md) makes the skill-level rule machinery legible, this case study makes the runtime layer legible: every behavioral primitive promoted from prose to hook, the same source running on Claude Code and Cowork, the audit moving from self-report to ground truth.
 
 ---
 

@@ -1,10 +1,6 @@
 # For PMs Reusing These Patterns
 
-> **Designed by Craig.** The smallest-viable-version of each pattern, the sequencing that lets the patterns compound rather than collide, the explicit list of pieces a peer PM should NOT copy verbatim because they are Craig-specific to the job-search use case.
-> **Runtime: Claude.** Drafting under the case studies' evidence base, surfacing the implementation order that lets a reader test each pattern at low cost before committing to scale.
-> **Source artifacts.** [`case-studies/03-eval-driven-loops.md`](./case-studies/03-eval-driven-loops.md) · [`case-studies/04-discipline-to-machinery.md`](./case-studies/04-discipline-to-machinery.md) · [`retrospection.md`](./retrospection.md)
-
-A peer PM who has read the case studies and wants to test these patterns inside a different workflow can start small. This page is the implementation guide. It does not assume the reader builds 23 evals and 39 detectors before deciding whether the approach pays back. It assumes the reader wants the cheapest version that demonstrates the pattern, plus the explicit sequencing that lets later additions compound rather than collide.
+A peer PM who has read the case studies and wants to test these patterns inside a different workflow can start small. This page is the implementation guide. It does not assume the reader builds 26 evals and 40 detectors before deciding whether the approach pays back. It assumes the reader wants the cheapest version that demonstrates the pattern, plus the explicit sequencing that lets later additions compound rather than collide.
 
 The patterns are independent enough that a reader can adopt them in any order. The order below is what would have saved the most rework if Craig had built this system from scratch knowing what he knows now.
 
