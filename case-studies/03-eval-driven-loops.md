@@ -21,7 +21,7 @@ Eval-driven correction is software-engineering rigor applied to AI work. The dis
 - **Library versioning** is the rule-promotion lifecycle. A verbal rule moves through stages: prose with worked example, qa-checklist gate at composer-time, verifier-prompt sub-check at audit-time, mechanical pre-flight detector that catches the failure shape before the verifier subagent runs at all.
 - **Observability** is drift detection. Hooks scan source files for cross-file inconsistencies—a fix in CONTEXT.md but missing in the corresponding skill SKILL.md, a ROADMAP.md item moved to Completed in one place but not the canonical inventory.
 
-The job-materials skill is where these patterns earned their place. The skill has shipped 26 evals, runs about 40 detectors, catches and fixes hundreds of errors autonomously per month, and produces dozens of tailored applications. The patterns transfer outward; the volume and the live-application stakes are what made this the skill that proved them.
+The job-materials skill is where these patterns earned their place. The skill has shipped 36 evals, runs about 40 detectors, catches and fixes hundreds of errors autonomously per month, and produces dozens of tailored applications. The patterns transfer outward; the volume and the live-application stakes are what made this the skill that proved them.
 
 ## The corrections-log and the WRONG/RIGHT pair
 

@@ -44,7 +44,7 @@ The corollary: when an existing primitive is still living as prose, treat that a
 
 ## What's still being tested
 
-The synthesis is a working hypothesis. The hook layer is recent—weeks old at the time this is written. The era-shard pattern has been applied twice. The verifier-subagent pattern has shipped across 26 evals. The synthesis is supported by these artifacts; it is not yet falsified by long-term observation across the next class of failure mode that will surface.
+The synthesis is a working hypothesis. The hook layer is recent—weeks old at the time this is written. The era-shard pattern has been applied twice. The verifier-subagent pattern has shipped across 36 evals. The synthesis is supported by these artifacts; it is not yet falsified by long-term observation across the next class of failure mode that will surface.
 
 The honest framing: this is what the system looks like after three retrofits have been applied and one design rule has been pulled out of them. Whether the same pattern—externalize what the runtime cannot reliably remember—holds for the next failure mode the system encounters is not yet known. The mechanism for finding out is the [metrics dashboard](./metrics.md): the rate at which new failure modes surface, the share that promote to machinery within the same session, the share that recur after promotion. The metrics are how the synthesis stays honest.
 

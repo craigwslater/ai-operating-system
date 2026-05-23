@@ -46,7 +46,7 @@ Reference files split into an index plus content shards once they exceed the loa
 
 ### Eval-driven correction
 
-Every applied job becomes one eval—a regression-test record that captures the JD, the briefing research, the composed deliverables, the verifier's verdict, the corrections promoted to source rules, and the open follow-ups. Detectors that catch returning failure modes promote from prose to mechanical pre-flight scripts when the same shape fires across consecutive evals. Recurrence counters force structural rethinks when failures return after promotion. There are 26 evals and about 40 detectors at this writing. Walked in [Case Study #3](./case-studies/03-eval-driven-loops.md).
+Every applied job becomes one eval—a regression-test record that captures the JD, the briefing research, the composed deliverables, the verifier's verdict, the corrections promoted to source rules, and the open follow-ups. Detectors that catch returning failure modes promote from prose to mechanical pre-flight scripts when the same shape fires across consecutive evals. Recurrence counters force structural rethinks when failures return after promotion. There are 36 evals and about 40 detectors at this writing. Walked in [Case Study #3](./case-studies/03-eval-driven-loops.md).
 
 ### Discipline becomes machinery
 
@@ -58,7 +58,7 @@ Behavioral primitives that began as prose in CLAUDE.md become hook scripts on `P
 
 The README names three reader paths; this is what each one looks like in pages.
 
-A recruiter with 60 seconds reads the README headline plus the [manifesto](./manifesto.md). Both pages frame the headline numbers—26 evals, about 40 detectors, hundreds of errors caught and fixed autonomously per month—and link out to the redacted artifacts that back them.
+A recruiter with 60 seconds reads the README headline plus the [manifesto](./manifesto.md). Both pages frame the headline numbers—36 evals, about 40 detectors, hundreds of errors caught and fixed autonomously per month—and link out to the redacted artifacts that back them.
 
 A product hiring manager with 10-20 minutes reads one or two case studies. [`Personal AI Operating System`](./case-studies/01-personal-ai-os.md) walks the meta-architecture; it is the right entry for assessing platform-PM thinking applied inward. [`Composer/Verifier`](./case-studies/02-composer-verifier.md) walks the two-agent pattern that runs the composer and the verifier in separate contexts so the audit can fail the draft. [`Eval-Driven Correction Loops`](./case-studies/03-eval-driven-loops.md) and [`From Discipline to Machinery`](./case-studies/04-discipline-to-machinery.md) go deeper on the rule-promotion lifecycle and the hooks layer.
 

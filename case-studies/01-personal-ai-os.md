@@ -80,9 +80,9 @@ The system produces three things that a hiring manager can verify.
 
 **Compounding source files.** CLAUDE.md has grown not by accumulation but by encode-into-source: every recurring correction has become a primitive. Every skill's references-corrections-log holds the WRONG/RIGHT records that promoted the skill's rules. Conversation context is ephemeral. Source files compound.
 
-**Versioned project releases.** The job-materials skill has shipped 26 evals across six release projects. The claude-local-frontier meta-project shipped seven structural improvements across two versions. Each release closes with a retrospective and a commitment-verification audit. The discipline produces visible cadence.
+**Versioned project releases.** The job-materials skill has shipped 36 evals across six release projects. The claude-local-frontier meta-project shipped seven structural improvements across two versions. Each release closes with a retrospective and a commitment-verification audit. The discipline produces visible cadence.
 
-**Quantitative output.** The job-materials skill alone runs about 40 detectors against every draft, has shipped 26 evals, and catches and fixes hundreds of errors autonomously per month—measured directly from the corrections logs. Those numbers anchor the headline metric on the [metrics dashboard](../metrics.md). The depth on the operational mechanics—composer/verifier separation, eval-driven correction, hooks as enforcement—lives in [Case Study #2](./02-composer-verifier.md), [Case Study #3](./03-eval-driven-loops.md), and [Case Study #4](./04-discipline-to-machinery.md).
+**Quantitative output.** The job-materials skill alone runs about 40 detectors against every draft, has shipped 36 evals, and catches and fixes hundreds of errors autonomously per month—measured directly from the corrections logs. Those numbers anchor the headline metric on the [metrics dashboard](../metrics.md). The depth on the operational mechanics—composer/verifier separation, eval-driven correction, hooks as enforcement—lives in [Case Study #2](./02-composer-verifier.md), [Case Study #3](./03-eval-driven-loops.md), and [Case Study #4](./04-discipline-to-machinery.md).
 
 ## Failure modes that drove the design
 

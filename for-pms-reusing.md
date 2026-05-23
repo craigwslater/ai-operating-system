@@ -1,6 +1,6 @@
 # For PMs Reusing These Patterns
 
-A peer PM who has read the case studies and wants to test these patterns inside a different workflow can start small. This page is the implementation guide. It does not assume the reader builds 26 evals and 40 detectors before deciding whether the approach pays back. It assumes the reader wants the cheapest version that demonstrates the pattern, plus the explicit sequencing that lets later additions compound rather than collide.
+A peer PM who has read the case studies and wants to test these patterns inside a different workflow can start small. This page is the implementation guide. It does not assume the reader builds 36 evals and 40 detectors before deciding whether the approach pays back. It assumes the reader wants the cheapest version that demonstrates the pattern, plus the explicit sequencing that lets later additions compound rather than collide.
 
 The patterns are independent enough that a reader can adopt them in any order. The order below is what would have saved the most rework if Craig had built this system from scratch knowing what he knows now.
 

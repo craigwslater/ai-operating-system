@@ -22,7 +22,7 @@ When Craig signals a new project (says "new project," describes a new multi-sess
    - **Sequencing**: What order should things be built/done? What's the first milestone?
 3. **Create the project folder** at `projects/[name]/` with:
    - `CLAUDE.md` — the project plan: goals, constraints, architecture decisions, non-negotiables, quality standards. This is prescriptive and stable — it changes only when Craig makes a deliberate strategic decision. **Scaffold from `templates/project-CLAUDE-md.template`.**
-   - `CONTEXT.md` — initialized with the first session's status and next steps. This is descriptive and temporal — it updates every session. **Scaffold from `templates/project-CONTEXT-md.template`.** Hard ≤80-line budget; older session entries archive to `log.md`.
+   - `CONTEXT.md` — initialized with the first session's status and next steps. This is descriptive and temporal — it updates every session. **Scaffold from `templates/project-CONTEXT-md.template`.** Authoritative size budget is ≤1,800 cl100k for an active project (`policies/memory-architecture.md` §3.2); ~80 lines is a cheap proxy pre-screen, not the budget itself. Older session entries archive to `log.md`.
    - `log.md` — the full session log (one entry per session, append-only). Entries follow `templates/session-log-entry.template`. Created when the first session log entry is written.
    - `inputs/` — if the project has source materials (data files, specs, images, reference docs), create this directory and document what's in it in the project CLAUDE.md under a "Key Files" section.
    - `outputs/` — created when the first deliverable is produced.
@@ -35,7 +35,7 @@ When Craig signals a new project (says "new project," describes a new multi-sess
 The `templates/` folder contains scaffolds for the standard artifacts new projects produce:
 
 - `templates/project-CLAUDE-md.template` — 12-section project plan (goal / diagnosis / scope / non-negotiables / architecture / sequencing / quality bar / working practices / source-of-truth / what-this-plan-does-not-do / failure modes / kickoff). Use for any multi-session project.
-- `templates/project-CONTEXT-md.template` — slim status file (≤80 lines): Status / Next steps / 3 most recent sessions / Source-of-truth pointers.
+- `templates/project-CONTEXT-md.template` — slim status file (≤1,800 cl100k for an active project per `policies/memory-architecture.md` §3.2; ~80 lines as a proxy pre-screen): Status / Next steps / 3 most recent sessions / Source-of-truth pointers.
 - `templates/session-log-entry.template` — full per-session entry for `log.md` (purpose / actions / acceptance check / state at close / open items). The `log.md` is append-only; CONTEXT.md only carries 1-2 line summaries of the 3 most recent.
 - `templates/eval-template.md` — skill eval format (preamble / JD summary / mastery angles / key decisions / iteration log / verification / rules spawned / cross-references). Lives in `skills/[name]/evals/`.
 - `templates/correction-entry.template` — single corrections-log.md entry (failure mode / WRONG / RIGHT / why-checks-missed-it / rule spawned / severity / provenance / cross-refs).

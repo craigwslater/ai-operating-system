@@ -6,8 +6,9 @@
 # What this is. The Cowork plugin packaging script for the same cross-file
 # maintenance + structural drift detection hook layer that install-hooks-to-claude-code.sh
 # wires into Claude Code. Builds a frontier-hooks.zip plugin bundle from
-# ~/.claude-local/hooks/ that uploads via Cowork Organization Settings →
-# Plugins.
+# ~/.claude-local/hooks/ that uploads via Cowork's Customize tab → Personal
+# Plugin (the personal-account route; Organization Settings → Plugins is
+# org-account-only).
 #
 # What was redacted. Nothing—the registry sweep produced zero substitutions.
 # The script uses $HOME for path resolution; no hardcoded user paths.

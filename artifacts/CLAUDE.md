@@ -125,7 +125,7 @@ Each item is a known failure mode. If a response contains the pattern, the respo
 
 ## Folder Structure (summary)
 
-`~/.claude-local/` contains CLAUDE.md (this file) and MEMORY.md (identity + preferences) at root, plus `projects/` (per-project CLAUDE.md + CONTEXT.md + inputs/outputs), `skills/` (custom skills — see Workflow Protocols below for how each surface discovers them), `policies/` (workflow files wrapped by slash commands), `docs/` (extended documentation), `templates/`, and `outputs/` (one-off deliverables not tied to a project). Project-specific files always live in `projects/[name]/` — never at root. Full structure and rules: `docs/folder-structure.md`.
+`~/.claude-local/` contains CLAUDE.md (this file) and MEMORY.md (identity + preferences) at root, plus `projects/` (per-project CLAUDE.md + CONTEXT.md + inputs/outputs), `skills/` (custom skills — see Workflow Protocols below for how each surface discovers them), `policies/` (workflow files wrapped by slash commands), `docs/` (extended documentation), `templates/`, `repos/` (working trees of GitHub repos Craig publishes — one subdir per remote; folder name matches the GitHub repo name; see `repos/README.md`), and `outputs/` (one-off deliverables not tied to a project). Project-specific files always live in `projects/[name]/` — never at root. Full structure and rules: `docs/folder-structure.md`.
 
 ## Environment-Specific Paths (summary)
 
@@ -141,7 +141,7 @@ Output files always save inside `~/.claude-local/`: project work → `projects/[
 
 The session-start, session-end, new-project-intake, commitment-verification-audit, and file-delivery workflows are documented in `policies/` and ship as runnable slash commands: `/start-session`, `/end-session`, `/start-project`, `/promote-canonical`, `/audit`.
 Cross-file maintenance and structural drift detection ship as Claude Code hooks (PostToolUse + SessionEnd) under `hooks/`; install via `bash ~/.claude-local/hooks/install-hooks-to-claude-code.sh`.
-Cowork port ships as the `frontier-hooks` plugin (`plugins/frontier-hooks/`); build via `bash ~/.claude-local/hooks/package-hooks-plugin.sh` and upload the resulting `outputs/plugins-packaged/frontier-hooks.zip` via Cowork Organization Settings → Plugins. Full install + verification details in `docs/environment-specific-paths.md`.
+Cowork port ships as the `frontier-hooks` plugin (`plugins/frontier-hooks/`); build via `bash ~/.claude-local/hooks/package-hooks-plugin.sh` and upload the resulting `outputs/plugins-packaged/frontier-hooks.zip` via Cowork's Customize tab → Personal Plugin (the personal-account route; Organization Settings → Plugins is org-account-only). Full install + verification details in `docs/environment-specific-paths.md`.
 
 Read these at the right moments:
 
@@ -149,6 +149,7 @@ Read these at the right moments:
 - **Session end** → `policies/session-end.md` + `policies/commitment-verification-audit.md`
 - **New multi-session project** → `policies/new-project-intake.md`
 - **Saving deliverables** → `policies/file-delivery.md`
+- **Memory tiers, budgets & maintenance policies (M1–M10)** → `policies/memory-architecture.md`
 
 ---
 

@@ -153,7 +153,7 @@ For workspace-wide concerns (e.g., a CLAUDE.md primitive needs revision), use th
 
 ## 8. Audit integration
 
-The `audit` skill (`/audit`) Step 6 — "ROADMAP drift" detector — runs on demand (deep version via `/audit`, executed against all skills or a single skill via the optional `roadmap` scope arg). A cheap continuous version via SessionEnd hook (`hooks/session-end-cross-file-consistency.sh`) is a planned future extension — until shipped, drift is detected only when Craig explicitly runs `/audit`. Sub-checks A (missing ROADMAP.md) and B (cross-section drift) are the highest-priority candidates for hook integration because they catch the failure modes most likely to silently accumulate between explicit audit runs.
+The `audit` skill (`/audit`) Step 6 — "ROADMAP drift" detector — runs on demand (deep version via `/audit`, executed against all skills or a single skill via the optional `roadmap` scope arg). A cheap continuous version of sub-checks A (missing ROADMAP.md) and B (cross-section drift) shipped 2026-05-06 in the SessionEnd hook (`hooks/session-end-improvement-opportunities.sh`'s `check_roadmap_drift` function), so those two failure modes — the ones most likely to silently accumulate between explicit audit runs — are caught at every session-end. Sub-checks C, D, and E run only in the deep `/audit` pass.
 
 Sub-checks (full list in `skills/audit/SKILL.md` Step 6):
 
@@ -177,3 +177,17 @@ The `job-materials` skill's ROADMAP.md is the reference implementation as of 202
 - A multi-month Completed audit trail spanning Phase 1 through v4 close + post-v4 live applications.
 
 When evaluating whether a new ROADMAP.md you're scaffolding meets this policy, compare structurally against `skills/job-materials/ROADMAP.md`.
+
+---
+
+## 10. Compaction discipline — the `[Open / Completed]` split (M4)
+
+A skill `ROADMAP.md` grows without limit: the **Completed** section (§5) is an append-only audit trail, and a long-lived skill accumulates a multi-month trail. This is diagnostic gap **G10** — `skills/job-materials/ROADMAP.md` reached 84,290 cl100k. Maintenance policy **M4** (`policies/memory-architecture.md` §6) bounds it, and this section is M4's acting home for skill ROADMAPs (the parallel of `/end-session` Step 4.5 for `log.md`).
+
+**The threshold.** When a skill `ROADMAP.md`'s `## Completed` section exceeds **12,000 cl100k** (`memory-architecture.md` §3.2), it is compacted. The threshold measures the **Completed section** — the compactable append-only portion — not the whole file: Open Considerations / Candidate Bundles / Standing Deferrals are never compacted, so measuring them against a compaction threshold would be incoherent. The `/audit` Step 1.7 detector and the SessionEnd hook flag an over-threshold Completed section; `python3 ~/.claude-local/scripts/check-append-only-compaction.py` is the detector.
+
+**What gets compacted — and what never does.** Compaction is scoped to the **Completed** section only. **Open Considerations, Candidate Bundles, and Standing Deferrals are never compacted** — they are the actionable inventory, the reason the file exists (§1), and must stay navigable in full. This is the `[Open / Completed]` split: the *open* half stays whole; the *completed* half is bounded.
+
+**The mechanic (move, not delete).** Move the **oldest** Completed entries **verbatim** into a sibling `ROADMAP-archive.md` — organized as dated `## Archive — Completed entries through YYYY-MM-DD` sections. Leave in the live `ROADMAP.md` Completed section the **recent** entries plus a **dated summary block** — one manifest line per archived entry (date + what shipped) — and a pointer to `ROADMAP-archive.md`. Keep enough recent entries that the file lands comfortably under threshold. Every byte of detail is preserved (`memory-architecture.md` Non-Negotiable #2); verify `ROADMAP-archive.md` + the trimmed `ROADMAP.md` reconstruct the full Completed trail before the edit is done.
+
+**When it runs.** Apply this discipline whenever the detector flags the file — most naturally during an improvement-project pruning pass (§4 "When the file gets pruned"), or as a standalone compaction pass. Compaction does not violate the §7 anti-pattern "Retroactive Completed edits": moving an entry verbatim to the archive is not *modifying* it. The archive file is the audit trail's permanent home; the live Completed section becomes a recent-window-plus-manifest view of it.
