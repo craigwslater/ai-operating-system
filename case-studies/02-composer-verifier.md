@@ -10,11 +10,11 @@ The architecture in this case study is the answer to a single observation Craig 
 
 > "AI can hallucinate in all sorts of predictable ways, impacting ongoing quality and accuracy if not improved under a systematized evaluation and regression process. Early failures were around improving the skill but not producing the appropriate evaluation framework and regression testing to scale the skill. This was my biggest long-term quality unlock."
 
-What follows is what the systematic-evaluation answer looks like in operating form: a two-agent pattern with mechanical detectors and an eval-driven correction loop that has shipped 26 applications, runs about 40 detectors against every draft, and catches and fixes hundreds of errors autonomously per month. The job-materials skill is the example. The pattern is the unit.
+What follows is what the systematic-evaluation answer looks like in operating form: a two-agent pattern with mechanical detectors and an eval-driven correction loop that has shipped dozens of tailored applications, runs about 42 detectors against every draft, and catches and fixes hundreds of errors autonomously per month. The job-materials skill is the example. The pattern is the unit.
 
 ## What this is
 
-The job-materials skill is a composer/verifier system that produces tailored cover letters and resumes for senior product-management roles. It runs inside `~/.claude-local/skills/job-materials/`. Each applied job becomes one *eval*—a regression-test record that captures the JD, the briefing research, the composed deliverables, the verifier's verdict, the corrections promoted to source rules, and the open follow-ups for the next eval. There are 36 evals to date. The detector count stands at 40. The system catches and fixes hundreds of errors autonomously per month and has shipped dozens of tailored applications; the experiential delta Craig describes as moving from "cognitive dissonance" to "minimal pressure" on every application.
+The job-materials skill is a composer/verifier system that produces tailored cover letters and resumes for senior product-management roles. It runs inside `~/.claude-local/skills/job-materials/`. Each applied job becomes one *eval*—a regression-test record that captures the JD, the briefing research, the composed deliverables, the verifier's verdict, the corrections promoted to source rules, and the open follow-ups for the next eval. There are 40 evals to date. The detector count stands at 42. The system catches and fixes hundreds of errors autonomously per month and has shipped dozens of tailored applications; the experiential delta Craig describes as moving from "cognitive dissonance" to "minimal pressure" on every application.
 
 This is the skill where eval-driven correction earned its place. The same patterns appear in other skills, but the volume and the live-application stakes make this the one to study.
 
@@ -135,7 +135,7 @@ Recurrence counters appear in the eval files explicitly. Each eval that ships cl
 
 ## What it produces
 
-36 evals shipped across the job-materials skill. About 40 detectors active in the verifier. Hundreds of errors caught and fixed autonomously per month. Dozens of tailored applications shipped. The experiential delta is captured in Craig's own framing: applying for a job used to carry "a lot of cognitive dissonance, especially whether or not to write a cover letter in the first place"; with the system, "each application takes minimal pressure from a materials perspective." The decision-overhead removal is the under-appreciated half of the story. The visible half is quality. The under-the-surface half is that "should I even write a cover letter for this one?" stops being a question.
+40 evals shipped across the job-materials skill. About 42 detectors active in the verifier. Hundreds of errors caught and fixed autonomously per month. Dozens of tailored applications shipped. The experiential delta is captured in Craig's own framing: applying for a job used to carry "a lot of cognitive dissonance, especially whether or not to write a cover letter in the first place"; with the system, "each application takes minimal pressure from a materials perspective." The decision-overhead removal is the under-appreciated half of the story. The visible half is quality. The under-the-surface half is that "should I even write a cover letter for this one?" stops being a question.
 
 ## Failure modes that drove the design
 
@@ -147,7 +147,7 @@ Recurrence counters appear in the eval files explicitly. Each eval that ships cl
 
 ## What's next
 
-The next two case studies extend the pattern outward. [Eval-Driven Correction Loops](./03-eval-driven-loops.md) walks the WRONG/RIGHT corrections-log discipline, the rule-promotion lifecycle, the era-shard split, and the per-rule decomposition—the modular-structure pattern that makes the rule set readable as it grows. [From Discipline to Machinery](./04-discipline-to-machinery.md) walks the hooks layer that turns the skill-level detectors and the system-level behavioral primitives into runtime checks at the file-system level.
+The next three case studies extend the pattern outward. [Eval-Driven Correction Loops](./03-eval-driven-loops.md) walks the WRONG/RIGHT corrections-log discipline, the rule-promotion lifecycle, the era-shard split, and the per-rule decomposition—the modular-structure pattern that makes the rule set readable as it grows. [From Discipline to Machinery](./04-discipline-to-machinery.md) walks the hooks layer that turns the skill-level detectors and the system-level behavioral primitives into runtime checks at the file-system level. [Earned Autonomy](./05-autonomous-execution.md) walks the autonomous-execution engine that carries a bounded backlog end-to-end behind the same class of gates, escalating only the decisions that genuinely need a human.
 
 The redacted operational artifacts in [`artifacts/sample-skill/`](../artifacts/sample-skill/), [`artifacts/sample-eval.md`](../artifacts/sample-eval.md), and [`artifacts/sample-roadmap.md`](../artifacts/sample-roadmap.md) are where any claim in this case study can be verified against actual source files—with PII, target-company names, third-party individuals, and prior-employer narrative redacted, but the operating system intact.
 
@@ -157,5 +157,5 @@ If the architecture in [Case Study #1](./01-personal-ai-os.md) makes the meta-sy
 
 ---
 
-**Sources:** `~/.claude-local/skills/job-materials/SKILL.md` (composer skill spec); `~/.claude-local/skills/job-materials/references/` (voice rules + craig-profile + qa-checklist + corrections-log); `~/.claude-local/skills/job-materials/ROADMAP.md` (detector inventory + bundle history); `~/.claude-local/skills/job-materials/evals/` (36 eval directories); `~/.claude-local/projects/ai-operating-system/inputs/interview-material.md` (failure-mode reflection verbatim).
+**Sources:** `~/.claude-local/skills/job-materials/SKILL.md` (composer skill spec); `~/.claude-local/skills/job-materials/references/` (voice rules + craig-profile + qa-checklist + corrections-log); `~/.claude-local/skills/job-materials/ROADMAP.md` (detector inventory + bundle history); `~/.claude-local/skills/job-materials/evals/` (40 eval directories); `~/.claude-local/projects/ai-operating-system/inputs/interview-material.md` (failure-mode reflection verbatim).
 **Last refreshed:** 2026-05-08

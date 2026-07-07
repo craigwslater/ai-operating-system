@@ -1,6 +1,6 @@
 # Metrics
 
-> **What this is.** The operational dashboard for the personal AI operating system. Four metrics committed at Session 0 of the portfolio project, baselined on 2026-05-22, updated through the signal-triggered sync described in [`README.md`](./README.md).
+> **What this is.** The operational dashboard for the personal AI operating system. Four metrics committed at Session 0 of the portfolio project, baselined on 2026-07-06, updated through the signal-triggered sync described in [`README.md`](./README.md).
 > **What it tracks.** Errors caught per month (headline metric); evals shipped per quarter; detector count plus regression-test pass rate; rules added per month across `CLAUDE.md` and the skills layer.
 > **Why it's included.** The case studies make the qualitative claim that the system around the AI does most of the work. This page is the quantitative spine. Every number cites the source file it was computed from.
 
@@ -29,7 +29,7 @@ A rate-derived metric needs a measurement window. The window for this dashboard 
 
 **Source.** The four files listed under "Headline metric" above. Future skills that adopt the corrections-log pattern will surface here automatically.
 
-**Baseline (2026-05-22).** Cumulative WRONG token count across the four files: 100 (a rough lower-bound proxy; not every correction uses the WRONG keyword). Headline-rate framing: hundreds per month during active periods.
+**Baseline (2026-07-06).** Cumulative WRONG token count across the four files: 107 (a rough lower-bound proxy; not every correction uses the WRONG keyword). Headline-rate framing: hundreds per month during active periods.
 
 **Bar.** Rate stays in the same order of magnitude (hundreds per month) during active job-application periods. Sustained drop without a corresponding drop in application volume is a signal that the corrections layer is missing failure modes.
 
@@ -37,9 +37,9 @@ A rate-derived metric needs a measurement window. The window for this dashboard 
 
 **Methodology.** Count of distinct numbered evals shipped in the trailing 90-day window. An eval is one applied job application that produced a regression-test record, either as a dedicated file under `skills/job-materials/evals/` or as a corrections entry under `corrections-log/`.
 
-**Source.** `skills/job-materials/evals/` (26 dedicated eval files spanning Evals 11 through 36 at baseline) plus the corrections-log shards (covering Evals 3 through 10, with Evals 1 and 2 archived). Lifetime count: 36 evals.
+**Source.** `skills/job-materials/evals/` (30 dedicated eval files spanning Evals 11 through 40 at baseline) plus the corrections-log shards (covering Evals 3 through 10, with Evals 1 and 2 archived). Lifetime count: 40 evals.
 
-**Baseline (2026-05-22).** 36 lifetime evals across the job-materials skill. The trailing-90-day cadence will be established at the first dashboard update.
+**Baseline (2026-07-06).** 40 lifetime evals across the job-materials skill. The trailing-90-day cadence will be established at the first dashboard update.
 
 **Bar.** Cadence stays steady or grows during active job-search periods. The evals produce the corrections that drive Metric 1; they are the upstream signal for the system's correction loop.
 
@@ -47,9 +47,9 @@ A rate-derived metric needs a measurement window. The window for this dashboard 
 
 **Methodology.** Two paired numbers. Detector count is the number of mechanical pre-flight detector functions in `skills/job-materials/scripts/preflight_check.py` plus any verifier-prompt sub-checks promoted to mechanical form. Regression-test pass rate is the share of detectors passing on the immediately-prior eval's draft as authored.
 
-**Source.** `skills/job-materials/scripts/preflight_check.py` (40 `detect_*` functions at baseline, verified by counting function definitions). The cross-cutting reference is the v7 close on 2026-05-19, which closed at 40 detectors at the working ceiling of 40.
+**Source.** `skills/job-materials/scripts/preflight_check.py` (42 `detect_*` functions at baseline, verified by counting function definitions). The v7 close on 2026-05-19 closed at 40 detectors at its then-working ceiling of 40; the count has since grown to 42.
 
-**Baseline (2026-05-22).** 40 detectors. Regression-test pass rate: to be established. Pass rate matters because detector count without pass rate can grow misleadingly—adding detectors that always pass because their failure mode is rare is detector inflation.
+**Baseline (2026-07-06).** 42 detectors. Regression-test pass rate: to be established. Pass rate matters because detector count without pass rate can grow misleadingly—adding detectors that always pass because their failure mode is rare is detector inflation.
 
 **Bar.** Detector count tracks toward the ceiling deliberately. A detector promoted past the ceiling means an existing detector should retire (the failure mode it caught no longer recurs across recent evals) or the ceiling itself should be revisited as a deliberate architectural decision.
 
@@ -59,12 +59,12 @@ A rate-derived metric needs a measurement window. The window for this dashboard 
 
 **Source.** The four file populations:
 
-- `CLAUDE.md` root: 14 behavioral primitives at baseline (Truth-telling, Data Accuracy & sourcing, Reasoning Quality, Verify-before-claim-complete, Surgical Discipline, Proactive Issue Surfacing, Decide vs Ask, Subagent Discipline, Skill Update Persistence, Personal Skills Take Priority, File Write Verification, Multi-Session Project Discipline, Frontier-Feature Proactivity, Language).
+- `CLAUDE.md` root: 16 behavioral primitives at baseline (Truth-telling, Data Accuracy & sourcing, Reasoning Quality, Verify-before-claim-complete, Surgical Discipline, Proactive Issue Surfacing, Decide vs Ask, Scope Sizing, Subagent Discipline, Skill Update Persistence, Personal Skills Take Priority, File Write Verification, Multi-Session Project Discipline, Frontier-Feature Proactivity, Visual-First Explanation, Language).
 - `skills/job-materials/references/voice-rules/`: 23 files (21 per-rule + 2 supporting). Sparse rule numbering preserved; the index sits at 66 lines / 6,856 bytes.
-- `skills/job-materials/references/qa-checklist.md`: 996 lines / 133,803 bytes; 50 H3 subsections covering individual checks and gates.
-- `~/.claude-local/hooks/`: 6 hook scripts encoding behavioral primitives (`post-tool-use-verify-write.sh`, `session-start-prune-commitment-logs.sh`, `session-end-context-reminder.sh`, `session-end-cross-file-consistency.sh`, `session-end-improvement-opportunities.sh`, `session-end-portfolio-sync.sh`) plus 2 install scripts.
+- `skills/job-materials/references/qa-checklist.md`: 1,016 lines / 140,742 bytes; 51 H3 subsections covering individual checks and gates.
+- `~/.claude-local/hooks/`: 10 hook scripts encoding behavioral primitives—seven that observe (`post-tool-use-verify-write.sh`, `session-start-prune-commitment-logs.sh`, `session-end-context-reminder.sh`, `session-end-cross-file-consistency.sh`, `session-end-improvement-opportunities.sh`, `session-end-portfolio-sync.sh`, `session-start-drift-guard.sh`) and three that enforce (`pre-tool-use-guard-paths.sh`, `pre-tool-use-unit-scope.sh`, `stop-verify-before-complete.sh`)—plus the `common.sh` shared library and 2 install scripts.
 
-**Baseline (2026-05-22).** Cumulative populations as listed above. The trailing-30-day rate will be established at the first dashboard update.
+**Baseline (2026-07-06).** Cumulative populations as listed above. The trailing-30-day rate will be established at the first dashboard update.
 
 **Bar.** Rate is non-zero during periods with active correction work. Zero rate over multiple months without a corresponding drop in correction-loop activity (Metric 1) is a signal that corrections are landing in conversation context instead of source files—the encode-into-source primitive is failing.
 
@@ -80,7 +80,7 @@ A rate-derived metric needs a measurement window. The window for this dashboard 
 
 ## Baseline date and source
 
-**Baseline date: 2026-05-22.** All counts above are computed from the state of `~/.claude-local/` on this date. The next update against this baseline will report deltas plus a 30-day rolling rate where applicable.
+**Baseline date: 2026-07-06.** All counts above are computed from the state of `~/.claude-local/` on this date. The next update against this baseline will report deltas plus a 30-day rolling rate where applicable.
 
 **Source verification.** Each numeric claim above traces to a specific source file or directory. The redacted artifact tier under [`artifacts/`](./artifacts/) provides a reader with the operational files that produced the numbers, with PII, target-company names, third-party individuals, and prior-employer narrative redacted but the structural depth preserved. Any number on this page traces to a source file under [`artifacts/`](./artifacts/).
 
@@ -89,4 +89,4 @@ The case studies that walk the operational mechanics are [Case Study #2—Compos
 ---
 
 **Sources:** `~/.claude-local/skills/job-materials/references/corrections-log.md` + `corrections-log-archive.md` + `corrections-log/` shards (errors-caught-per-month aggregate); `~/.claude-local/skills/job-materials/evals/` (eval count); `~/.claude-local/skills/job-materials/ROADMAP.md` (detector inventory + regression-test pass rate); `~/.claude-local/CLAUDE.md` + `~/.claude-local/skills/*/SKILL.md` + `~/.claude-local/skills/*/references/` (rules-added-per-month composite).
-**Last refreshed:** 2026-05-22
+**Last refreshed:** 2026-07-06

@@ -3,10 +3,12 @@
 #
 # Designed by Craig—runtime: Claude (Sonnet/Opus).
 #
-# What this is. The Claude Code install script for the cross-file maintenance +
-# structural drift detection hook layer. Wires the SessionStart + PostToolUse +
-# SessionEnd hooks from ~/.claude-local/hooks/ into ~/.claude/settings.json so
-# they fire on every Claude Code session against this workspace.
+# What this is. The Claude Code install script for the ~/.claude-local hook
+# layer. Wires all ten hooks—across five event types (PreToolUse, PostToolUse,
+# SessionStart, Stop, SessionEnd), seven that observe and three that enforce—
+# from ~/.claude-local/hooks/ into ~/.claude/settings.json so they fire on every
+# Claude Code session against this workspace. Idempotent: re-running on an
+# already-wired settings.json is a no-op.
 #
 # What was redacted. Nothing—the registry sweep produced zero substitutions.
 # The script uses $HOME for path resolution; no hardcoded user paths.
@@ -26,8 +28,12 @@
 # missing; existing matching entries are preserved).
 #
 # What gets installed:
+#   - PreToolUse  (matcher "Write|Edit") → pre-tool-use-guard-paths.sh
+#   - PreToolUse  (matcher "Write|Edit") → pre-tool-use-unit-scope.sh
 #   - PostToolUse (matcher "Write|Edit") → post-tool-use-verify-write.sh
+#   - Stop                                → stop-verify-before-complete.sh
 #   - SessionStart                        → session-start-prune-commitment-logs.sh
+#   - SessionStart                        → session-start-drift-guard.sh
 #   - SessionEnd                          → session-end-context-reminder.sh
 #   - SessionEnd                          → session-end-cross-file-consistency.sh
 #   - SessionEnd                          → session-end-improvement-opportunities.sh
@@ -99,8 +105,12 @@ fi
 # (including tab) and would lose an empty field.
 # Format per line: "<event>\t<matcher-or-_NONE_>\t<command>".
 read -r -d '' ENTRIES_RAW <<EOF || true
+PreToolUse	Write|Edit	${HOOKS_DIR}/pre-tool-use-guard-paths.sh
+PreToolUse	Write|Edit	${HOOKS_DIR}/pre-tool-use-unit-scope.sh
 PostToolUse	Write|Edit	${HOOKS_DIR}/post-tool-use-verify-write.sh
+Stop	_NONE_	${HOOKS_DIR}/stop-verify-before-complete.sh
 SessionStart	_NONE_	${HOOKS_DIR}/session-start-prune-commitment-logs.sh
+SessionStart	_NONE_	${HOOKS_DIR}/session-start-drift-guard.sh
 SessionEnd	_NONE_	${HOOKS_DIR}/session-end-context-reminder.sh
 SessionEnd	_NONE_	${HOOKS_DIR}/session-end-cross-file-consistency.sh
 SessionEnd	_NONE_	${HOOKS_DIR}/session-end-improvement-opportunities.sh

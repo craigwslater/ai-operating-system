@@ -1,6 +1,6 @@
 # For PMs Reusing These Patterns
 
-A peer PM who has read the case studies and wants to test these patterns inside a different workflow can start small. This page is the implementation guide. It does not assume the reader builds 36 evals and 40 detectors before deciding whether the approach pays back. It assumes the reader wants the cheapest version that demonstrates the pattern, plus the explicit sequencing that lets later additions compound rather than collide.
+A peer PM who has read the case studies and wants to test these patterns inside a different workflow can start small. This page is the implementation guide. It does not assume the reader builds 40 evals and 42 detectors before deciding whether the approach pays back. It assumes the reader wants the cheapest version that demonstrates the pattern, plus the explicit sequencing that lets later additions compound rather than collide.
 
 The patterns are independent enough that a reader can adopt them in any order. The order below is what would have saved the most rework if Craig had built this system from scratch knowing what he knows now.
 
@@ -56,7 +56,7 @@ Several pieces of this system are Craig-specific. They demonstrate the patterns 
 
 - **The job-materials skill structure.** It exists because Craig has been running an active job search and produced 23 applied-job regression-test records. A peer PM with a different workflow needs different evals, different detectors, different rule files. The structure is the reusable unit; the contents are not.
 - **The 39-detector population.** Each detector was promoted because a specific failure mode fired twice. The detectors solve Craig's drafting failure modes (canonical phrase fidelity, hook fact-count limits, parallel-restrictive-relative tense, JD-vocabulary parroting). A peer PM's failure modes will be different. The lifecycle that produced the 39 is reusable; the 39 themselves are not.
-- **The eight-session arc that produced this portfolio.** It exists because Craig set out to publish a derived artifact for a specific recruiting purpose. A peer PM testing the patterns above does not need an eight-session arc. The patterns survive at smaller scope.
+- **The multi-session arc that produced this portfolio.** It exists because Craig set out to publish a derived artifact for a specific recruiting purpose. A peer PM testing the patterns above does not need a multi-session arc. The patterns survive at smaller scope.
 - **The dual-environment install (Claude Code plus Cowork).** Most peer PMs run Claude in one environment. The dual-install pattern is reusable for anyone running both, but it is not a prerequisite. A single-environment install is sufficient for everything above.
 - **The metrics dashboard at four metrics.** A peer PM should pick the metric that maps to the headline of the work. For Craig, "errors caught per month" is the headline because the use case is high-quality production drafts. A different use case has a different headline. The dashboard pattern is reusable; the metric set is not.
 

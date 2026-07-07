@@ -42,7 +42,7 @@ Two files at the root of `~/.claude-local/` carry this layer.
 
 [`artifacts/CLAUDE.md`](../artifacts/CLAUDE.md) is the global behavioral-rules file. Every Claude session reads it first. It defines the priority hierarchy (truth-telling beats data-accuracy beats reasoning-quality beats verify-before-claim-complete beats surgical-discipline beats proactive-issue-surfacing beats persistence-and-auditability beats efficiency, in that order, with earlier wins on conflict), a list of named behavioral primitives, and a list of anti-patterns each of which Claude is required to recognize and avoid.
 
-The MEMORY.md file alongside it carries identity-stable context: name, contact, location, professional summary, the active-projects registry, the e-commerce brand, the tools and platforms in use. CLAUDE.md is rules; MEMORY.md is who.
+The MEMORY files alongside it carry identity-stable context: name, contact, location, professional summary, the active-projects registry, the e-commerce brand, the tools and platforms in use—a shared identity core plus a per-machine overlay, detailed under Cross-device portability below. CLAUDE.md is rules; MEMORY is who.
 
 The encode-into-source primitive ties them together. Every correction lands in a source file—never just in the conversation. If the operator says "Claude, you keep mistaking X for Y," the fix is a sentence in CLAUDE.md or a reference file under `~/.claude-local/skills/[skill-name]/`, encoded immediately, read back, verified. The conversation is ephemeral; the source files compound.
 
@@ -74,15 +74,26 @@ The same `~/.claude-local/` source folder runs in two environments: Cowork (moun
 
 The portability matters for one reason: the same source of truth governs every session, regardless of which surface Claude is running on. A correction made in a Claude Code session shows up in the next Cowork session because both environments read the same files. The dual-install scripts in [`artifacts/install-scripts/`](../artifacts/install-scripts/) make the wiring deterministic on each surface.
 
+## Cross-device portability
+
+Dual-environment portability is one axis; running the same operating system across more than one *machine* is the other. The system now spans two Macs—a personal machine and a separate work machine on a company-managed Claude account—from one shared source, without ever letting the two machines' private data touch. The instinct is platform multi-tenancy applied to a personal workflow: **one shared engine, isolated per-machine data planes.**
+
+- **A private framework repository is the shared engine.** The rules, skills, policies, hooks, templates, and scripts—everything that is *not* personal data—live in a private git repository that both machines clone. A framework improvement made on either machine reaches the other through git. Transport is git rather than a consumer file-sync service on purpose: git merges concurrent edits, keeps history, and rolls back cleanly; a naive folder-sync service corrupts a directory that is itself full of git repositories, and offers no real merge.
+- **The MEMORY layer split into a shared core and a per-machine overlay.** `MEMORY.md` was divided into a tracked **shared identity core** (name, contact, professional summary, tools—who the operator is, identical on every machine) and a git-ignored **per-machine overlay**, `MEMORY.local.md` (the active-projects registry and the e-commerce section—what *this* machine is working on). Identity travels with the framework; per-machine working state stays local. The session-start eager-load reads both, so a session sees the whole picture while the repository boundary keeps each machine's project data on its own device.
+- **A confidentiality boundary enforced by repository topology, not by hand.** Each machine's data plane—its `projects/` folder and its overlay—is its own git repository with its own private remote; the two never connect. Personal job-search and e-commerce work never lands on the company account; employer-managed work never lands on the personal account. The boundary that used to be a sentence in MEMORY—"this account handles public information only"—is now a property of how the repositories are wired.
+- **`$HOME`-relative resolution makes the tree machine-agnostic.** Every path resolves under `$HOME/.claude-local`, never a hardcoded user directory, so the identical framework stands up under a different username on a different machine with no path rewrites. A bootstrap script brings a fresh machine online—clone the framework, stand up that machine's data plane, seed its overlay—and the operating system is running.
+
+This is the same instinct the rest of the system runs on: a boundary you can point at and version, not a rule you have to remember to honor. The [`artifacts/policies/memory-architecture.md`](../artifacts/policies/memory-architecture.md) artifact documents the tiered memory model the split slots into—the shared core and the per-machine overlay are the always-on identity tier, budgeted and measured like every other tier.
+
 ## What it produces
 
 The system produces three things that a hiring manager can verify.
 
 **Compounding source files.** CLAUDE.md has grown not by accumulation but by encode-into-source: every recurring correction has become a primitive. Every skill's references-corrections-log holds the WRONG/RIGHT records that promoted the skill's rules. Conversation context is ephemeral. Source files compound.
 
-**Versioned project releases.** The job-materials skill has shipped 36 evals across six release projects. The claude-local-frontier meta-project shipped seven structural improvements across two versions. Each release closes with a retrospective and a commitment-verification audit. The discipline produces visible cadence.
+**Versioned project releases.** The job-materials skill has shipped 40 evals across six release projects. The claude-local-frontier meta-project shipped seven structural improvements across two versions. Each release closes with a retrospective and a commitment-verification audit. The discipline produces visible cadence.
 
-**Quantitative output.** The job-materials skill alone runs about 40 detectors against every draft, has shipped 36 evals, and catches and fixes hundreds of errors autonomously per month—measured directly from the corrections logs. Those numbers anchor the headline metric on the [metrics dashboard](../metrics.md). The depth on the operational mechanics—composer/verifier separation, eval-driven correction, hooks as enforcement—lives in [Case Study #2](./02-composer-verifier.md), [Case Study #3](./03-eval-driven-loops.md), and [Case Study #4](./04-discipline-to-machinery.md).
+**Quantitative output.** The job-materials skill alone runs about 42 detectors against every draft, has shipped 40 evals, and catches and fixes hundreds of errors autonomously per month—measured directly from the corrections logs. Those numbers anchor the headline metric on the [metrics dashboard](../metrics.md). The depth on the operational mechanics—composer/verifier separation, eval-driven correction, hooks as enforcement—lives in [Case Study #2](./02-composer-verifier.md), [Case Study #3](./03-eval-driven-loops.md), and [Case Study #4](./04-discipline-to-machinery.md).
 
 ## Failure modes that drove the design
 
@@ -98,11 +109,11 @@ The synthesis line—captured in [`retrospection.md`](../retrospection.md): *AI 
 
 ## What's next
 
-The next three case studies go deeper. [Composer/Verifier](./02-composer-verifier.md) walks the two-agent pattern that turned skill drafts into auditable production output. [Eval-Driven Correction Loops](./03-eval-driven-loops.md) walks the WRONG/RIGHT corrections-log discipline and the rule-promotion lifecycle. [From Discipline to Machinery](./04-discipline-to-machinery.md) walks the hooks layer that turned behavioral primitives into runtime checks.
+The next four case studies go deeper. [Composer/Verifier](./02-composer-verifier.md) walks the two-agent pattern that turned skill drafts into auditable production output. [Eval-Driven Correction Loops](./03-eval-driven-loops.md) walks the WRONG/RIGHT corrections-log discipline and the rule-promotion lifecycle. [From Discipline to Machinery](./04-discipline-to-machinery.md) walks the hooks layer that turned behavioral primitives into runtime checks. [Earned Autonomy](./05-autonomous-execution.md) walks the autonomous-execution engine that runs bounded, low-blast-radius backlogs unattended behind a taxonomy of safety gates.
 
 The redacted artifact tier in [`artifacts/`](../artifacts/) is where a reader can verify any claim in this case study against the actual source files—with PII, target-company names, third-party individuals, and prior-employer narrative redacted, but the architecture intact.
 
-The [metrics dashboard](../metrics.md) is where the system's compounding effect is tracked over time. Baseline date: 2026-05-08.
+The [metrics dashboard](../metrics.md) is where the system's compounding effect is tracked over time. Current snapshot: 2026-07-06.
 
 [`Surprises`](../surprises.md) names two things a reader unfamiliar with this kind of work might miss: AI as a willing collaborator on its own working relationship, and the fact that most of what gets called "AI quality" is the system around the AI, not the AI itself.
 

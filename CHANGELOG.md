@@ -1,6 +1,6 @@
 # Changelog
 
-All notable changes to this portfolio are tracked here. Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) conventions adapted for a content portfolio (Added / Pending / Notes rather than the software-release set). Versioning is [Semantic Versioning](https://semver.org/)—MINOR for substantive new content (case study, artifact tier), PATCH for revisions.
+All notable changes to this portfolio are tracked here. Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) conventions adapted for a content portfolio (Added / Pending / Notes rather than the software-release set). Versioning is [Semantic Versioning](https://semver.org/)—MAJOR for a new chapter of the thesis (a new capability class shipped with its own case study), MINOR for substantive new content (case study, artifact tier), PATCH for revisions.
 
 The portfolio's source of truth is `~/.claude-local/`. Updates flow `~/.claude-local/` → portfolio (per the project's non-negotiable that the repo is a derived artifact, never the source). Every public-repo push goes through diff review before the push runs.
 
@@ -9,6 +9,40 @@ The portfolio's source of truth is `~/.claude-local/`. Updates flow `~/.claude-l
 ## [Unreleased]
 
 (no changes pending)
+
+---
+
+## [2.0.0]—2026-07-06—Earned autonomy, enforcement hooks, cross-device
+
+A MAJOR release—the first major bump since v1.0. It adds a new chapter of the thesis: the personal AI operating system evolved from observe-only discipline into enforced, then autonomous, execution. Per the Semantic Versioning policy (line 3), a new capability class shipped with its own case study is a MAJOR bump, not the MINOR a single added case study would warrant. Regenerated from v1.1.0 across four staged single-session batches and published atomically, per the publish protocol's commit-and-push-only architecture.
+
+The headline additions: a new Case Study #5 ("Earned Autonomy") for the safety-gated autonomous-execution engine, and the maturation of Case Study #4 from six observe-only hooks to a ten-hook observe→enforce layer. Supporting: two new redacted policy/skill artifacts, a new enforcement-hook artifact, a cross-device-portability section in Case Study #1, a re-ported memory-architecture artifact, and a full metrics re-baseline.
+
+### Added (2026-07-06)
+
+- **New Case Study #5: "Earned Autonomy"** (`case-studies/05-autonomous-execution.md`). The autonomous-execution engine: the orchestrator/runner with a frozen plan and an append-only run ledger, the nine-gate blocking taxonomy (including the arc-level quality-trend gate), the DECIDE/PARK/STOP async escalation model, the three-tier earned-autonomy ladder with its five-condition eligibility gate, and the `/orchestrate` operator command. Positions autonomy as safety-gated and earned per bounded backlog, not "let the model run." Wired into the inter-case-study chain (Case Study #4 now links forward to it).
+- **Two new redacted artifacts.** `artifacts/policies/escalation.md`—a redacted excerpt of the async escalation protocol (the gate taxonomy and the tier ladder; per-gate worked examples omitted as product-domain-specific). `artifacts/orchestrate-skill.md`—the `/orchestrate` operator command ported in full.
+- **New enforcement-hook artifact** `artifacts/sample-enforcement-hook.sh`—a redacted PreToolUse guard-paths hook, the enforce counterpart to the observe-only `sample-hook.sh`.
+- **Cross-device portability section in Case Study #1.** The MEMORY core-plus-overlay split, the shared private framework repository with isolated per-machine data planes, and `$HOME`-relative resolution plus a fresh-machine bootstrap—the same source of truth spanning more than one machine behind a confidentiality boundary enforced by repository topology rather than by hand.
+
+### Updated (2026-07-06)
+
+- **Case Study #4 matured from observe-only to observe→enforce.** The hooks layer grows from six hooks / three event types to ten hooks / five event types (adding PreToolUse and Stop), split into seven observe hooks and three enforcement hooks (guard-paths, unit-scope, verify-before-complete). The load-bearing reframe: discipline first became observable, then became enforceable. Propagated to `methodology.md` and `metrics.md`; a re-ported install-scripts artifact and a corrected artifact-tier hook-count reference followed the change.
+- **`artifacts/policies/memory-architecture.md` re-ported from current source.** Reflects the cross-device evolution: the identity tier split into a shared core (≤1,000 cl100k) plus a per-machine overlay (≤2,500 cl100k), the `CLAUDE.md` preserve-budget re-baseline (≤3,200 → ≤3,400 cl100k), and the new measured-state history. Two registry substitutions (a target-company name in an illustrative M10 example; one project-type token per registry Category 6); the gap-identifier hyphenation notation is preserved. HARD GATE clean.
+- **`metrics.md` fully re-baselined to 2026-07-06.** Lifetime evals 36 → 40; `detect_*` detectors 40 → 42; behavioral primitives 14 → 16 (adding Scope Sizing and Visual-First Explanation); qa-checklist 996L / 133,803B / 50 H3 → 1,016L / 140,742B / 51 H3; hook inventory at ten (seven observe plus three enforce). The corrections-log layer is unchanged (job-application activity concluded; no bulk additions since the prior baseline).
+- **Mechanical claim refresh across the narrative tier.** Eval count 36 → 40 and detector count 40 → 42 propagated across `README.md`, `manifesto.md`, `methodology.md`, `surprises.md`, `retrospection.md`, `for-pms-reusing.md`, the case studies, and the sample-skill artifact header. Case Study #2's "26 applications" hard number was generalized to "dozens of tailored applications" (the portfolio's established hedge). The inter-case-study "next N" chains were updated to include Case Study #5.
+- **Semantic Versioning policy extended** (line 3 of this CHANGELOG) with a MAJOR definition, so the policy stays internally consistent with this release.
+
+### Privacy (2026-07-06)
+
+- **Redaction registry hardened (+Category 6).** A new registry category substitutes the pre-launch venture's bounded-backlog project identifiers, which surface in the autonomous-execution framework files ported for Case Study #5; a paired sanity-grep category flags the brand and model names that triangulate the same catalog. The hardened gate then caught a self-defeating-loop leak in an artifact header during the port (fixed in-session).
+- **HARD GATE clean across every touched file.** `redact.py verify` and `redact.py sanity-grep` both exit 0 on every narrative-tier and artifact-tier file changed in this release.
+- **Self-defeating-loop discipline applied to this CHANGELOG entry** (per the §11 codification). No redacted entities are named in the prose; references to redacted content use category-level descriptors only.
+
+### Notes (2026-07-06)
+
+- **Staged as four single-session batches, published once.** Batch 1 (mechanical claim refresh), Batch 2 (Case Study #4 observe→enforce), Batch 3 (Case Study #5 new), Batch 4 (cross-device addendum, memory-architecture re-port, metrics re-baseline, this CHANGELOG, register reconciliation). Each batch closed with the redaction HARD GATE and a `claim-verify.py` pass; the working tree accumulated all four before the single v2.0.0 push.
+- **Internal claim register (`.claim-register.md`, sidecar—not committed) reconciled** across the four batches. Expected values updated for the eval, detector, primitive, hook-count, and budget rows; `claim-verify.py` returns clean.
 
 ---
 
