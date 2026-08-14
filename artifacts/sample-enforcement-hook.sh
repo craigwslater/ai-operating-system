@@ -16,7 +16,7 @@
 # What was redacted. Nothing—the registry sweep produced zero substitutions.
 # This is operational shell code; no PII, target companies, third-party
 # individuals, or prior-employer narrative are present. The default workspace
-# path is the same publicly-shown ~/.claude-local host path that already appears
+# path is the same publicly-shown ~/aios host path that already appears
 # across the other artifacts in this folder.
 #
 # Why it's included. The clearest single example of the observe-to-enforce
@@ -31,7 +31,7 @@
 # pre-tool-use-guard-paths.sh
 #
 # Claude Code PreToolUse hook (matcher: "Write|Edit"). The Safety Layer of the
-# ~/.claude-local hook architecture (claude-local-frontier-hooks Session 2). It
+# ~/aios hook architecture (claude-local-frontier-hooks Session 2). It
 # turns the enumerated, mechanically-checkable forbidden-path rules in CLAUDE.md
 # + policies/file-delivery.md from prompt-discipline into machinery: a write to a
 # never-allowed location is stopped (or escalated to Craig) BEFORE it lands,
@@ -69,7 +69,7 @@
 # exists; everything borderline escalates to Craig via `ask`.
 #
 #   DENY (unambiguous never-rule):
-#     D1  Loose file at the ~/.claude-local/ ROOT (a direct child of root) whose
+#     D1  Loose file at the ~/aios/ ROOT (a direct child of root) whose
 #         basename is not an allowlisted root file
 #         {CLAUDE.md, MEMORY.md, MEMORY.local.md, INDEX.md, .gitignore}.
 #         SRC: file-delivery "only CLAUDE.md, MEMORY.md, and system dirs belong
@@ -78,7 +78,7 @@
 #              "No loose project files at root".
 #     D2  Any path under the Cowork SYSTEM folder (contains "/mnt/.claude/", or is
 #         exactly ".../mnt/.claude"). Deliberately does NOT match Claude Code's
-#         own ~/.claude/ (no /mnt/) nor the legit workspace mount /mnt/.claude-local/.
+#         own ~/.claude/ (no /mnt/) nor the legit workspace mount /mnt/aios/.
 #         SRC: file-delivery "Cowork's system folder (mnt/.claude/)"; CLAUDE.md
 #              Personal Skills "the system folder (mnt/.claude/skills/) ... must
 #              never be used".
@@ -101,7 +101,7 @@
 #              folder)".
 #
 #   ALLOW (silent — nothing emitted): everything else — the session scratchpad,
-#   mktemp fixtures, normal writes under ~/.claude-local/{projects,skills,outputs,
+#   mktemp fixtures, normal writes under ~/aios/{projects,skills,outputs,
 #   policies,docs,...}/, Claude Code ~/.claude/ settings, allowlisted root files.
 #
 # "temp/sandbox path" = /tmp/*, /private/tmp/*, /var/tmp/*, or /sessions/* that is
@@ -113,7 +113,7 @@
 # Surface degrade (NN#3): Cowork demonstrably RUNS plugin hooks (the SessionStart
 # drift guard fired live), but whether it HONORS blocking (deny/ask) is not yet
 # empirically confirmed — that is Session 2's out-of-session probe. Until then,
-# Cowork (ROOT == */mnt/.claude-local) defaults to MODE=report-only: the guard
+# Cowork (ROOT == */mnt/aios) defaults to MODE=report-only: the guard
 # emits a non-blocking additionalContext warning instead of a permissionDecision,
 # so it never silently no-ops (false confidence) and never blocks on a surface
 # that might not honor the block. Claude Code defaults to MODE=block. Override
@@ -150,19 +150,19 @@ resolve_root
 
 # Host-form root prefix (what the model emits in tool_input.file_path on both
 # surfaces). Overridable for non-Craig installs, same as verify-write.
-HOST_CLAUDE_LOCAL="${HOST_CLAUDE_LOCAL:-/Users/craigslater/.claude-local}"
+HOST_CLAUDE_LOCAL="${HOST_CLAUDE_LOCAL:-/Users/craigslater/aios}"
 
 # Enforcement mode. Block on Claude Code; report-only on Cowork until the NN#3
 # blocking-honor probe confirms. Explicit override wins.
 MODE="${GUARD_PATHS_MODE:-}"
 if [ -z "$MODE" ]; then
   case "$ROOT" in
-    */mnt/.claude-local) MODE="report-only" ;;
+    */mnt/aios) MODE="report-only" ;;
     *)                   MODE="block" ;;
   esac
 fi
 
-# Allowlisted basenames that legitimately live at the ~/.claude-local/ root.
+# Allowlisted basenames that legitimately live at the ~/aios/ root.
 ROOT_ALLOWLIST="CLAUDE.md MEMORY.md MEMORY.local.md INDEX.md .gitignore"
 
 # ---------------------------------------------------------------------------
@@ -185,7 +185,7 @@ is_loose_root_file() {
   return 0
 }
 
-# D2 — the Cowork system folder (never the legit /mnt/.claude-local mount).
+# D2 — the Cowork system folder (never the legit /mnt/aios mount).
 is_cowork_system_folder() {
   case "$1" in
     */mnt/.claude/*|*/mnt/.claude) return 0 ;;
@@ -238,19 +238,19 @@ REASON=""
 
 if is_loose_root_file "$FILE_PATH"; then
   DECISION="deny"
-  REASON="Blocked by guard-paths D1: '$FILE_PATH' is a loose file at the ~/.claude-local/ root. Only CLAUDE.md, MEMORY.md, MEMORY.local.md, INDEX.md, and .gitignore belong at root (policies/file-delivery.md; CLAUDE.md Folder Structure / Structure Discipline #2). Write it into a subdirectory — projects/<name>/, outputs/, skills/<name>/, etc."
+  REASON="Blocked by guard-paths D1: '$FILE_PATH' is a loose file at the ~/aios/ root. Only CLAUDE.md, MEMORY.md, MEMORY.local.md, INDEX.md, and .gitignore belong at root (policies/file-delivery.md; CLAUDE.md Folder Structure / Structure Discipline #2). Write it into a subdirectory — projects/<name>/, outputs/, skills/<name>/, etc."
 elif is_cowork_system_folder "$FILE_PATH"; then
   DECISION="deny"
-  REASON="Blocked by guard-paths D2: '$FILE_PATH' is inside the Cowork system folder (mnt/.claude/), which must never be written (CLAUDE.md Personal Skills Take Priority; policies/file-delivery.md). Personal skills live under ~/.claude-local/skills/."
+  REASON="Blocked by guard-paths D2: '$FILE_PATH' is inside the Cowork system folder (mnt/.claude/), which must never be written (CLAUDE.md Personal Skills Take Priority; policies/file-delivery.md). Personal skills live under ~/aios/skills/."
 elif is_skill_file "$FILE_PATH" && is_temp_path "$FILE_PATH"; then
   DECISION="ask"
-  REASON="guard-paths A1: '$FILE_PATH' looks like a skill file being written to a temp/sandbox path. CLAUDE.md Skill Update Persistence says skill files go to ~/.claude-local/skills/<name>/ and never to /tmp or a sandbox-only path. Confirm this is an intentional throwaway staging copy, not the authoritative skill file."
+  REASON="guard-paths A1: '$FILE_PATH' looks like a skill file being written to a temp/sandbox path. CLAUDE.md Skill Update Persistence says skill files go to ~/aios/skills/<name>/ and never to /tmp or a sandbox-only path. Confirm this is an intentional throwaway staging copy, not the authoritative skill file."
 elif is_desktop "$FILE_PATH"; then
   DECISION="ask"
-  REASON="guard-paths A2: '$FILE_PATH' is under ~/Desktop/. policies/file-delivery.md routes output files into the ~/.claude-local/ structure (projects/<name>/outputs/ or root outputs/), never the Desktop. Confirm before writing outside the workspace."
+  REASON="guard-paths A2: '$FILE_PATH' is under ~/Desktop/. policies/file-delivery.md routes output files into the ~/aios/ structure (projects/<name>/outputs/ or root outputs/), never the Desktop. Confirm before writing outside the workspace."
 elif is_deliverable "$FILE_PATH" && is_temp_path "$FILE_PATH"; then
   DECISION="ask"
-  REASON="guard-paths A3: '$FILE_PATH' is a deliverable artifact written to a temp/sandbox path. policies/file-delivery.md routes output files into the ~/.claude-local/ structure, never a temporary VM path. Confirm before writing it somewhere ephemeral."
+  REASON="guard-paths A3: '$FILE_PATH' is a deliverable artifact written to a temp/sandbox path. policies/file-delivery.md routes output files into the ~/aios/ structure, never a temporary VM path. Confirm before writing it somewhere ephemeral."
 fi
 
 # No rule matched → defer to normal permissions (silent).

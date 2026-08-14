@@ -52,7 +52,7 @@ The reference files (`craig-profile.md`, `exemplars.md`, `voice-rules.md`) are t
 
 ### Workflow
 
-1. **Identify the closest-matching prior application** by scanning `~/.claude-local/projects/job-search/outputs/` for delivered cover letters. Prefer same-role-type matches (e.g., for a Healthcare Platform + Analytics role, scan recent healthcare PM letters; for a 0→1 / Greenfield role, scan recent non-healthcare 0→1 letters). When in doubt, pull the 1-2 most recent applications regardless of role-type.
+1. **Identify the closest-matching prior application** by scanning `~/aios/projects/job-search/outputs/` for delivered cover letters. Prefer same-role-type matches (e.g., for a Healthcare Platform + Analytics role, scan recent healthcare PM letters; for a 0→1 / Greenfield role, scan recent non-healthcare 0→1 letters). When in doubt, pull the 1-2 most recent applications regardless of role-type.
 
 2. **Extract the canonical phrasing from the prior letter for each role's evidence sentence:**
    - Consulting: payment-reconciliation framing, MRR clause form (long "of delivering the payments system" vs. short "of delivery"), Three-Initiative attribution pattern (1-sentence parallel-gerund vs. 2-sentence split). **PL #5 form-selection sub-rule (added Eval 15, 2026-04-30):** the compact "of delivery" form is preferred whenever the "payment reconciliation system" / "the payments system" antecedent is established earlier in the same sentence as the PL #5 hit. The long "of delivering the payments system" form is preferred when no antecedent is in the same sentence (PL #5 lands as the first mention of the system). When extracting the prior letter's PL #5 form, also note whether its antecedent is in the same sentence — that decides which form is the working canonical for the new letter, not just the prior letter's choice. Origin: Eval 15 [REDACTED COMPANY] (composer drifted to [REDACTED COMPANY]'s long form for a [REDACTED COMPANY] sentence whose structure matched [REDACTED COMPANY]'s compact-form precondition). **PL #1 + S2 shape form-selection sub-rule (added v4 Round 3, 2026-04-30 from Eval 15 Round 2 Finding B):** when extracting the Three-Initiative form from the prior letter, also evaluate whether PL #1 will be DROPPED in the new letter per the Rule 18 narrative-value gate. **If PL #1 will be dropped, run the mandatory pre-step from `voice-rules/rule-18-canonical-bullet-fidelity.md` "Sentence-weight discipline when PL #1 is dropped" sub-section BEFORE finalizing the P4 S2/S3 shape:** re-verify the gate disposition. If PL #1's content is borderline-defensible per the gate criteria — the JD has implicit signals for workflow integration / cross-team data sharing / adoption-driving / customer-experience workflows even if it doesn't use the verbatim Rule 18 trigger phrases AND the 1-sentence parallel-gerund 2-outcome canonical form would strengthen P4 — INCLUDE PL #1 (option (d) in the Rule 18 sub-section), which avoids the S3 anemia problem entirely. If the gate genuinely fires (PL #1 stays dropped), evaluate the four-option enumeration in Rule 18 to choose between (a) compress / (b) drop initiative 3 / (c) restructure S3 with canonical structural-problem framing / (d) include PL #1. Origin: Eval 15 [REDACTED COMPANY] (composer over-conservatively dropped PL #1 per gate firing on JD lacking verbatim "compliance" / "care-to-billing" hook; Round 3 review concluded the gate fired over-conservatively given [REDACTED COMPANY]'s PMS product + three-platform structure with implicit workflow-integration signals, and PL #1 should have been included).
@@ -774,16 +774,16 @@ python SKILL_DIR/scripts/generate_pdfs.py /tmp/craig_application.json /tmp/craig
 
 ## Step 7: Output Routing
 
-Canonical archive: `~/.claude-local/projects/job-search/outputs/`
+Canonical archive: `~/aios/projects/job-search/outputs/`
 Convenience copy: Craig's Desktop
 
 After `generate_docs.py` and `generate_pdfs.py` finish, copy files to both locations:
 
 ```bash
-cp "/tmp/craig_output/Slater, Craig - Resume ([Company]).docx" "<.claude-local mount>/projects/job-search/outputs/"
-cp "/tmp/craig_output/Slater, Craig - Cover Letter ([Company]).docx" "<.claude-local mount>/projects/job-search/outputs/"
-cp "/tmp/craig_output/Slater, Craig - Resume ([Company]).pdf" "<.claude-local mount>/projects/job-search/outputs/"
-cp "/tmp/craig_output/Slater, Craig - Cover Letter ([Company]).pdf" "<.claude-local mount>/projects/job-search/outputs/"
+cp "/tmp/craig_output/Slater, Craig - Resume ([Company]).docx" "<aios mount>/projects/job-search/outputs/"
+cp "/tmp/craig_output/Slater, Craig - Cover Letter ([Company]).docx" "<aios mount>/projects/job-search/outputs/"
+cp "/tmp/craig_output/Slater, Craig - Resume ([Company]).pdf" "<aios mount>/projects/job-search/outputs/"
+cp "/tmp/craig_output/Slater, Craig - Cover Letter ([Company]).pdf" "<aios mount>/projects/job-search/outputs/"
 
 mv "/tmp/craig_output/Slater, Craig - Resume ([Company]).docx" "<Desktop mount>/"
 mv "/tmp/craig_output/Slater, Craig - Cover Letter ([Company]).docx" "<Desktop mount>/"
@@ -791,7 +791,7 @@ mv "/tmp/craig_output/Slater, Craig - Resume ([Company]).pdf" "<Desktop mount>/"
 mv "/tmp/craig_output/Slater, Craig - Cover Letter ([Company]).pdf" "<Desktop mount>/"
 ```
 
-If `~/.claude-local` or Desktop is not mounted, use `request_cowork_directory` to mount them (paths: `/Users/craigslater/.claude-local`, `/Users/craigslater/Desktop`).
+If `~/aios` or Desktop is not mounted, use `request_cowork_directory` to mount them (paths: `/Users/craigslater/aios`, `/Users/craigslater/Desktop`).
 
 Output filenames (all four land in both locations):
 - `Slater, Craig - Resume ([Company]).docx`

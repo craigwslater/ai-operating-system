@@ -6,7 +6,7 @@
 
 ## What this is
 
-This portfolio documents a personal AI operating system: a single source-of-truth folder, `~/.claude-local/`, that holds the rules, identity, projects, skills, policies, and machinery for working with Claude as a long-term partner. Designed by Craig Slater, with Claude as the runtime executing under the rules. The job-materials skill in this system has produced 40 evals (regression-test records, one per applied job), runs about 42 detectors that catch returning failure modes on every draft, has caught and fixed hundreds of errors autonomously per month, and has shipped dozens of tailored applications.
+This portfolio documents a personal AI operating system: a single source-of-truth folder, `~/aios/`, that holds the rules, identity, projects, skills, policies, and machinery for working with Claude as a long-term partner. Designed by Craig Slater, with Claude as the runtime executing under the rules. The job-materials skill in this system has produced 40 evals (regression-test records, one per applied job), runs about 42 detectors that catch returning failure modes on every draft, has caught and fixed hundreds of errors autonomously per month, and has shipped dozens of tailored applications.
 
 ---
 
@@ -93,5 +93,5 @@ This portfolio is a curated showcase derived from a private source folder; the o
 
 ---
 
-**Sources:** `~/.claude-local/projects/ai-operating-system/CLAUDE.md` (§5 architecture); `~/.claude-local/projects/ai-operating-system/inputs/interview-material.md` (manifesto opener).
+**Sources:** `~/aios/projects/ai-operating-system/CLAUDE.md` (§5 architecture); `~/aios/projects/ai-operating-system/inputs/interview-material.md` (manifesto opener).
 **Last refreshed:** 2026-05-08

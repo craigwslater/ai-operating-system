@@ -2,13 +2,28 @@
 
 All notable changes to this portfolio are tracked here. Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) conventions adapted for a content portfolio (Added / Pending / Notes rather than the software-release set). Versioning is [Semantic Versioning](https://semver.org/)—MAJOR for a new chapter of the thesis (a new capability class shipped with its own case study), MINOR for substantive new content (case study, artifact tier), PATCH for revisions.
 
-The portfolio's source of truth is `~/.claude-local/`. Updates flow `~/.claude-local/` → portfolio (per the project's non-negotiable that the repo is a derived artifact, never the source). Every public-repo push goes through diff review before the push runs.
+The portfolio's source of truth is `~/aios/`. Updates flow `~/aios/` → portfolio (per the project's non-negotiable that the repo is a derived artifact, never the source). Every public-repo push goes through diff review before the push runs. *(That root was called `~/.claude-local/` until 2026-08-14; dated entries below the v2.0.1 release use the name that was current when they were written. See v2.0.1.)*
 
 ---
 
 ## [Unreleased]
 
 (no changes pending)
+
+---
+
+## [2.0.1]—2026-08-14—Workspace root renamed; atomicity claim corrected
+
+A PATCH release—no new content, two corrections. The workspace root this portfolio documents was renamed on disk, and a technical claim published in v2.0.0 turned out to be right in its conclusion and wrong in every part of its stated reason.
+
+### Updated (2026-08-14)
+
+- **Source-of-truth path renamed `~/.claude-local/` → `~/aios/`.** Cowork could no longer mount a directory whose name collides that closely with `.claude`, its own system folder; a symlink was tried first and also failed, establishing that the real directory name is what gets resolved. So the root was renamed on disk. Every *live* reference across the narrative and artifact tiers now reads `~/aios/`—including the per-file `**Sources:**` footers, whose 43 declared source paths had every one stopped resolving, leaving the portfolio's own staleness walker reporting zero drift because it could no longer find anything to measure. Nothing about the content, the structure, or the GitHub repository changed; only the path on the operator's filesystem. Public consumers of this repo see no change beyond the paths quoted in the text.
+- **Dated entries below this one are deliberately left verbatim.** They are release notes for a workspace that was genuinely called `.claude-local`, and the v1.1.0 entry narrating an *earlier* working-tree move only reads correctly under the old name. Rewriting history to match a present-day path would make the record less true, not more consistent.
+
+### Corrected (2026-08-14)
+
+- **The commitment-log atomicity claim** (Case Study #4, "The commitment-log JSONL ground truth," and the code comment in `artifacts/sample-hook.sh`). The published text credited the atomic append to `flock` plus a `PIPE_BUF` size bound of 4,096 bytes. The *conclusion* was correct—the append really is atomic—but all three components of the reason were wrong, each measured on the operator's machine: `flock(1)` is absent from `PATH` there, so the advertised primary path has never executed; `PIPE_BUF` is 512 on that box, not 4,096, and POSIX scopes its atomicity guarantee to pipes and FIFOs rather than regular files; and the hook's worst-case record is 676 bytes, which exceeds the real bound—meaning the code would have been unsafe under its own published theory. The actual guarantee is both simpler and stronger: `O_APPEND` on a regular file sets the offset and writes with no intervening modification, at any size, per POSIX `write()`. The rule that matters is one record per write, never seek. Fixed in the source hook first, then in both published copies, per the derived-artifact directionality. The `flock` branch is retained and now labeled for what it is—a portability affordance, not the active protection on this machine.
 
 ---
 

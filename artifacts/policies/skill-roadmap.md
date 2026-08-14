@@ -23,7 +23,7 @@ ROADMAP.md exists to be that canonical inventory. Its purpose is operational, no
 
 ## 2. File location and naming
 
-- **Path:** `~/.claude-local/skills/[skill-name]/ROADMAP.md`
+- **Path:** `~/aios/skills/[skill-name]/ROADMAP.md`
 - **Naming:** literal `ROADMAP.md` (uppercase, no version suffix). One per skill.
 - **Required:** every skill in `skills/` has one. The audit skill detects missing ROADMAP.md as drift.
 
@@ -184,7 +184,7 @@ When evaluating whether a new ROADMAP.md you're scaffolding meets this policy, c
 
 A skill `ROADMAP.md` grows without limit: the **Completed** section (§5) is an append-only audit trail, and a long-lived skill accumulates a multi-month trail. This is diagnostic gap **G10** — `skills/job-materials/ROADMAP.md` reached 84,290 cl100k. Maintenance policy **M4** (`policies/memory-architecture.md` §6) bounds it, and this section is M4's acting home for skill ROADMAPs (the parallel of `/end-session` Step 4.5 for `log.md`).
 
-**The threshold.** When a skill `ROADMAP.md`'s `## Completed` section exceeds **12,000 cl100k** (`memory-architecture.md` §3.2), it is compacted. The threshold measures the **Completed section** — the compactable append-only portion — not the whole file: Open Considerations / Candidate Bundles / Standing Deferrals are never compacted, so measuring them against a compaction threshold would be incoherent. The `/audit` Step 1.7 detector and the SessionEnd hook flag an over-threshold Completed section; `python3 ~/.claude-local/scripts/check-append-only-compaction.py` is the detector.
+**The threshold.** When a skill `ROADMAP.md`'s `## Completed` section exceeds **12,000 cl100k** (`memory-architecture.md` §3.2), it is compacted. The threshold measures the **Completed section** — the compactable append-only portion — not the whole file: Open Considerations / Candidate Bundles / Standing Deferrals are never compacted, so measuring them against a compaction threshold would be incoherent. The `/audit` Step 1.7 detector and the SessionEnd hook flag an over-threshold Completed section; `python3 ~/aios/scripts/check-append-only-compaction.py` is the detector.
 
 **What gets compacted — and what never does.** Compaction is scoped to the **Completed** section only. **Open Considerations, Candidate Bundles, and Standing Deferrals are never compacted** — they are the actionable inventory, the reason the file exists (§1), and must stay navigable in full. This is the `[Open / Completed]` split: the *open* half stays whole; the *completed* half is bounded.
 

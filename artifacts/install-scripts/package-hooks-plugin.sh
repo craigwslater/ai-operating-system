@@ -6,7 +6,7 @@
 # What this is. The Cowork plugin packaging script for the same cross-file
 # maintenance + structural drift detection hook layer that install-hooks-to-claude-code.sh
 # wires into Claude Code. Builds a frontier-hooks.zip plugin bundle from
-# ~/.claude-local/hooks/ that uploads via Cowork's Customize tab → Personal
+# ~/aios/hooks/ that uploads via Cowork's Customize tab → Personal
 # Plugin (the personal-account route; Organization Settings → Plugins is
 # org-account-only).
 #
@@ -30,18 +30,18 @@
 #   - package-hooks-plugin.sh         → bundles the hooks as a plugin .zip (Cowork).
 #
 # Source-of-truth discipline: the six hook scripts live ONLY at
-# ~/.claude-local/hooks/*.sh. The persisted plugin folder
-# (~/.claude-local/plugins/frontier-hooks/) holds only plugin-specific source
+# ~/aios/hooks/*.sh. The persisted plugin folder
+# (~/aios/plugins/frontier-hooks/) holds only plugin-specific source
 # files (.claude-plugin/plugin.json + hooks/hooks.json). The scripts are
-# bundled fresh from ~/.claude-local/hooks/ at package time. This avoids the
+# bundled fresh from ~/aios/hooks/ at package time. This avoids the
 # drift problem that the Session 4 hooks layer was built to solve.
 #
-# Output: ~/.claude-local/outputs/plugins-packaged/frontier-hooks.zip
+# Output: ~/aios/outputs/plugins-packaged/frontier-hooks.zip
 #
 # Usage:
-#   bash ~/.claude-local/hooks/package-hooks-plugin.sh
-#   bash ~/.claude-local/hooks/package-hooks-plugin.sh --dry-run
-#   bash ~/.claude-local/hooks/package-hooks-plugin.sh --output /tmp/plugins
+#   bash ~/aios/hooks/package-hooks-plugin.sh
+#   bash ~/aios/hooks/package-hooks-plugin.sh --dry-run
+#   bash ~/aios/hooks/package-hooks-plugin.sh --output /tmp/plugins
 #
 # Exit codes:
 #   0 — package built (or dry-run printed)
@@ -52,18 +52,18 @@
 
 set -euo pipefail
 
-# Resolve ~/.claude-local across environments. Same fallback chain used by
+# Resolve ~/aios across environments. Same fallback chain used by
 # scripts/regenerate-index.sh and the six hook scripts. CC on Craig's Mac
 # resolves directly via $HOME; Cowork bash sandbox finds the mount under
 # $HOME/mnt/; CLAUDE_LOCAL_ROOT is an explicit override.
-if [ -d "${HOME}/.claude-local" ]; then
-  ROOT="${HOME}/.claude-local"
-elif [ -d "${HOME}/mnt/.claude-local" ]; then
-  ROOT="${HOME}/mnt/.claude-local"
+if [ -d "${HOME}/aios" ]; then
+  ROOT="${HOME}/aios"
+elif [ -d "${HOME}/mnt/aios" ]; then
+  ROOT="${HOME}/mnt/aios"
 elif [ -d "${CLAUDE_LOCAL_ROOT:-}" ]; then
   ROOT="${CLAUDE_LOCAL_ROOT}"
 else
-  echo "Could not resolve ~/.claude-local. Tried \${HOME}/.claude-local and \${HOME}/mnt/.claude-local. Set CLAUDE_LOCAL_ROOT explicitly to override." >&2
+  echo "Could not resolve ~/aios. Tried \${HOME}/aios and \${HOME}/mnt/aios. Set CLAUDE_LOCAL_ROOT explicitly to override." >&2
   exit 2
 fi
 
@@ -182,11 +182,11 @@ echo "  1. Open the Claude desktop app, switch to the Cowork tab."
 echo "  2. Click Customize in the left sidebar → Personal Plugin → upload."
 echo "  3. Choose ${OUTPUT_DIR}/${PLUGIN_NAME}.plugin."
 echo "  4. Verify hook firing in Cowork:"
-echo "       - PostToolUse:  trigger any Write/Edit on a ~/.claude-local file. JSONL line should append to ~/.claude-local/outputs/commitment-logs/{session-id}.jsonl."
-echo "       - SessionStart: at session start, the prune hook scans ~/.claude-local/outputs/commitment-logs/ for files older than 30 days. Silent on the happy path; emits a one-line summary if it actually pruned anything."
+echo "       - PostToolUse:  trigger any Write/Edit on a ~/aios file. JSONL line should append to ~/aios/outputs/commitment-logs/{session-id}.jsonl."
+echo "       - SessionStart: at session start, the prune hook scans ~/aios/outputs/commitment-logs/ for files older than 30 days. Silent on the happy path; emits a one-line summary if it actually pruned anything."
 echo "       - SessionEnd:   close a session and look for the three hook outputs in additionalContext."
 echo ""
-echo "  Claude Code half: also re-run \`bash ~/.claude-local/hooks/install-hooks-to-claude-code.sh\`"
+echo "  Claude Code half: also re-run \`bash ~/aios/hooks/install-hooks-to-claude-code.sh\`"
 echo "  on your Mac so the new SessionStart hook gets registered in ~/.claude/settings.json."
 echo "  (PostToolUse + SessionEnd entries already exist; the installer is idempotent — only the"
 echo "  new SessionStart entry will be added.)"

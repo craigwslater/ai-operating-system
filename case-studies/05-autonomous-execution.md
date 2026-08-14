@@ -94,5 +94,5 @@ The redacted [escalation model + gate taxonomy](../artifacts/policies/escalation
 
 ---
 
-**Sources:** `~/.claude-local/policies/escalation.md` (the async escalation protocol—nine-gate taxonomy, DECIDE/PARK/STOP model, three-tier autonomy ladder); `~/.claude-local/projects/autonomous-project-execution/` (the engine: orchestrator/runner split, `PLAN.json` freeze, `RUN.json` ledger, the supervised pilot and its seven findings); `~/.claude-local/skills/orchestrate/` (the operator command wrapping the engine); `~/.claude-local/CLAUDE.md` (the *Decide vs Ask* and *File Write Verification* primitives the protocol extends into autonomy).
+**Sources:** `~/aios/policies/escalation.md` (the async escalation protocol—nine-gate taxonomy, DECIDE/PARK/STOP model, three-tier autonomy ladder); `~/aios/projects/autonomous-project-execution/` (the engine: orchestrator/runner split, `PLAN.json` freeze, `RUN.json` ledger, the supervised pilot and its seven findings); `~/aios/skills/orchestrate/` (the operator command wrapping the engine); `~/aios/CLAUDE.md` (the *Decide vs Ask* and *File Write Verification* primitives the protocol extends into autonomy).
 **Last refreshed:** 2026-07-03

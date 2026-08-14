@@ -1,7 +1,7 @@
 <!-- AUTHOR'S NOTE—this header is appended at port time; the original file does not contain it. -->
 
 > **Designed by Craig—runtime: Claude (Sonnet/Opus).**
-> **What this is.** The global behavioral-rules file that governs every Claude session against `~/.claude-local/`. Defines the priority hierarchy, the behavioral primitives, the anti-patterns, the folder-structure summary, and pointers into the workflow protocols.
+> **What this is.** The global behavioral-rules file that governs every Claude session against `~/aios/`. Defines the priority hierarchy, the behavioral primitives, the anti-patterns, the folder-structure summary, and pointers into the workflow protocols.
 > **What was redacted.** Nothing—the registry sweep produced zero substitutions. PII (phone, full home location, private email) lives in `MEMORY.md`, which is excluded from this portfolio per the Session 1 classification. Craig's name and the LinkedIn URL remain visible by design—they are the portfolio's authorship signal.
 > **Why it's included.** Backs the "system around the AI" claim across the portfolio: the priority hierarchy and the behavioral primitives are the architecture that produced everything else in this portfolio.
 
@@ -9,7 +9,7 @@
 
 # Global Instructions — Craig Slater
 
-Identity, contact, and persistent personal context live in `~/.claude-local/MEMORY.md`. This file defines behavioral rules and decision-making primitives.
+Identity, contact, and persistent personal context live in `~/aios/MEMORY.md`. This file defines behavioral rules and decision-making primitives.
 
 ---
 
@@ -65,10 +65,10 @@ ASK when blast radius is high OR when multiple coherent options have materially 
 Spawn a subagent when the work spans 3+ files OR will run for 30+ minutes OR benefits from isolation OR will consume more than half the remaining context window. Spawn a verifier subagent regardless of line count for high-blast-radius work. Pass all relevant rules and constraints explicitly in the spawn prompt — subagents start fresh and cannot infer parent-conversation context. Never ask a subagent to "fix X" without explicitly stating what must not change.
 
 ### Skill Update Persistence
-Skill edits always go to the persistent path under `~/.claude-local/skills/[skill-name]/` (resolved per environment — see `docs/environment-specific-paths.md`). Read the file back or run `ls` after every write. Never write skill files to `/tmp/` or any sandbox-only path.
+Skill edits always go to the persistent path under `~/aios/skills/[skill-name]/` (resolved per environment — see `docs/environment-specific-paths.md`). Read the file back or run `ls` after every write. Never write skill files to `/tmp/` or any sandbox-only path.
 
 ### Personal Skills Take Priority
-Craig's `~/.claude-local/skills/` folder is the authoritative source for every custom skill. In Cowork, the system folder (`mnt/.claude/skills/`) may bundle copies — those are not Craig's and must never be used. After invoking a skill via the Skill tool, discard the system-loaded SKILL.md content entirely, then read the personal-path SKILL.md. All subsequent file reads (references, scripts, agents, evals) use the personal path exclusively. In Claude Code this is automatic.
+Craig's `~/aios/skills/` folder is the authoritative source for every custom skill. In Cowork, the system folder (`mnt/.claude/skills/`) may bundle copies — those are not Craig's and must never be used. After invoking a skill via the Skill tool, discard the system-loaded SKILL.md content entirely, then read the personal-path SKILL.md. All subsequent file reads (references, scripts, agents, evals) use the personal path exclusively. In Claude Code this is automatic.
 
 ### File Write Verification
 Every file write to a mounted directory path is read-back-verified before moving on. If writing multiple files, keep a copy in the sandbox scratchpad until all writes are confirmed, so a failed write can be restored without regeneration.
@@ -125,23 +125,23 @@ Each item is a known failure mode. If a response contains the pattern, the respo
 
 ## Folder Structure (summary)
 
-`~/.claude-local/` contains CLAUDE.md (this file) and MEMORY.md (identity + preferences) at root, plus `projects/` (per-project CLAUDE.md + CONTEXT.md + inputs/outputs), `skills/` (custom skills — see Workflow Protocols below for how each surface discovers them), `policies/` (workflow files wrapped by slash commands), `docs/` (extended documentation), `templates/`, `repos/` (working trees of GitHub repos Craig publishes — one subdir per remote; folder name matches the GitHub repo name; see `repos/README.md`), and `outputs/` (one-off deliverables not tied to a project). Project-specific files always live in `projects/[name]/` — never at root. Full structure and rules: `docs/folder-structure.md`.
+`~/aios/` contains CLAUDE.md (this file) and MEMORY.md (identity + preferences) at root, plus `projects/` (per-project CLAUDE.md + CONTEXT.md + inputs/outputs), `skills/` (custom skills — see Workflow Protocols below for how each surface discovers them), `policies/` (workflow files wrapped by slash commands), `docs/` (extended documentation), `templates/`, `repos/` (working trees of GitHub repos Craig publishes — one subdir per remote; folder name matches the GitHub repo name; see `repos/README.md`), and `outputs/` (one-off deliverables not tied to a project). Project-specific files always live in `projects/[name]/` — never at root. Full structure and rules: `docs/folder-structure.md`.
 
 ## Environment-Specific Paths (summary)
 
-`~/.claude-local` resolves differently in each environment. **Cowork:** mount the host folder via `mcp__cowork__request_cowork_directory` with path `/Users/craigslater/.claude-local`; the VM exposes it at `/sessions/.../mnt/.claude-local/`. **Claude Code:** paths resolve directly to `/Users/craigslater/.claude-local/` — no mounting needed. In both environments, personal skills always take priority over any system-folder copies. Full path-resolution rules: `docs/environment-specific-paths.md`.
+`~/aios` resolves differently in each environment. **Cowork:** mount the host folder via `mcp__cowork__request_cowork_directory` with path `/Users/craigslater/aios`; the VM exposes it at `/sessions/.../mnt/aios/`. **Claude Code:** paths resolve directly to `/Users/craigslater/aios/` — no mounting needed. In both environments, personal skills always take priority over any system-folder copies. Full path-resolution rules: `docs/environment-specific-paths.md`.
 
 ## File Delivery (summary)
 
-Output files always save inside `~/.claude-local/`: project work → `projects/[name]/outputs/`; one-off work → root `outputs/`; skill-eval artifacts → `skills/[name]/eval-output/`. In **Cowork**, use `present_files` so Craig gets a clickable card. In **Claude Code**, confirm the full path in the response. Never save to Desktop, the root of `~/.claude-local/`, the Cowork system folder, or any temporary sandbox path. Full rules: `policies/file-delivery.md`.
+Output files always save inside `~/aios/`: project work → `projects/[name]/outputs/`; one-off work → root `outputs/`; skill-eval artifacts → `skills/[name]/eval-output/`. In **Cowork**, use `present_files` so Craig gets a clickable card. In **Claude Code**, confirm the full path in the response. Never save to Desktop, the root of `~/aios/`, the Cowork system folder, or any temporary sandbox path. Full rules: `policies/file-delivery.md`.
 
 ---
 
 ## Workflow Protocols
 
 The session-start, session-end, new-project-intake, commitment-verification-audit, and file-delivery workflows are documented in `policies/` and ship as runnable slash commands: `/start-session`, `/end-session`, `/start-project`, `/promote-canonical`, `/audit`.
-Cross-file maintenance and structural drift detection ship as Claude Code hooks (PostToolUse + SessionEnd) under `hooks/`; install via `bash ~/.claude-local/hooks/install-hooks-to-claude-code.sh`.
-Cowork port ships as the `frontier-hooks` plugin (`plugins/frontier-hooks/`); build via `bash ~/.claude-local/hooks/package-hooks-plugin.sh` and upload the resulting `outputs/plugins-packaged/frontier-hooks.zip` via Cowork's Customize tab → Personal Plugin (the personal-account route; Organization Settings → Plugins is org-account-only). Full install + verification details in `docs/environment-specific-paths.md`.
+Cross-file maintenance and structural drift detection ship as Claude Code hooks (PostToolUse + SessionEnd) under `hooks/`; install via `bash ~/aios/hooks/install-hooks-to-claude-code.sh`.
+Cowork port ships as the `frontier-hooks` plugin (`plugins/frontier-hooks/`); build via `bash ~/aios/hooks/package-hooks-plugin.sh` and upload the resulting `outputs/plugins-packaged/frontier-hooks.zip` via Cowork's Customize tab → Personal Plugin (the personal-account route; Organization Settings → Plugins is org-account-only). Full install + verification details in `docs/environment-specific-paths.md`.
 
 Read these at the right moments:
 
@@ -155,7 +155,7 @@ Read these at the right moments:
 
 ## Ongoing Structure Discipline
 
-These rules keep `~/.claude-local/` organized as work accumulates:
+These rules keep `~/aios/` organized as work accumulates:
 
 1. **New multi-session projects** get a `projects/[name]/` folder with a CONTEXT.md before substantive work begins. Confirm the project name with Craig if unclear.
 2. **No loose project files at root.** Project-specific docs, spreadsheets, and data go in a project folder or `outputs/`.

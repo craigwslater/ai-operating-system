@@ -8,7 +8,7 @@ The early conversation that anchors this whole portfolio—captured verbatim in 
 
 The surface read of that comment is sentimental. The operational read is structural. AI has a view about how the relationship should work, the view is articulable, and the view will be shared if the operator asks. Most AI-PM content treats the model as a tool to be configured. The model in that early conversation acted more like a colleague being onboarded—offering an opinion on the working relationship Craig was setting up, not just executing inside it.
 
-What changed once Craig took the comment seriously was the unit of work. Before: prompt engineering, individual session outputs, model-as-configuration. After: the relationship as the unit, formalized in a folder structure (`~/.claude-local/`) that defines how every session reads, writes, and audits against shared rules. The architecture in [Case Study #1](./case-studies/01-personal-ai-os.md) is what the relationship looks like once it has been written down.
+What changed once Craig took the comment seriously was the unit of work. Before: prompt engineering, individual session outputs, model-as-configuration. After: the relationship as the unit, formalized in a folder structure (`~/aios/`) that defines how every session reads, writes, and audits against shared rules. The architecture in [Case Study #1](./case-studies/01-personal-ai-os.md) is what the relationship looks like once it has been written down.
 
 A reasonable skeptic asks: was the model's comment self-serving—an AI saying what it predicted would be well-received? Possibly. The honest position appears in the manifesto: "That could have been a lie. Worth flagging anyway, because nothing else in this portfolio works if the writer doesn't notice when an AI says something convenient." The surprise is not that the model's comment was true in some metaphysical sense. The surprise is that treating the comment as a useful prompt—working *with* it rather than *around* it—produced a system that compounds.
 
@@ -34,5 +34,5 @@ For a reader who wants to test the surprises empirically before adopting them, [
 
 ---
 
-**Sources:** `~/.claude-local/projects/ai-operating-system/inputs/interview-material.md` (Craig's two verbatim surprises).
+**Sources:** `~/aios/projects/ai-operating-system/inputs/interview-material.md` (Craig's two verbatim surprises).
 **Last refreshed:** 2026-05-08

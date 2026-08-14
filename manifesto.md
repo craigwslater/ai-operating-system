@@ -16,5 +16,5 @@ What follows is a tour of how the system works and what it produces. The numbers
 
 ---
 
-**Sources:** `~/.claude-local/projects/ai-operating-system/inputs/interview-material.md` (origin-moment quote + thesis paragraph, verbatim).
+**Sources:** `~/aios/projects/ai-operating-system/inputs/interview-material.md` (origin-moment quote + thesis paragraph, verbatim).
 **Last refreshed:** 2026-05-08

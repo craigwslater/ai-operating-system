@@ -33,7 +33,7 @@ Any engine bug routes back to the APE artifacts — never a fork.
 
 **Paths** (all commands below assume these):
 ```
-ROOT=~/.claude-local
+ROOT=~/aios
 ENGINE=$ROOT/projects/autonomous-project-execution/orchestrator
 ORCH=$ROOT/skills/orchestrate
 ```

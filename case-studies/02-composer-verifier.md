@@ -14,7 +14,7 @@ What follows is what the systematic-evaluation answer looks like in operating fo
 
 ## What this is
 
-The job-materials skill is a composer/verifier system that produces tailored cover letters and resumes for senior product-management roles. It runs inside `~/.claude-local/skills/job-materials/`. Each applied job becomes one *eval*—a regression-test record that captures the JD, the briefing research, the composed deliverables, the verifier's verdict, the corrections promoted to source rules, and the open follow-ups for the next eval. There are 40 evals to date. The detector count stands at 42. The system catches and fixes hundreds of errors autonomously per month and has shipped dozens of tailored applications; the experiential delta Craig describes as moving from "cognitive dissonance" to "minimal pressure" on every application.
+The job-materials skill is a composer/verifier system that produces tailored cover letters and resumes for senior product-management roles. It runs inside `~/aios/skills/job-materials/`. Each applied job becomes one *eval*—a regression-test record that captures the JD, the briefing research, the composed deliverables, the verifier's verdict, the corrections promoted to source rules, and the open follow-ups for the next eval. There are 40 evals to date. The detector count stands at 42. The system catches and fixes hundreds of errors autonomously per month and has shipped dozens of tailored applications; the experiential delta Craig describes as moving from "cognitive dissonance" to "minimal pressure" on every application.
 
 This is the skill where eval-driven correction earned its place. The same patterns appear in other skills, but the volume and the live-application stakes make this the one to study.
 
@@ -75,7 +75,7 @@ These four artifacts feed the composer. The verifier reads them too. When the ve
 
 ## The cover-letter structure the composer produces
 
-Every cover letter the system ships follows the same five-paragraph structure. The structure is governed by named rules, and the verifier audits each paragraph against the rules that govern it. The skeleton below is structural—paragraph functions, governing rules, verifier checks—not actual prose. (Dozens of shipped letters live operationally in `~/.claude-local/projects/job-search/outputs/`; none are reproduced here, per the redaction policy in [`projects/ai-operating-system/CLAUDE.md`](../artifacts/CLAUDE.md) §4 non-negotiable #1.)
+Every cover letter the system ships follows the same five-paragraph structure. The structure is governed by named rules, and the verifier audits each paragraph against the rules that govern it. The skeleton below is structural—paragraph functions, governing rules, verifier checks—not actual prose. (Dozens of shipped letters live operationally in `~/aios/projects/job-search/outputs/`; none are reproduced here, per the redaction policy in [`projects/ai-operating-system/CLAUDE.md`](../artifacts/CLAUDE.md) §4 non-negotiable #1.)
 
 ```
 P1—Hook (Rule 23, ~3 sentences)
@@ -157,5 +157,5 @@ If the architecture in [Case Study #1](./01-personal-ai-os.md) makes the meta-sy
 
 ---
 
-**Sources:** `~/.claude-local/skills/job-materials/SKILL.md` (composer skill spec); `~/.claude-local/skills/job-materials/references/` (voice rules + craig-profile + qa-checklist + corrections-log); `~/.claude-local/skills/job-materials/ROADMAP.md` (detector inventory + bundle history); `~/.claude-local/skills/job-materials/evals/` (40 eval directories); `~/.claude-local/projects/ai-operating-system/inputs/interview-material.md` (failure-mode reflection verbatim).
+**Sources:** `~/aios/skills/job-materials/SKILL.md` (composer skill spec); `~/aios/skills/job-materials/references/` (voice rules + craig-profile + qa-checklist + corrections-log); `~/aios/skills/job-materials/ROADMAP.md` (detector inventory + bundle history); `~/aios/skills/job-materials/evals/` (40 eval directories); `~/aios/projects/ai-operating-system/inputs/interview-material.md` (failure-mode reflection verbatim).
 **Last refreshed:** 2026-05-08

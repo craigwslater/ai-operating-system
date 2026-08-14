@@ -74,5 +74,5 @@ The case studies—[Case Study #1](./case-studies/01-personal-ai-os.md), [Case S
 
 ---
 
-**Sources:** `./methodology.md` + `./case-studies/03-eval-driven-loops.md` + `./case-studies/04-discipline-to-machinery.md` (the reusable patterns synthesized inside this portfolio); ultimate `~/.claude-local/` sources documented in those files' own footers.
+**Sources:** `./methodology.md` + `./case-studies/03-eval-driven-loops.md` + `./case-studies/04-discipline-to-machinery.md` (the reusable patterns synthesized inside this portfolio); ultimate `~/aios/` sources documented in those files' own footers.
 **Last refreshed:** 2026-05-08

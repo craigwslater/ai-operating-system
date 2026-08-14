@@ -4,7 +4,7 @@
 # Designed by Craig—runtime: Claude (Sonnet/Opus).
 #
 # What this is. A Claude Code PostToolUse hook (matcher: Write|Edit) that
-# verifies file writes to mounted ~/.claude-local/ paths actually landed (file
+# verifies file writes to mounted ~/aios/ paths actually landed (file
 # exists and is non-empty). Encodes the "File Write Verification" primitive
 # from CLAUDE.md as machinery rather than discipline. Surfaces a warning to
 # Claude via additionalContext on failure; does not block the tool.
@@ -24,7 +24,7 @@
 # post-tool-use-verify-write.sh
 #
 # Claude Code PostToolUse hook (matcher: "Write|Edit"). Verifies that file
-# writes to mounted ~/.claude-local/ paths actually landed (file exists and
+# writes to mounted ~/aios/ paths actually landed (file exists and
 # is non-empty). On failure, surfaces a warning to Claude via additionalContext
 # — does NOT block the tool. The point is to encode the "File Write
 # Verification" CLAUDE.md primitive in machinery rather than discipline,
@@ -50,7 +50,7 @@
 # Exit codes:
 #   0 — always (this hook is non-blocking by design)
 #
-# Scope: only files under ~/.claude-local/. Other writes are a no-op.
+# Scope: only files under ~/aios/. Other writes are a no-op.
 
 set -euo pipefail
 
@@ -79,13 +79,13 @@ fi
 
 # Resolve sandbox-visible ROOT (where this script can read files) via the same
 # fallback chain as scripts/regenerate-index.sh. In Claude Code on Craig's Mac,
-# ROOT == /Users/craigslater/.claude-local. In the Cowork bash sandbox,
-# ROOT == /sessions/<name>/mnt/.claude-local. CLAUDE_LOCAL_ROOT is an explicit
+# ROOT == /Users/craigslater/aios. In the Cowork bash sandbox,
+# ROOT == /sessions/<name>/mnt/aios. CLAUDE_LOCAL_ROOT is an explicit
 # override for unusual installations.
-if [ -d "${HOME}/.claude-local" ]; then
-  ROOT="${HOME}/.claude-local"
-elif [ -d "${HOME}/mnt/.claude-local" ]; then
-  ROOT="${HOME}/mnt/.claude-local"
+if [ -d "${HOME}/aios" ]; then
+  ROOT="${HOME}/aios"
+elif [ -d "${HOME}/mnt/aios" ]; then
+  ROOT="${HOME}/mnt/aios"
 elif [ -d "${CLAUDE_LOCAL_ROOT:-}" ]; then
   ROOT="${CLAUDE_LOCAL_ROOT}"
 else
@@ -95,11 +95,11 @@ fi
 # Translate FILE_PATH to a sandbox-visible path. Two forms supported:
 #   - Host form (what the model emits in tool_input.file_path on both Cowork
 #     and Claude Code): "${HOST_CLAUDE_LOCAL}/...". On Craig's Mac that's
-#     /Users/craigslater/.claude-local/.... In Cowork the sandbox can't see
+#     /Users/craigslater/aios/.... In Cowork the sandbox can't see
 #     this path directly — needs translation to ROOT-relative.
 #   - Already-sandbox form: "${ROOT}/..." (no translation needed).
 # HOST_CLAUDE_LOCAL is overridable via env var for non-Craig installations.
-HOST_CLAUDE_LOCAL="${HOST_CLAUDE_LOCAL:-/Users/craigslater/.claude-local}"
+HOST_CLAUDE_LOCAL="${HOST_CLAUDE_LOCAL:-/Users/craigslater/aios}"
 
 case "$FILE_PATH" in
   "$HOST_CLAUDE_LOCAL/"*)
@@ -110,7 +110,7 @@ case "$FILE_PATH" in
     CHECK_PATH="$FILE_PATH"
     ;;
   *)
-    exit 0  # write target is outside ~/.claude-local/; out of scope
+    exit 0  # write target is outside ~/aios/; out of scope
     ;;
 esac
 
@@ -124,8 +124,8 @@ fi
 
 # Commitment log (Bundle A automation, v2 Session 2): append a JSONL record per
 # Write/Edit so /end-session can enumerate from ground truth rather than memory.
-# Append-only, flock-protected, scoped to the current session id. Persistent
-# under ~/.claude-local/outputs/commitment-logs/ so the file survives the
+# Append-only, O_APPEND-atomic, scoped to the current session id. Persistent
+# under ~/aios/outputs/commitment-logs/ so the file survives the
 # Cowork sandbox lifecycle (tmp would disappear before /end-session reads it).
 # 30-day prune lives in the SessionStart hook (session-start-prune-commitment-logs.sh).
 LOG_DIR="${ROOT}/outputs/commitment-logs"
@@ -159,9 +159,14 @@ else
     "$TIMESTAMP" "$SESSION_ID" "$TOOL_NAME" "$ESCAPED_FP" "$VERIFIED_JSON" "$ESCAPED_MSG")
 fi
 
-# Atomic append with flock when available (prevents interleaving under parallel
-# Write/Edit calls). Fall back to >> which is single-line atomic on POSIX
-# (PIPE_BUF=4096; our lines are well under that).
+# Atomic append: O_APPEND on a regular file sets the offset and writes with no
+# intervening modification, at any size (POSIX write()). Bash >> sets O_APPEND,
+# so the fallback branch below is fully safe on its own. PIPE_BUF is NOT the
+# applicable bound: POSIX scopes it to pipes and FIFOs, not regular files, and
+# it measures 512 on this machine rather than 4096. The rule that matters is
+# one record per write, never seek.
+# The flock branch is a portability affordance, not the active protection here:
+# flock(1) is absent from PATH on this machine, so the fallback is what runs.
 if command -v flock >/dev/null 2>&1; then
   ( flock -x 200; printf '%s\n' "$LOG_LINE" >&200 ) 200>>"$LOG_FILE"
 else

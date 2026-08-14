@@ -1,7 +1,7 @@
 <!-- AUTHOR'S NOTE—this header is appended at port time; the original file does not contain it. -->
 
 > **Designed by Craig—runtime: Claude (Sonnet/Opus).**
-> **What this is.** The publish-portfolio workflow protocol—what `/publish-portfolio` runs to ship content from the working portfolio-repo at `~/.claude-local/repos/ai-operating-system/` to the public GitHub repo. Defines preconditions, the redactor verify + sanity-grep gate, the diff-review hard gate, commit/push, and the sync-state update on success. Init-mode is the Session 8 first-publish branch; standard mode is every subsequent commit-and-push.
+> **What this is.** The publish-portfolio workflow protocol—what `/publish-portfolio` runs to ship content from the working portfolio-repo at `~/aios/repos/ai-operating-system/` to the public GitHub repo. Defines preconditions, the redactor verify + sanity-grep gate, the diff-review hard gate, commit/push, and the sync-state update on success. Init-mode is the Session 8 first-publish branch; standard mode is every subsequent commit-and-push.
 > **What was redacted.** Nothing—the registry sweep produced zero substitutions. This file references workflow steps, file paths, and the project's binding non-negotiables only; no PII, target companies, third-party individuals, or prior-employer narrative are present.
 > **Why it's included.** This is the protocol behind `/publish-portfolio`. It pairs with `session-end-portfolio-sync.sh` (one of the ten hooks registered in `artifacts/install-scripts/install-hooks-to-claude-code.sh`) to form the complete sync mechanism: the hook detects portfolio-worthy signals at session-end; this protocol is the only path that updates the public repo and the only path that updates the sync state. The per-push diff-review hard gate is the runtime expression of project non-negotiable #5.
 
@@ -9,7 +9,7 @@
 
 # Publish-Portfolio Protocol
 
-Workflow for shipping content from `~/.claude-local/repos/ai-operating-system/` to the public GitHub repo `craigwslater/ai-operating-system`.
+Workflow for shipping content from `~/aios/repos/ai-operating-system/` to the public GitHub repo `craigwslater/ai-operating-system`.
 
 **Architecture (locked Session 7 kickoff 2026-05-08):** Commit-and-push only. This protocol does NOT regenerate source-to-portfolio content. Source regeneration (re-running redactor on artifact-tier files after a CLAUDE.md primitive was added, etc.) happens in dedicated sessions BEFORE invocation. The protocol operates on `repos/ai-operating-system/` as-is.
 
@@ -35,7 +35,7 @@ If git is NOT initialized, this is the Session 8 prerequisite case. Surface to C
 Run the redactor's `verify` mode + `sanity-grep` mode against every `.md` and `.sh` file under `repos/ai-operating-system/`. Both modes must exit 0 for every file before proceeding.
 
 ```bash
-cd ~/.claude-local/projects/ai-operating-system
+cd ~/aios/projects/ai-operating-system
 find repos/ai-operating-system \( -name '*.md' -o -name '*.sh' \) -type f \
   | while read -r f; do
       python3 scripts/redact.py verify "$f" || exit 1
@@ -52,21 +52,21 @@ Run the auto-walkers built in `projects/ai-operating-system-maintenance/` Sessio
 **(a) Staleness check.** Walks every `*.md` file under `repos/ai-operating-system/` (excluding `artifacts/`), parses each file's `**Sources:**` / `**Last refreshed:**` footer, resolves source paths under `$CLAUDE_LOCAL_ROOT`, computes mtime deltas against declared `Last refreshed` dates, and emits a tabular drift report.
 
 ```bash
-python3 ~/.claude-local/skills/publish-portfolio/scripts/staleness-check.py
+python3 ~/aios/skills/publish-portfolio/scripts/staleness-check.py
 ```
 
 The script's default target is `$CLAUDE_LOCAL_ROOT/repos/ai-operating-system` (resolved via the hooks-layer fallback chain). Pass an explicit positional arg to override. Exit 0 if no source has drifted ≥90 days; exit 1 with the report otherwise. Default threshold is 90 days; override with `--threshold-days N`. Use `--verbose` to surface all checked sources, not just drifted.
 
-**(b) Claim verify.** Parses the master tables in `.claim-register.md` (sidecar; never committed), runs each row's `verify` shell command against `~/.claude-local/`, and compares output to the row's `Expected` value.
+**(b) Claim verify.** Parses the master tables in `.claim-register.md` (sidecar; never committed), runs each row's `verify` shell command against `~/aios/`, and compares output to the row's `Expected` value.
 
 ```bash
-cd ~/.claude-local/projects/ai-operating-system
-python3 ~/.claude-local/skills/publish-portfolio/scripts/claim-verify.py .claim-register.md
+cd ~/aios/projects/ai-operating-system
+python3 ~/aios/skills/publish-portfolio/scripts/claim-verify.py .claim-register.md
 ```
 
 Exit 0 if every mechanical row PASS; exit 1 if any row DRIFT or ERROR. Manual rows (`` `manual` `` marker) and frozen-historical rows (`` `N/A (frozen historical)` `` marker) are reported informationally and never block exit.
 
-**Disposition on flag:** (a) regenerate the affected portfolio file from current source in a dedicated session before push, (b) accept the drift and document the decision in the commit message, or (c) update the file's `Last refreshed` date / register row inline if a quick spot-check confirms the content is still accurate against current source. Path-resolution conventions for both scripts live alongside the script source headers; both honor the hooks-layer fallback chain (`${HOME}/.claude-local` → `${HOME}/mnt/.claude-local` → `${CLAUDE_LOCAL_ROOT}`).
+**Disposition on flag:** (a) regenerate the affected portfolio file from current source in a dedicated session before push, (b) accept the drift and document the decision in the commit message, or (c) update the file's `Last refreshed` date / register row inline if a quick spot-check confirms the content is still accurate against current source. Path-resolution conventions for both scripts live alongside the script source headers; both honor the hooks-layer fallback chain (`${HOME}/aios` → `${HOME}/mnt/aios` → `${CLAUDE_LOCAL_ROOT}`).
 
 ### Step 2 — Stage changes
 
@@ -96,7 +96,7 @@ On approval, compose a commit message. Default form:
 ```
 v[VERSION] — [milestone-name]
 
-Synced from ~/.claude-local/ on YYYY-MM-DD. Signals: [list from
+Synced from ~/aios/ on YYYY-MM-DD. Signals: [list from
 portfolio-sync-pending.md].
 
 Per-push diff reviewed and approved by Craig.

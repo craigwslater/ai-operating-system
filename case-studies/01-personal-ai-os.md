@@ -6,13 +6,13 @@
 
 ## Origin moment
 
-The full anchor lives in the [manifesto](../manifesto.md). The short version: an early conversation with Claude Sonnet 4.6, sitting inside the first version of `~/.claude-local/`, defined the working relationship that the rest of this system formalizes. The model commented that it doesn't often get asked how best to work with it. That observation—and the dialogue it produced—is what made "the system around the AI" the unit of work, not "the prompt."
+The full anchor lives in the [manifesto](../manifesto.md). The short version: an early conversation with Claude Sonnet 4.6, sitting inside the first version of `~/aios/`, defined the working relationship that the rest of this system formalizes. The model commented that it doesn't often get asked how best to work with it. That observation—and the dialogue it produced—is what made "the system around the AI" the unit of work, not "the prompt."
 
 What follows is what comes next when an operator takes that insight seriously: a folder structure that holds the rules, the identity, the projects, the skills, the policies, and the machinery—together—as the working surface for every Claude session.
 
 ## What this is
 
-A *personal AI operating system* is a single source-of-truth folder, `~/.claude-local/`, that defines the working relationship with Claude. It contains the global rules every session reads first, the persistent identity context that doesn't change session-to-session, the per-project plans and handoff documents, the bundled skills Claude loads on demand, the documented workflow policies, the templates for new projects and new skills, and the hook scripts that enforce discipline at runtime.
+A *personal AI operating system* is a single source-of-truth folder, `~/aios/`, that defines the working relationship with Claude. It contains the global rules every session reads first, the persistent identity context that doesn't change session-to-session, the per-project plans and handoff documents, the bundled skills Claude loads on demand, the documented workflow policies, the templates for new projects and new skills, and the hook scripts that enforce discipline at runtime.
 
 It is not a prompt library. It is not a configuration file. It is the operational substrate that makes a multi-month working relationship with an AI auditable, durable, and improvable.
 
@@ -25,7 +25,7 @@ This system is what those concepts look like when the platform under management 
 - **Composability.** Rules live in a priority hierarchy where earlier-numbered items beat later-numbered items, and behavioral primitives are named and reusable across sessions.
 - **Versioning.** Projects ship as numbered releases—a job-materials v2, then v3, v4, v5, v6, v7; a claude-local-frontier, then a claude-local-frontier-v2. Each version is a separate folder with its own CLAUDE.md plan and CONTEXT.md status.
 - **Observability.** A Commitment-Verification Audit at session-end re-reads each commitment against the work shipped. The session log records what changed and why.
-- **Contracts.** Every file write to a mounted directory is read-back-verified. Every skill edit goes to the persistent path under `~/.claude-local/skills/`, never to a sandbox.
+- **Contracts.** Every file write to a mounted directory is read-back-verified. Every skill edit goes to the persistent path under `~/aios/skills/`, never to a sandbox.
 - **Eventual consistency.** The encode-into-source primitive moves every correction from conversation context into a source file (CLAUDE.md, a skill reference, or a policy) before session-end.
 - **Drift detection.** Hooks scan for cross-file inconsistencies—a fix in CONTEXT.md but missing in the corresponding skill SKILL.md, for example—and surface them.
 - **Blast radius.** A Decide-vs-Ask primitive forces explicit confirmation when a change touches multiple files or has high reversal cost.
@@ -34,31 +34,31 @@ The artifact in [`artifacts/CLAUDE.md`](../artifacts/CLAUDE.md) is where these p
 
 ## How it works—the four layers
 
-The architecture stratifies into four layers. Each layer has its own folder under `~/.claude-local/`, its own concerns, and its own corrections-as-source discipline.
+The architecture stratifies into four layers. Each layer has its own folder under `~/aios/`, its own concerns, and its own corrections-as-source discipline.
 
 ### Layer 1—Identity and rules
 
-Two files at the root of `~/.claude-local/` carry this layer.
+Two files at the root of `~/aios/` carry this layer.
 
 [`artifacts/CLAUDE.md`](../artifacts/CLAUDE.md) is the global behavioral-rules file. Every Claude session reads it first. It defines the priority hierarchy (truth-telling beats data-accuracy beats reasoning-quality beats verify-before-claim-complete beats surgical-discipline beats proactive-issue-surfacing beats persistence-and-auditability beats efficiency, in that order, with earlier wins on conflict), a list of named behavioral primitives, and a list of anti-patterns each of which Claude is required to recognize and avoid.
 
 The MEMORY files alongside it carry identity-stable context: name, contact, location, professional summary, the active-projects registry, the e-commerce brand, the tools and platforms in use—a shared identity core plus a per-machine overlay, detailed under Cross-device portability below. CLAUDE.md is rules; MEMORY is who.
 
-The encode-into-source primitive ties them together. Every correction lands in a source file—never just in the conversation. If the operator says "Claude, you keep mistaking X for Y," the fix is a sentence in CLAUDE.md or a reference file under `~/.claude-local/skills/[skill-name]/`, encoded immediately, read back, verified. The conversation is ephemeral; the source files compound.
+The encode-into-source primitive ties them together. Every correction lands in a source file—never just in the conversation. If the operator says "Claude, you keep mistaking X for Y," the fix is a sentence in CLAUDE.md or a reference file under `~/aios/skills/[skill-name]/`, encoded immediately, read back, verified. The conversation is ephemeral; the source files compound.
 
 ### Layer 2—Skills and projects
 
-`~/.claude-local/skills/` holds the bundled capabilities Claude loads on demand. A *skill*, in the Anthropic primitive sense, is a folder with a SKILL.md file describing when the skill triggers and what it does, plus references, scripts, evals, and a [ROADMAP.md](../artifacts/sample-roadmap.md) that holds open considerations and completed work. Each skill cites its own corrections-log as the source of every rule it applies.
+`~/aios/skills/` holds the bundled capabilities Claude loads on demand. A *skill*, in the Anthropic primitive sense, is a folder with a SKILL.md file describing when the skill triggers and what it does, plus references, scripts, evals, and a [ROADMAP.md](../artifacts/sample-roadmap.md) that holds open considerations and completed work. Each skill cites its own corrections-log as the source of every rule it applies.
 
-`~/.claude-local/projects/` holds the per-project work containers. Each project gets a folder with its own CLAUDE.md plan (the binding scope and sequencing for the multi-session arc—the plan you're reading the meta-version of right now), a CONTEXT.md status file (the session handoff contract—read at session start, updated at session end, always reflects reality), a `log.md` (the session-by-session record), and `inputs/` plus `outputs/` for source material and deliverables.
+`~/aios/projects/` holds the per-project work containers. Each project gets a folder with its own CLAUDE.md plan (the binding scope and sequencing for the multi-session arc—the plan you're reading the meta-version of right now), a CONTEXT.md status file (the session handoff contract—read at session start, updated at session end, always reflects reality), a `log.md` (the session-by-session record), and `inputs/` plus `outputs/` for source material and deliverables.
 
 Versioned releases live at the projects layer. The job-materials skill has shipped through six release projects—`projects/job-materials-v2/`, `v3/`, `v4/`, `v5/`, `v6/`, `v7/`—each closed cleanly with its own retrospective and improvement bundle. The claude-local-frontier meta-project has a v1 and a v2; v2 closed in three sessions. Versioning happens because closing a release is the discipline that forces a clean stopping point and an explicit commitment to what the next version owes.
 
 ### Layer 3—Policies and templates
 
-`~/.claude-local/policies/` holds the documented workflows that wrap slash commands. The current set: [`session-start.md`](../artifacts/policies/session-start.md), [`session-end.md`](../artifacts/policies/session-end.md), [`new-project-intake.md`](../artifacts/policies/new-project-intake.md), [`commitment-verification-audit.md`](../artifacts/policies/commitment-verification-audit.md), [`file-delivery.md`](../artifacts/policies/file-delivery.md), and [`skill-roadmap.md`](../artifacts/policies/skill-roadmap.md). Each policy file defines a workflow as a set of numbered steps. Each is exposed as a slash command—`/start-session`, `/end-session`, `/start-project`, `/audit`, `/promote-canonical`—so the workflow runs the same way every time.
+`~/aios/policies/` holds the documented workflows that wrap slash commands. The current set: [`session-start.md`](../artifacts/policies/session-start.md), [`session-end.md`](../artifacts/policies/session-end.md), [`new-project-intake.md`](../artifacts/policies/new-project-intake.md), [`commitment-verification-audit.md`](../artifacts/policies/commitment-verification-audit.md), [`file-delivery.md`](../artifacts/policies/file-delivery.md), and [`skill-roadmap.md`](../artifacts/policies/skill-roadmap.md). Each policy file defines a workflow as a set of numbered steps. Each is exposed as a slash command—`/start-session`, `/end-session`, `/start-project`, `/audit`, `/promote-canonical`—so the workflow runs the same way every time.
 
-`~/.claude-local/templates/` holds the scaffolding for new artifacts. New project? `project-CLAUDE-md.template` plus `project-CONTEXT-md.template` define the file shape. New skill? `skill-ROADMAP.md.template` defines the canonical structure for tracking open considerations, completed work, and candidate bundles. New eval? `eval-template.md` defines the structure of an applied-and-archived regression record.
+`~/aios/templates/` holds the scaffolding for new artifacts. New project? `project-CLAUDE-md.template` plus `project-CONTEXT-md.template` define the file shape. New skill? `skill-ROADMAP.md.template` defines the canonical structure for tracking open considerations, completed work, and candidate bundles. New eval? `eval-template.md` defines the structure of an applied-and-archived regression record.
 
 The pattern across this layer: every recurring workflow becomes a policy file with an exposed slash command. Every recurring artifact becomes a template. The discipline is to never run the same multi-step workflow twice without writing it down.
 
@@ -70,7 +70,7 @@ The depth on this layer lives in [Case Study #4—From Discipline to Machinery](
 
 ## Dual-environment portability
 
-The same `~/.claude-local/` source folder runs in two environments: Cowork (mounted into a session via the cowork directory tool) and Claude Code (native, resolved directly under the home directory). Personal skills under `~/.claude-local/skills/` always take priority over any system-bundled copies. The path-resolution rules are documented and version-controlled with the system itself.
+The same `~/aios/` source folder runs in two environments: Cowork (mounted into a session via the cowork directory tool) and Claude Code (native, resolved directly under the home directory). Personal skills under `~/aios/skills/` always take priority over any system-bundled copies. The path-resolution rules are documented and version-controlled with the system itself.
 
 The portability matters for one reason: the same source of truth governs every session, regardless of which surface Claude is running on. A correction made in a Claude Code session shows up in the next Cowork session because both environments read the same files. The dual-install scripts in [`artifacts/install-scripts/`](../artifacts/install-scripts/) make the wiring deterministic on each surface.
 
@@ -81,7 +81,7 @@ Dual-environment portability is one axis; running the same operating system acro
 - **A private framework repository is the shared engine.** The rules, skills, policies, hooks, templates, and scripts—everything that is *not* personal data—live in a private git repository that both machines clone. A framework improvement made on either machine reaches the other through git. Transport is git rather than a consumer file-sync service on purpose: git merges concurrent edits, keeps history, and rolls back cleanly; a naive folder-sync service corrupts a directory that is itself full of git repositories, and offers no real merge.
 - **The MEMORY layer split into a shared core and a per-machine overlay.** `MEMORY.md` was divided into a tracked **shared identity core** (name, contact, professional summary, tools—who the operator is, identical on every machine) and a git-ignored **per-machine overlay**, `MEMORY.local.md` (the active-projects registry and the e-commerce section—what *this* machine is working on). Identity travels with the framework; per-machine working state stays local. The session-start eager-load reads both, so a session sees the whole picture while the repository boundary keeps each machine's project data on its own device.
 - **A confidentiality boundary enforced by repository topology, not by hand.** Each machine's data plane—its `projects/` folder and its overlay—is its own git repository with its own private remote; the two never connect. Personal job-search and e-commerce work never lands on the company account; employer-managed work never lands on the personal account. The boundary that used to be a sentence in MEMORY—"this account handles public information only"—is now a property of how the repositories are wired.
-- **`$HOME`-relative resolution makes the tree machine-agnostic.** Every path resolves under `$HOME/.claude-local`, never a hardcoded user directory, so the identical framework stands up under a different username on a different machine with no path rewrites. A bootstrap script brings a fresh machine online—clone the framework, stand up that machine's data plane, seed its overlay—and the operating system is running.
+- **`$HOME`-relative resolution makes the tree machine-agnostic.** Every path resolves under `$HOME/aios`, never a hardcoded user directory, so the identical framework stands up under a different username on a different machine with no path rewrites. A bootstrap script brings a fresh machine online—clone the framework, stand up that machine's data plane, seed its overlay—and the operating system is running.
 
 This is the same instinct the rest of the system runs on: a boundary you can point at and version, not a rule you have to remember to honor. The [`artifacts/policies/memory-architecture.md`](../artifacts/policies/memory-architecture.md) artifact documents the tiered memory model the split slots into—the shared core and the per-machine overlay are the always-on identity tier, budgeted and measured like every other tier.
 
@@ -119,5 +119,5 @@ The [metrics dashboard](../metrics.md) is where the system's compounding effect 
 
 ---
 
-**Sources:** `~/.claude-local/CLAUDE.md`; `~/.claude-local/MEMORY.md`; `~/.claude-local/projects/`, `~/.claude-local/policies/`, `~/.claude-local/templates/`, `~/.claude-local/skills/` (architecture pattern); `~/.claude-local/projects/ai-operating-system/inputs/interview-material.md` (origin-moment dialogue verbatim).
+**Sources:** `~/aios/CLAUDE.md`; `~/aios/MEMORY.md`; `~/aios/projects/`, `~/aios/policies/`, `~/aios/templates/`, `~/aios/skills/` (architecture pattern); `~/aios/projects/ai-operating-system/inputs/interview-material.md` (origin-moment dialogue verbatim).
 **Last refreshed:** 2026-05-08

@@ -9,7 +9,7 @@
 
 # File Delivery
 
-All output files (Excel, PDF, Word doc, etc.) are saved within the `~/.claude-local` folder structure — never to Desktop or any location outside it.
+All output files (Excel, PDF, Word doc, etc.) are saved within the `~/aios` folder structure — never to Desktop or any location outside it.
 
 **Routing logic (always follow this order):**
 
@@ -25,7 +25,7 @@ All output files (Excel, PDF, Word doc, etc.) are saved within the `~/.claude-lo
 **Never save output files to:**
 
 - Craig's Desktop (`~/Desktop/`)
-- The root of `~/.claude-local/` (only CLAUDE.md, MEMORY.md, and system dirs belong there)
+- The root of `~/aios/` (only CLAUDE.md, MEMORY.md, and system dirs belong there)
 - Cowork's system folder (`mnt/.claude/`)
 - Temporary VM paths (`/tmp/`, `/sessions/.../` outside a mounted folder)
 

@@ -52,5 +52,5 @@ If the synthesis breaks—if a failure mode appears that does not fit the extern
 
 ---
 
-**Sources:** `~/.claude-local/projects/ai-operating-system/inputs/interview-material.md` (the three retrospections — composer/verifier-late, discipline-as-prose-late, monolith-late — verbatim from Craig's interview material).
+**Sources:** `~/aios/projects/ai-operating-system/inputs/interview-material.md` (the three retrospections — composer/verifier-late, discipline-as-prose-late, monolith-late — verbatim from Craig's interview material).
 **Last refreshed:** 2026-05-08

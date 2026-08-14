@@ -25,7 +25,7 @@ A rate-derived metric needs a measurement window. The window for this dashboard 
 
 ## 1. Errors caught per month
 
-**Methodology.** Aggregate count of WRONG/RIGHT pairs across `~/.claude-local/skills/*/references/corrections-log*` files added in the trailing 30 days. The job-materials skill is currently the dominant contributor.
+**Methodology.** Aggregate count of WRONG/RIGHT pairs across `~/aios/skills/*/references/corrections-log*` files added in the trailing 30 days. The job-materials skill is currently the dominant contributor.
 
 **Source.** The four files listed under "Headline metric" above. Future skills that adopt the corrections-log pattern will surface here automatically.
 
@@ -55,14 +55,14 @@ A rate-derived metric needs a measurement window. The window for this dashboard 
 
 ## 4. Rules added per month across `CLAUDE.md` plus skills
 
-**Methodology.** Composite count of new rules added in the trailing 30 days across (a) global behavioral primitives in `CLAUDE.md`, (b) per-rule files under `skills/*/references/voice-rules/`, (c) checks in `skills/*/references/qa-checklist.md` (or equivalent), and (d) hooks under `~/.claude-local/hooks/`.
+**Methodology.** Composite count of new rules added in the trailing 30 days across (a) global behavioral primitives in `CLAUDE.md`, (b) per-rule files under `skills/*/references/voice-rules/`, (c) checks in `skills/*/references/qa-checklist.md` (or equivalent), and (d) hooks under `~/aios/hooks/`.
 
 **Source.** The four file populations:
 
 - `CLAUDE.md` root: 16 behavioral primitives at baseline (Truth-telling, Data Accuracy & sourcing, Reasoning Quality, Verify-before-claim-complete, Surgical Discipline, Proactive Issue Surfacing, Decide vs Ask, Scope Sizing, Subagent Discipline, Skill Update Persistence, Personal Skills Take Priority, File Write Verification, Multi-Session Project Discipline, Frontier-Feature Proactivity, Visual-First Explanation, Language).
 - `skills/job-materials/references/voice-rules/`: 23 files (21 per-rule + 2 supporting). Sparse rule numbering preserved; the index sits at 66 lines / 6,856 bytes.
 - `skills/job-materials/references/qa-checklist.md`: 1,016 lines / 140,742 bytes; 51 H3 subsections covering individual checks and gates.
-- `~/.claude-local/hooks/`: 10 hook scripts encoding behavioral primitives—seven that observe (`post-tool-use-verify-write.sh`, `session-start-prune-commitment-logs.sh`, `session-end-context-reminder.sh`, `session-end-cross-file-consistency.sh`, `session-end-improvement-opportunities.sh`, `session-end-portfolio-sync.sh`, `session-start-drift-guard.sh`) and three that enforce (`pre-tool-use-guard-paths.sh`, `pre-tool-use-unit-scope.sh`, `stop-verify-before-complete.sh`)—plus the `common.sh` shared library and 2 install scripts.
+- `~/aios/hooks/`: 10 hook scripts encoding behavioral primitives—seven that observe (`post-tool-use-verify-write.sh`, `session-start-prune-commitment-logs.sh`, `session-end-context-reminder.sh`, `session-end-cross-file-consistency.sh`, `session-end-improvement-opportunities.sh`, `session-end-portfolio-sync.sh`, `session-start-drift-guard.sh`) and three that enforce (`pre-tool-use-guard-paths.sh`, `pre-tool-use-unit-scope.sh`, `stop-verify-before-complete.sh`)—plus the `common.sh` shared library and 2 install scripts.
 
 **Baseline (2026-07-06).** Cumulative populations as listed above. The trailing-30-day rate will be established at the first dashboard update.
 
@@ -80,7 +80,7 @@ A rate-derived metric needs a measurement window. The window for this dashboard 
 
 ## Baseline date and source
 
-**Baseline date: 2026-07-06.** All counts above are computed from the state of `~/.claude-local/` on this date. The next update against this baseline will report deltas plus a 30-day rolling rate where applicable.
+**Baseline date: 2026-07-06.** All counts above are computed from the state of `~/aios/` on this date. The next update against this baseline will report deltas plus a 30-day rolling rate where applicable.
 
 **Source verification.** Each numeric claim above traces to a specific source file or directory. The redacted artifact tier under [`artifacts/`](./artifacts/) provides a reader with the operational files that produced the numbers, with PII, target-company names, third-party individuals, and prior-employer narrative redacted but the structural depth preserved. Any number on this page traces to a source file under [`artifacts/`](./artifacts/).
 
@@ -88,5 +88,5 @@ The case studies that walk the operational mechanics are [Case Study #2—Compos
 
 ---
 
-**Sources:** `~/.claude-local/skills/job-materials/references/corrections-log.md` + `corrections-log-archive.md` + `corrections-log/` shards (errors-caught-per-month aggregate); `~/.claude-local/skills/job-materials/evals/` (eval count); `~/.claude-local/skills/job-materials/ROADMAP.md` (detector inventory + regression-test pass rate); `~/.claude-local/CLAUDE.md` + `~/.claude-local/skills/*/SKILL.md` + `~/.claude-local/skills/*/references/` (rules-added-per-month composite).
+**Sources:** `~/aios/skills/job-materials/references/corrections-log.md` + `corrections-log-archive.md` + `corrections-log/` shards (errors-caught-per-month aggregate); `~/aios/skills/job-materials/evals/` (eval count); `~/aios/skills/job-materials/ROADMAP.md` (detector inventory + regression-test pass rate); `~/aios/CLAUDE.md` + `~/aios/skills/*/SKILL.md` + `~/aios/skills/*/references/` (rules-added-per-month composite).
 **Last refreshed:** 2026-07-06

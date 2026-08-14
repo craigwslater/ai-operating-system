@@ -125,5 +125,5 @@ If [Case Study #1](./01-personal-ai-os.md) makes the meta-system legible and [Ca
 
 ---
 
-**Sources:** `~/.claude-local/skills/job-materials/references/corrections-log.md` + `corrections-log-archive.md` + `corrections-log/evals-6-15.md` + `live-applications.md` (era-shard split data point); `~/.claude-local/projects/job-materials-efficiency/` Sessions 2 + 3 logs (live data points: 194,363→shards; 168,338→23 files); `~/.claude-local/skills/job-materials/ROADMAP.md` (rule-promotion history).
+**Sources:** `~/aios/skills/job-materials/references/corrections-log.md` + `corrections-log-archive.md` + `corrections-log/evals-6-15.md` + `live-applications.md` (era-shard split data point); `~/aios/projects/job-materials-efficiency/` Sessions 2 + 3 logs (live data points: 194,363→shards; 168,338→23 files); `~/aios/skills/job-materials/ROADMAP.md` (rule-promotion history).
 **Last refreshed:** 2026-05-08

@@ -3,10 +3,10 @@
 #
 # Designed by Craig—runtime: Claude (Sonnet/Opus).
 #
-# What this is. The Claude Code install script for the ~/.claude-local hook
+# What this is. The Claude Code install script for the ~/aios hook
 # layer. Wires all ten hooks—across five event types (PreToolUse, PostToolUse,
 # SessionStart, Stop, SessionEnd), seven that observe and three that enforce—
-# from ~/.claude-local/hooks/ into ~/.claude/settings.json so they fire on every
+# from ~/aios/hooks/ into ~/.claude/settings.json so they fire on every
 # Claude Code session against this workspace. Idempotent: re-running on an
 # already-wired settings.json is a no-op.
 #
@@ -22,7 +22,7 @@
 
 # install-hooks-to-claude-code.sh
 #
-# Installs the ~/.claude-local/hooks/*.sh scripts into Claude Code's
+# Installs the ~/aios/hooks/*.sh scripts into Claude Code's
 # settings.json so they fire on the appropriate events. Idempotent: re-running
 # on an already-wired settings.json is a no-op (entries are added only when
 # missing; existing matching entries are preserved).
@@ -46,9 +46,9 @@
 # pattern. Run it from a host terminal after pulling fresh hooks/.
 #
 # Usage:
-#   bash ~/.claude-local/hooks/install-hooks-to-claude-code.sh
-#   bash ~/.claude-local/hooks/install-hooks-to-claude-code.sh --dry-run
-#   bash ~/.claude-local/hooks/install-hooks-to-claude-code.sh --uninstall
+#   bash ~/aios/hooks/install-hooks-to-claude-code.sh
+#   bash ~/aios/hooks/install-hooks-to-claude-code.sh --dry-run
+#   bash ~/aios/hooks/install-hooks-to-claude-code.sh --uninstall
 #
 # Requires: jq (for safe JSON manipulation).
 #
@@ -61,7 +61,7 @@ set -euo pipefail
 
 SETTINGS_DIR="${HOME}/.claude"
 SETTINGS="${SETTINGS_DIR}/settings.json"
-HOOKS_DIR="${HOME}/.claude-local/hooks"
+HOOKS_DIR="${HOME}/aios/hooks"
 
 DRY_RUN=0
 UNINSTALL=0
@@ -210,9 +210,9 @@ done <<< "$ENTRIES_RAW"
 
 if [ "$DRY_RUN" -eq 0 ]; then
   if [ "$UNINSTALL" -eq 1 ]; then
-    echo "Uninstalled ~/.claude-local hooks from $SETTINGS"
+    echo "Uninstalled ~/aios hooks from $SETTINGS"
   else
-    echo "Installed ~/.claude-local hooks into $SETTINGS"
+    echo "Installed ~/aios hooks into $SETTINGS"
     echo ""
     echo "Verify with: jq '.hooks' $SETTINGS"
   fi

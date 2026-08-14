@@ -8,11 +8,11 @@ This is the layered overview of the architecture—the bridge between the README
 
 ## The four layers
 
-The system stratifies into four layers under `~/.claude-local/`. Each layer has its own folder, its own concerns, and its own corrections-as-source discipline. Layers 1-3 carry the platform-PM concerns—identity, scope, workflow. Layer 4 is where behavioral primitives become runtime checks. Reading top-to-bottom traces the path a primitive walks from prose rule to executing machinery.
+The system stratifies into four layers under `~/aios/`. Each layer has its own folder, its own concerns, and its own corrections-as-source discipline. Layers 1-3 carry the platform-PM concerns—identity, scope, workflow. Layer 4 is where behavioral primitives become runtime checks. Reading top-to-bottom traces the path a primitive walks from prose rule to executing machinery.
 
 ### Layer 1—Identity and rules
 
-`CLAUDE.md` and `MEMORY.md` sit at the root of `~/.claude-local/`. CLAUDE.md is the global behavioral-rules file every Claude session reads first—a priority hierarchy where earlier-numbered items beat later-numbered items, a list of named behavioral primitives, and an explicit anti-patterns list. MEMORY.md is identity-stable context: name, contact, professional summary, the active-projects registry, the e-commerce brand, the tools in use. CLAUDE.md is rules; MEMORY.md is who. The encode-into-source primitive ties them together—every correction lands in a source file, never just in conversation, read back and verified before the session closes. Walked operationally in [Case Study #1](./case-studies/01-personal-ai-os.md).
+`CLAUDE.md` and `MEMORY.md` sit at the root of `~/aios/`. CLAUDE.md is the global behavioral-rules file every Claude session reads first—a priority hierarchy where earlier-numbered items beat later-numbered items, a list of named behavioral primitives, and an explicit anti-patterns list. MEMORY.md is identity-stable context: name, contact, professional summary, the active-projects registry, the e-commerce brand, the tools in use. CLAUDE.md is rules; MEMORY.md is who. The encode-into-source primitive ties them together—every correction lands in a source file, never just in conversation, read back and verified before the session closes. Walked operationally in [Case Study #1](./case-studies/01-personal-ai-os.md).
 
 ### Layer 2—Skills and projects
 
@@ -68,7 +68,7 @@ A peer PM curious about the methodology starts here, then browses the [`artifact
 
 ## How the portfolio gets updated
 
-The portfolio is a derived artifact. Updates flow from `~/.claude-local/` to the public repo, never the other direction. A SessionEnd hook (`session-end-portfolio-sync.sh`) detects portfolio-worthy signals across the source folder since the last sync and surfaces a prompt at session close recommending `/publish-portfolio` next session. Five signal categories fire the hook: a ROADMAP item resolved with portfolio relevance, a new eval shipped, a new CLAUDE.md primitive added, a project closed, a version release of an existing project. State lives in a small JSON file under the project directory, updated only by `/publish-portfolio` on a successful push so the "since last sync" semantic is preserved.
+The portfolio is a derived artifact. Updates flow from `~/aios/` to the public repo, never the other direction. A SessionEnd hook (`session-end-portfolio-sync.sh`) detects portfolio-worthy signals across the source folder since the last sync and surfaces a prompt at session close recommending `/publish-portfolio` next session. Five signal categories fire the hook: a ROADMAP item resolved with portfolio relevance, a new eval shipped, a new CLAUDE.md primitive added, a project closed, a version release of an existing project. State lives in a small JSON file under the project directory, updated only by `/publish-portfolio` on a successful push so the "since last sync" semantic is preserved.
 
 The publish slash command is commit-and-push only. It runs the redactor's `verify` and `sanity-grep` modes against every Markdown file in the working portfolio-repo as a hard pre-commit gate, stages the diff, surfaces it for explicit approval (vague responses do not count—the approval phrase must unambiguously name the diff), commits, pushes, and then refreshes the sync state. Per-push diff review is non-negotiable per the project's binding rules. The SessionEnd hook fires unconditionally on its own signal logic, and the publish protocol is the only path that updates the public repo.
 
@@ -78,5 +78,5 @@ The redacted operational artifacts in [`artifacts/`](./artifacts/)—the global 
 
 ---
 
-**Sources:** `~/.claude-local/CLAUDE.md` (priority hierarchy + behavioral primitives); `~/.claude-local/MEMORY.md` (identity model); `~/.claude-local/projects/ai-operating-system/CLAUDE.md` (project §5 architecture); architectural pattern across `~/.claude-local/projects/`, `~/.claude-local/skills/`, `~/.claude-local/policies/`, `~/.claude-local/hooks/`, `~/.claude-local/templates/`.
+**Sources:** `~/aios/CLAUDE.md` (priority hierarchy + behavioral primitives); `~/aios/MEMORY.md` (identity model); `~/aios/projects/ai-operating-system/CLAUDE.md` (project §5 architecture); architectural pattern across `~/aios/projects/`, `~/aios/skills/`, `~/aios/policies/`, `~/aios/hooks/`, `~/aios/templates/`.
 **Last refreshed:** 2026-05-08

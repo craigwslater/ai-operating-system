@@ -71,7 +71,7 @@ Nine gate *types* — the categories of decision an unattended loop actually hit
 - **Default:** STOP if the ambiguity blocks the unit's core output; PARK if it only affects an optional or late sub-task whose result nothing else consumes.
 
 ### 3.2 `high-blast-radius-write` — a write to a forbidden or out-of-scope path
-- **Default:** STOP, always. Never DECIDE, never PARK. Covers any path outside the unit's declared `write_scope`, plus the standing forbidden set (skill source, framework-defining `.claude-local` files, any `CLAUDE.md`/`MEMORY*.md`/`policies/`).
+- **Default:** STOP, always. Never DECIDE, never PARK. Covers any path outside the unit's declared `write_scope`, plus the standing forbidden set (skill source, framework-defining `aios` files, any `CLAUDE.md`/`MEMORY*.md`/`policies/`).
 - **Enforcement note:** the Safety Layer `PreToolUse` guard *blocks* the write; this gate *routes* the blocked attempt to `notify()` instead of a hard die. The enforcing hook denies in the unit session (deny/ask — the write never lands), the unit emits a `GUARD-BLOCKED:` marker rather than improvising, and the orchestrator raises this gate from that marker. deny **and** ask both route here (always STOP). A later fix closed the per-unit half: an FH-owned `pre-tool-use-unit-scope.sh` now enforces the unit's declared `write_scope`/`forbidden_scope` at runtime too (pinned env injected at launch from the frozen plan) — so this gate's "any path outside the unit's `write_scope`" intent no longer depends on the hook layer's global set alone.
 
 ### 3.3 `quality-bar-failure` — a deliverable fails its skill's quality gate
@@ -113,7 +113,7 @@ Nine gate *types* — the categories of decision an unattended loop actually hit
 
 | Tier | Posture | Who it covers |
 |---|---|---|
-| **Tier 0 — never autonomous** | The write is interactive-only; the orchestrator may *never* touch these paths, supervised or not. | The standing forbidden set — skill source (`skills/**`), framework-defining `.claude-local` files (any `CLAUDE.md` / `MEMORY*.md` / `policies/**`) — **extended** with the concurrency machinery (the single-writer registry, `INDEX.md`, the seal/drift-guard model). Changes here are made by Craig in an ordinary interactive session — never through the loop. |
+| **Tier 0 — never autonomous** | The write is interactive-only; the orchestrator may *never* touch these paths, supervised or not. | The standing forbidden set — skill source (`skills/**`), framework-defining `aios` files (any `CLAUDE.md` / `MEMORY*.md` / `policies/**`) — **extended** with the concurrency machinery (the single-writer registry, `INDEX.md`, the seal/drift-guard model). Changes here are made by Craig in an ordinary interactive session — never through the loop. |
 | **Tier 1 — supervised** (default) | The orchestrator runs the arc, but Craig **observes the live run**: watching for missed / over-eager escalations and out-of-scope writes. | Every not-yet-graduated project type. The pilot ran here. |
 | **Tier 2 — fire-and-forget eligible** | The orchestrator runs unattended; Craig receives only STOP pings. | A project type that has passed the §9.3 graduation gate. |
 
