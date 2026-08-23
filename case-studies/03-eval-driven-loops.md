@@ -8,7 +8,7 @@
 
 By spring 2026, the job-materials skill's `corrections-log.md` had reached 1,534 lines and 194,363 bytes as a single file, carrying corrections from 22 shipped evals plus dozens of live-application records. Composing one tailored cover letter required loading the corrections-log into context to consult prior failure modes. At ~48,500 tokens of consult-time cost per draft, the file had become the dominant load on every composition.
 
-The split—index plus two era-shards—happened on 2026-05-07 because the file got too large to load in a single context window, not because it was elegant. Two days later the same pattern fired against `voice-rules.md`, which had reached 1,596 lines and 28 H2 sections. Both files were carrying the same structural problem at different granularities.
+The split—index plus two era-shards—happened on 2026-05-07 because the file got too large to load in a single context window, not because it was elegant. Later the same day the same pattern fired against `voice-rules.md`, which had reached 1,596 lines and 28 H2 sections. Both files were carrying the same structural problem at different granularities.
 
 What follows is what eval-driven correction looks like at scale: WRONG/RIGHT pairs as the unit of learning, rule-promotion as the lifecycle that moves a correction from prose into machinery, and the era-shard pattern as the refactoring discipline that keeps the rule set readable as it grows.
 
@@ -21,7 +21,7 @@ Eval-driven correction is software-engineering rigor applied to AI work. The dis
 - **Library versioning** is the rule-promotion lifecycle. A verbal rule moves through stages: prose with worked example, qa-checklist gate at composer-time, verifier-prompt sub-check at audit-time, mechanical pre-flight detector that catches the failure shape before the verifier subagent runs at all.
 - **Observability** is drift detection. Hooks scan source files for cross-file inconsistencies—a fix in CONTEXT.md but missing in the corresponding skill SKILL.md, a ROADMAP.md item moved to Completed in one place but not the canonical inventory.
 
-The job-materials skill is where these patterns earned their place. The skill has shipped 40 evals, runs about 42 detectors, catches and fixes hundreds of errors autonomously per month, and produces dozens of tailored applications. The patterns transfer outward; the volume and the live-application stakes are what made this the skill that proved them.
+The job-materials skill is where these patterns earned their place. The skill has shipped 46 evals, runs about 41 detectors, catches and fixes hundreds of errors autonomously per month, and produces dozens of tailored applications. The patterns transfer outward; the volume and the live-application stakes are what made this the skill that proved them.
 
 ## The corrections-log and the WRONG/RIGHT pair
 
@@ -117,7 +117,7 @@ The next case study is the runtime layer. [From Discipline to Machinery](./04-di
 
 The redacted operational artifacts in [`artifacts/sample-skill/`](../artifacts/sample-skill/), [`artifacts/sample-eval.md`](../artifacts/sample-eval.md), and [`artifacts/sample-roadmap.md`](../artifacts/sample-roadmap.md) are where any claim in this case study can be verified against actual source files—with PII, target-company names, third-party individuals, and prior-employer narrative redacted, but the corrections-log structure, the rule-promotion stages, and the era-shard pattern intact.
 
-The [metrics dashboard](../metrics.md) tracks the four headline metrics over time: errors caught per month, evals shipped per quarter, detector count plus regression-test pass rate, and rules added per month across the global rule set and the skill rule sets. The headline metric—hundreds of errors caught and fixed autonomously per month—is the rate at which WRONG/RIGHT pairs land in the corrections-log shards. Baseline date 2026-05-08.
+The [metrics dashboard](../metrics.md) tracks the four headline metrics over time: errors caught per month, evals shipped per quarter, detector count plus regression-test pass rate, and rules added per month across the global rule set and the skill rule sets. The headline metric—hundreds of errors caught and fixed autonomously per month—is the rate at which WRONG/RIGHT pairs land in the corrections-log shards. Baseline date 2026-07-06.
 
 For a peer PM who wants to reuse the patterns above, [`for-pms-reusing.md`](../for-pms-reusing.md) walks the smallest-viable-version of each: the WRONG/RIGHT format as a working unit, the rule-promotion lifecycle as a lightweight template, and the era-shard pattern as a refactor trigger keyed to file size and consult-cost rather than aesthetic preference.
 

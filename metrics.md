@@ -14,12 +14,12 @@ The number is the rate at which WRONG/RIGHT pairs land in the corrections-log sh
 
 The corrections-log layer in the job-materials skill spans four files:
 
-- `references/corrections-log.md`—the navigation index, 92 lines / 6,380 bytes (post-split state plus cross-reference updates from the voice-rules decomposition on 2026-05-07).
-- `references/corrections-log/evals-6-15.md`—shard for numbered Evals 6 through 15, 928 lines / 121,198 bytes.
-- `references/corrections-log/live-applications.md`—shard for live-application corrections, 630 lines / 81,747 bytes.
-- `references/corrections-log-archive.md`—archive for Pre-Eval Drift plus Evals 3 through 5, 192 lines / 14,903 bytes.
+- `references/corrections-log.md`—the navigation index, 92 lines (post-split state plus cross-reference updates from the voice-rules decomposition on 2026-05-07).
+- `references/corrections-log/evals-6-15.md`—shard for numbered Evals 6 through 15, 928 lines.
+- `references/corrections-log/live-applications.md`—shard for live-application corrections, 630 lines.
+- `references/corrections-log-archive.md`—archive for Pre-Eval Drift plus Evals 3 through 5, 192 lines.
 
-Total content under the corrections-log layer at baseline: 1,842 lines / 224,228 bytes. The "hundreds per month" rate refers to the pace at which new corrections enter this layer in months with active job-application work, not the cumulative archive size.
+Total content under the corrections-log layer at baseline: 1,842 lines. The "hundreds per month" rate refers to the pace at which new corrections enter this layer in months with active job-application work, not the cumulative archive size.
 
 A rate-derived metric needs a measurement window. The window for this dashboard is calendar month. Future updates against this baseline will count newly-added WRONG/RIGHT pairs in the rolling 30-day window before the update date. The first updated number after baseline establishes the regression bar.
 
@@ -35,9 +35,9 @@ A rate-derived metric needs a measurement window. The window for this dashboard 
 
 ## 2. Evals shipped per quarter
 
-**Methodology.** Count of distinct numbered evals shipped in the trailing 90-day window. An eval is one applied job application that produced a regression-test record, either as a dedicated file under `skills/job-materials/evals/` or as a corrections entry under `corrections-log/`.
+**Methodology.** Count of distinct numbered evals shipped in the trailing 90-day window. An eval is a regression-test record produced by one applied job application—or, in a small minority, by a skill-improvement session that shipped no application (1 of 46 to date). It lands either as a dedicated file under `skills/job-materials/evals/` or as a corrections entry under `corrections-log/`.
 
-**Source.** `skills/job-materials/evals/` (30 dedicated eval files spanning Evals 11 through 40 at baseline) plus the corrections-log shards (covering Evals 3 through 10, with Evals 1 and 2 archived). Lifetime count: 40 evals.
+**Source.** `skills/job-materials/evals/` (36 dedicated eval files spanning Evals 11 through 46) plus `skills/job-materials/evals/archive/` (10 dedicated files covering Evals 1 through 10). Lifetime count: 46 evals.
 
 **Baseline (2026-07-06).** 40 lifetime evals across the job-materials skill. The trailing-90-day cadence will be established at the first dashboard update.
 
@@ -47,9 +47,9 @@ A rate-derived metric needs a measurement window. The window for this dashboard 
 
 **Methodology.** Two paired numbers. Detector count is the number of mechanical pre-flight detector functions in `skills/job-materials/scripts/preflight_check.py` plus any verifier-prompt sub-checks promoted to mechanical form. Regression-test pass rate is the share of detectors passing on the immediately-prior eval's draft as authored.
 
-**Source.** `skills/job-materials/scripts/preflight_check.py` (42 `detect_*` functions at baseline, verified by counting function definitions). The v7 close on 2026-05-19 closed at 40 detectors at its then-working ceiling of 40; the count has since grown to 42.
+**Source.** `skills/job-materials/scripts/preflight_check.py` (41 detectors registered across the four tier lists, verified by counting registry entries rather than `def` lines—the file defines a 42nd that is never registered and never runs). The v7 close on 2026-05-19 left the count at 39 with the ≤40 ceiling held; the fortieth arrived on 2026-05-25, the ceiling was lifted to 41 on 2026-05-27, and the count has sat there since.
 
-**Baseline (2026-07-06).** 42 detectors. Regression-test pass rate: to be established. Pass rate matters because detector count without pass rate can grow misleadingly—adding detectors that always pass because their failure mode is rare is detector inflation.
+**Baseline (2026-07-06).** 41 detectors. Regression-test pass rate: to be established. Pass rate matters because detector count without pass rate can grow misleadingly—adding detectors that always pass because their failure mode is rare is detector inflation.
 
 **Bar.** Detector count tracks toward the ceiling deliberately. A detector promoted past the ceiling means an existing detector should retire (the failure mode it caught no longer recurs across recent evals) or the ceiling itself should be revisited as a deliberate architectural decision.
 
@@ -60,8 +60,8 @@ A rate-derived metric needs a measurement window. The window for this dashboard 
 **Source.** The four file populations:
 
 - `CLAUDE.md` root: 16 behavioral primitives at baseline (Truth-telling, Data Accuracy & sourcing, Reasoning Quality, Verify-before-claim-complete, Surgical Discipline, Proactive Issue Surfacing, Decide vs Ask, Scope Sizing, Subagent Discipline, Skill Update Persistence, Personal Skills Take Priority, File Write Verification, Multi-Session Project Discipline, Frontier-Feature Proactivity, Visual-First Explanation, Language).
-- `skills/job-materials/references/voice-rules/`: 23 files (21 per-rule + 2 supporting). Sparse rule numbering preserved; the index sits at 66 lines / 6,856 bytes.
-- `skills/job-materials/references/qa-checklist.md`: 1,016 lines / 140,742 bytes; 51 H3 subsections covering individual checks and gates.
+- `skills/job-materials/references/voice-rules/`: 24 files (22 per-rule + 2 supporting). Sparse rule numbering preserved; the index sits at 69 lines.
+- `skills/job-materials/references/qa-checklist.md`: 1,096 lines; 53 H3 subsections covering individual checks and gates.
 - `~/aios/hooks/`: 10 hook scripts encoding behavioral primitives—seven that observe (`post-tool-use-verify-write.sh`, `session-start-prune-commitment-logs.sh`, `session-end-context-reminder.sh`, `session-end-cross-file-consistency.sh`, `session-end-improvement-opportunities.sh`, `session-end-portfolio-sync.sh`, `session-start-drift-guard.sh`) and three that enforce (`pre-tool-use-guard-paths.sh`, `pre-tool-use-unit-scope.sh`, `stop-verify-before-complete.sh`)—plus the `common.sh` shared library and 2 install scripts.
 
 **Baseline (2026-07-06).** Cumulative populations as listed above. The trailing-30-day rate will be established at the first dashboard update.

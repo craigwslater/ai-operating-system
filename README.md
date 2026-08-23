@@ -6,7 +6,7 @@
 
 ## What this is
 
-This portfolio documents a personal AI operating system: a single source-of-truth folder, `~/aios/`, that holds the rules, identity, projects, skills, policies, and machinery for working with Claude as a long-term partner. Designed by Craig Slater, with Claude as the runtime executing under the rules. The job-materials skill in this system has produced 40 evals (regression-test records, one per applied job), runs about 42 detectors that catch returning failure modes on every draft, has caught and fixed hundreds of errors autonomously per month, and has shipped dozens of tailored applications.
+This portfolio documents a personal AI operating system: a single source-of-truth folder, `~/aios/`, that holds the rules, identity, projects, skills, policies, and machinery for working with Claude as a long-term partner. Designed by Craig Slater, with Claude as the runtime executing under the rules. The job-materials skill in this system has produced 46 evals (regression-test records, one per applied job or skill-improvement pass), runs about 41 detectors that catch returning failure modes on every draft, has caught and fixed hundreds of errors autonomously per month, and has shipped dozens of tailored applications.
 
 ---
 
@@ -16,7 +16,7 @@ This repo serves three readers. Pick the path that matches.
 
 ### If you're a recruiter—60 seconds
 
-If you have one minute: read the headline above and skim the [manifesto](./manifesto.md). The numbers—40 evals, ~42 detectors, hundreds of errors caught and fixed autonomously per month—come from the corrections logs and eval archive of the underlying system. The [`Personal AI Operating System` case study](./case-studies/01-personal-ai-os.md) is the natural next read; it walks the meta-architecture in 10-15 minutes. Contact details are in the footer below.
+If you have one minute: read the headline above and skim the [manifesto](./manifesto.md). The numbers—46 evals, ~41 detectors, hundreds of errors caught and fixed autonomously per month—come from the corrections logs and eval archive of the underlying system. The [`Personal AI Operating System` case study](./case-studies/01-personal-ai-os.md) is the natural next read; it walks the meta-architecture in 10-15 minutes. Contact details are in the footer below.
 
 ### If you're a product hiring manager—10-20 minutes
 
@@ -24,7 +24,7 @@ If you have 10-20 minutes: read one or two case studies. [`Personal AI Operating
 
 ### If you're a fellow PM curious about the methodology
 
-If you're a fellow PM curious about the methodology: start with the [methodology overview](./methodology.md), then browse the [`artifacts/`](./artifacts/) folder for the redacted operational files (CLAUDE.md, policies, a sample skill, a sample eval, a sample ROADMAP, a hook script, the dual-environment install scripts). Each artifact carries a header explaining what was redacted and why it's included. The [`for PMs reusing this`](./for-pms-reusing.md) page is the explicit "how to build similar" walkthrough. The five case studies go deepest on individual patterns; the [retrospection](./retrospection.md) page is the synthesis statement of what the system would have wanted from day one.
+If you're a fellow PM curious about the methodology: start with the [methodology overview](./methodology.md), then browse the [`artifacts/`](./artifacts/) folder for the redacted operational files (CLAUDE.md, policies, a sample skill, a sample eval, a sample ROADMAP, an operator command, an observe hook and an enforcement hook, the dual-environment install scripts). Each artifact carries a header explaining what was redacted and why it's included. The [`for PMs reusing this`](./for-pms-reusing.md) page is the explicit "how to build similar" walkthrough. The five case studies go deepest on individual patterns; the [retrospection](./retrospection.md) page is the synthesis statement of what the system would have wanted from day one.
 
 ---
 
@@ -42,12 +42,12 @@ Keep relative links so the repo is browseable on github.com without configuratio
 
 - [`manifesto.md`](./manifesto.md)—the thesis, the origin moment, the voice anchor. *(Session 3.)*
 - [`methodology.md`](./methodology.md)—how the pieces fit. The layered overview of the architecture. *(Session 2 skeleton; content fills in across Sessions 3-5.)*
-- [`metrics.md`](./metrics.md)—the operational dashboard. Four metrics, baseline 2026-05-08. *(Session TBD per CLAUDE.md §6.)*
+- [`metrics.md`](./metrics.md)—the operational dashboard. Four metrics, baseline 2026-07-06.
 
 ### Case studies
 
 - [`case-studies/01-personal-ai-os.md`](./case-studies/01-personal-ai-os.md)—Personal AI Operating System: meta-architecture (priority hierarchy, MEMORY.md, projects/policies/templates, encode-into-source, dual-environment portability). *(Session 3.)*
-- [`case-studies/02-composer-verifier.md`](./case-studies/02-composer-verifier.md)—Composer/Verifier: a two-agent pattern + 40 evals + ~42 detectors. *(Session 4.)*
+- [`case-studies/02-composer-verifier.md`](./case-studies/02-composer-verifier.md)—Composer/Verifier: a two-agent pattern + 46 evals + ~41 detectors. *(Session 4.)*
 - [`case-studies/03-eval-driven-loops.md`](./case-studies/03-eval-driven-loops.md)—Eval-Driven Correction Loops: WRONG/RIGHT corrections-log, rule promotion, drift detection, era-shard pattern. *(Session 5.)*
 - [`case-studies/04-discipline-to-machinery.md`](./case-studies/04-discipline-to-machinery.md)—From Discipline to Machinery: hooks layer encoding behavioral primitives. *(Session 5.)*
 - [`case-studies/05-autonomous-execution.md`](./case-studies/05-autonomous-execution.md)—Earned Autonomy: the autonomous-execution engine, the nine-gate escalation taxonomy, and the earned-autonomy tier ladder (never / supervised / fire-and-forget). *(v2.0.)*
@@ -67,7 +67,9 @@ The `artifacts/` folder contains operational files from the underlying system, p
 - [`artifacts/sample-skill/`](./artifacts/sample-skill/)—one redacted skill as a worked example.
 - [`artifacts/sample-eval.md`](./artifacts/sample-eval.md)—one redacted eval.
 - [`artifacts/sample-roadmap.md`](./artifacts/sample-roadmap.md)—the per-skill ROADMAP template.
-- [`artifacts/sample-hook.sh`](./artifacts/sample-hook.sh)—one hook script.
+- [`artifacts/orchestrate-skill.md`](./artifacts/orchestrate-skill.md)—the autonomous-execution operator command.
+- [`artifacts/sample-hook.sh`](./artifacts/sample-hook.sh)—one observe hook (PostToolUse).
+- [`artifacts/sample-enforcement-hook.sh`](./artifacts/sample-enforcement-hook.sh)—one enforcement hook (PreToolUse).
 - [`artifacts/install-scripts/`](./artifacts/install-scripts/)—dual-environment install scripts.
 
 ### Changes

@@ -30,7 +30,7 @@ The pattern repeats one layer down inside the job-materials skill. A verbal voic
 
 The corrections-log inside the job-materials skill grew to 194,363 bytes and 1,534 lines as a single file before being era-sharded into an index plus two shards on 2026-05-07. The voice-rules reference inside the same skill grew to 168,338 bytes, 1,596 lines, and 28 H2 sections before the per-rule decomposition cut eager-load tokens by a third on the same day. Both refactors are documented in [Case Study #3—Eval-Driven Correction Loops](./case-studies/03-eval-driven-loops.md).
 
-The synthesis names this the *modular-structure* axis. The answer to "the runtime cannot reliably navigate a 1,500-line reference file under load" is the sharded-with-index pattern—a small navigation index pointing to multiple content shards, each shard scoped to a coherent unit of content (a single rule, a single era of evals, a single content category). The index loads cheaply at session start; the shards load on demand when their content is needed. The runtime navigates a 66-line index, not a 1,596-line monolith. Information retrieval becomes tractable at scale.
+The synthesis names this the *modular-structure* axis. The answer to "the runtime cannot reliably navigate a 1,500-line reference file under load" is the sharded-with-index pattern—a small navigation index pointing to multiple content shards, each shard scoped to a coherent unit of content (a single rule, a single era of evals, a single content category). The index loads cheaply at session start; the shards load on demand when their content is needed. The runtime navigates a 69-line index, not a 1,596-line monolith. Information retrieval becomes tractable at scale.
 
 The pattern is recognizable in any platform engineering team's review meeting. Refactoring a 1,500-line file into smaller modules is not aesthetic preference; it is the answer to a measurable cognitive load. The same logic applies to a Claude session reading a reference file under composition pressure. The unit of analysis is the same.
 
@@ -44,7 +44,7 @@ The corollary: when an existing primitive is still living as prose, treat that a
 
 ## What's still being tested
 
-The synthesis is a working hypothesis. The hook layer is recent—weeks old at the time this is written. The era-shard pattern has been applied twice. The verifier-subagent pattern has shipped across 40 evals. The synthesis is supported by these artifacts; it is not yet falsified by long-term observation across the next class of failure mode that will surface.
+The synthesis is a working hypothesis. The hook layer is recent—weeks old at the time this is written. The era-shard pattern has been applied twice. The verifier-subagent pattern has shipped across 46 evals. The synthesis is supported by these artifacts; it is not yet falsified by long-term observation across the next class of failure mode that will surface.
 
 The honest framing: this is what the system looks like after three retrofits have been applied and one design rule has been pulled out of them. Whether the same pattern—externalize what the runtime cannot reliably remember—holds for the next failure mode the system encounters is not yet known. The mechanism for finding out is the [metrics dashboard](./metrics.md): the rate at which new failure modes surface, the share that promote to machinery within the same session, the share that recur after promotion. The metrics are how the synthesis stays honest.
 

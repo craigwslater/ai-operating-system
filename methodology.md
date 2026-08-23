@@ -42,11 +42,11 @@ Every correction lands in a source file before the session closes—a CLAUDE.md 
 
 ### Modular structure (era-shard, per-rule decomposition)
 
-Reference files split into an index plus content shards once they exceed the load-cost threshold for a single context. The skill where the pattern earned its place had a corrections-log that grew to 194,363 bytes / 1,534 lines as a single file, and a voice-rules reference that grew to 168,338 bytes / 1,596 lines / 28 H2 sections, before each was refactored on 2026-05-07 into a small index plus shards. The voice-rules refactor cut eager-load tokens by a third. The runtime navigates a 66-line index, not a 1,596-line monolith. Walked in [Case Study #3](./case-studies/03-eval-driven-loops.md).
+Reference files split into an index plus content shards once they exceed the load-cost threshold for a single context. The skill where the pattern earned its place had a corrections-log that grew to 194,363 bytes / 1,534 lines as a single file, and a voice-rules reference that grew to 168,338 bytes / 1,596 lines / 28 H2 sections, before each was refactored on 2026-05-07 into a small index plus shards. The voice-rules refactor cut eager-load tokens by a third. The runtime navigates a 69-line index, not a 1,596-line monolith. Walked in [Case Study #3](./case-studies/03-eval-driven-loops.md).
 
 ### Eval-driven correction
 
-Every applied job becomes one eval—a regression-test record that captures the JD, the briefing research, the composed deliverables, the verifier's verdict, the corrections promoted to source rules, and the open follow-ups. Detectors that catch returning failure modes promote from prose to mechanical pre-flight scripts when the same shape fires across consecutive evals. Recurrence counters force structural rethinks when failures return after promotion. There are 40 evals and about 42 detectors at this writing. Walked in [Case Study #3](./case-studies/03-eval-driven-loops.md).
+Every applied job becomes one eval—a regression-test record that captures the JD, the briefing research, the composed deliverables, the verifier's verdict, the corrections promoted to source rules, and the open follow-ups. Detectors that catch returning failure modes promote from prose to mechanical pre-flight scripts when the same shape fires across consecutive evals. Recurrence counters force structural rethinks when failures return after promotion. There are 46 evals and about 41 detectors at this writing. Walked in [Case Study #3](./case-studies/03-eval-driven-loops.md).
 
 ### Discipline becomes machinery
 
@@ -58,7 +58,7 @@ Behavioral primitives that began as prose in CLAUDE.md become hook scripts on `P
 
 The README names three reader paths; this is what each one looks like in pages.
 
-A recruiter with 60 seconds reads the README headline plus the [manifesto](./manifesto.md). Both pages frame the headline numbers—40 evals, about 42 detectors, hundreds of errors caught and fixed autonomously per month—and link out to the redacted artifacts that back them.
+A recruiter with 60 seconds reads the README headline plus the [manifesto](./manifesto.md). Both pages frame the headline numbers—46 evals, about 41 detectors, hundreds of errors caught and fixed autonomously per month—and link out to the redacted artifacts that back them.
 
 A product hiring manager with 10-20 minutes reads one or two case studies. [`Personal AI Operating System`](./case-studies/01-personal-ai-os.md) walks the meta-architecture; it is the right entry for assessing platform-PM thinking applied inward. [`Composer/Verifier`](./case-studies/02-composer-verifier.md) walks the two-agent pattern that runs the composer and the verifier in separate contexts so the audit can fail the draft. [`Eval-Driven Correction Loops`](./case-studies/03-eval-driven-loops.md) and [`From Discipline to Machinery`](./case-studies/04-discipline-to-machinery.md) go deeper on the rule-promotion lifecycle and the hooks layer. [`Earned Autonomy`](./case-studies/05-autonomous-execution.md) walks the autonomous-execution engine those hooks make possible—the nine-gate escalation model and the earned-autonomy tiers.
 
@@ -74,7 +74,7 @@ The publish slash command is commit-and-push only. It runs the redactor's `verif
 
 ---
 
-The redacted operational artifacts in [`artifacts/`](./artifacts/)—the global rules file, the policies folder, a sample skill, a sample eval, a sample ROADMAP, a sample hook, the dual-install scripts—are where any architectural claim above can be verified against the underlying source files. The [metrics dashboard](./metrics.md) tracks the four headline metrics over time. Baseline date 2026-05-08.
+The redacted operational artifacts in [`artifacts/`](./artifacts/)—the global rules file, the policies folder, a sample skill, a sample eval, a sample ROADMAP, an operator command, a sample observe hook and a sample enforcement hook, the dual-install scripts—are where any architectural claim above can be verified against the underlying source files. The [metrics dashboard](./metrics.md) tracks the four headline metrics over time. Baseline date 2026-07-06.
 
 ---
 
