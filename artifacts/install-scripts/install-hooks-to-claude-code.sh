@@ -4,8 +4,8 @@
 # Designed by Craig—runtime: Claude (Sonnet/Opus).
 #
 # What this is. The Claude Code install script for the ~/aios hook
-# layer. Wires all ten hooks—across five event types (PreToolUse, PostToolUse,
-# SessionStart, Stop, SessionEnd), seven that observe and three that enforce—
+# layer. Wires all twelve hooks—across five event types (PreToolUse, PostToolUse,
+# SessionStart, Stop, SessionEnd), nine that observe and three that enforce—
 # from ~/aios/hooks/ into ~/.claude/settings.json so they fire on every
 # Claude Code session against this workspace. Idempotent: re-running on an
 # already-wired settings.json is a no-op.
@@ -30,6 +30,7 @@
 # What gets installed:
 #   - PreToolUse  (matcher "Write|Edit") → pre-tool-use-guard-paths.sh
 #   - PreToolUse  (matcher "Write|Edit") → pre-tool-use-unit-scope.sh
+#   - PreToolUse  (matcher "Write|Edit") → pre-tool-use-prewrite-checks.sh
 #   - PostToolUse (matcher "Write|Edit") → post-tool-use-verify-write.sh
 #   - Stop                                → stop-verify-before-complete.sh
 #   - SessionStart                        → session-start-prune-commitment-logs.sh
@@ -38,6 +39,7 @@
 #   - SessionEnd                          → session-end-cross-file-consistency.sh
 #   - SessionEnd                          → session-end-improvement-opportunities.sh
 #   - SessionEnd                          → session-end-portfolio-sync.sh
+#   - SessionEnd                          → session-end-harness-archive.sh
 #
 # Where: ~/.claude/settings.json (Claude Code's user-level settings).
 #
@@ -107,6 +109,7 @@ fi
 read -r -d '' ENTRIES_RAW <<EOF || true
 PreToolUse	Write|Edit	${HOOKS_DIR}/pre-tool-use-guard-paths.sh
 PreToolUse	Write|Edit	${HOOKS_DIR}/pre-tool-use-unit-scope.sh
+PreToolUse	Write|Edit	${HOOKS_DIR}/pre-tool-use-prewrite-checks.sh
 PostToolUse	Write|Edit	${HOOKS_DIR}/post-tool-use-verify-write.sh
 Stop	_NONE_	${HOOKS_DIR}/stop-verify-before-complete.sh
 SessionStart	_NONE_	${HOOKS_DIR}/session-start-prune-commitment-logs.sh
@@ -115,6 +118,7 @@ SessionEnd	_NONE_	${HOOKS_DIR}/session-end-context-reminder.sh
 SessionEnd	_NONE_	${HOOKS_DIR}/session-end-cross-file-consistency.sh
 SessionEnd	_NONE_	${HOOKS_DIR}/session-end-improvement-opportunities.sh
 SessionEnd	_NONE_	${HOOKS_DIR}/session-end-portfolio-sync.sh
+SessionEnd	_NONE_	${HOOKS_DIR}/session-end-harness-archive.sh
 EOF
 
 # Returns the jq filter for adding (or removing) one entry idempotently.
@@ -207,6 +211,25 @@ while IFS=$'\t' read -r event matcher command; do
   jq "$filter" "$SETTINGS" > "$TMP"
   mv "$TMP" "$SETTINGS"
 done <<< "$ENTRIES_RAW"
+
+# ---------------------------------------------------------------------------
+# F-16 — assert the hook execute bit on every install (do not trust it). Every
+# *.sh hook is normalized to 755; common.sh stays 644 (it is sourced, never
+# executed). The execute bit has been silently lost before (git d99c496 restored
+# it on session-start-prune-commitment-logs.sh) — a recurring drift vector this
+# guard closes. chmod is idempotent, so this is a no-op when modes are correct.
+if [ "$UNINSTALL" -eq 0 ]; then
+  for f in "$HOOKS_DIR"/*.sh; do
+    [ -f "$f" ] || continue
+    if [ "$(basename "$f")" = "common.sh" ]; then target=644; else target=755; fi
+    if [ "$DRY_RUN" -eq 1 ]; then
+      echo "[dry-run] would chmod $target $(basename "$f")"
+    else
+      chmod "$target" "$f"
+    fi
+  done
+  [ "$DRY_RUN" -eq 0 ] && echo "Normalized hook file modes (755 executables; common.sh 644)."
+fi
 
 if [ "$DRY_RUN" -eq 0 ]; then
   if [ "$UNINSTALL" -eq 1 ]; then

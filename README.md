@@ -33,15 +33,15 @@ If you're a fellow PM curious about the methodology: start with the [methodology
 <!--
 Table of contents—lists every page in the repo with a one-line description.
 This is the navigation surface; every link must resolve.
-Entries reflect §5 architecture exactly. As Sessions 3-7 fill placeholder files,
-the one-line descriptions update to match the final content.
+Entries reflected §5 architecture at v1.0 and have since tracked the repo itself—
+v2.0 added CS#5, orchestrate-skill.md, sample-enforcement-hook.sh; §5 never listed them.
 Keep relative links so the repo is browseable on github.com without configuration.
 -->
 
 ### Manifesto and methodology
 
 - [`manifesto.md`](./manifesto.md)—the thesis, the origin moment, the voice anchor. *(Session 3.)*
-- [`methodology.md`](./methodology.md)—how the pieces fit. The layered overview of the architecture. *(Session 2 skeleton; content fills in across Sessions 3-5.)*
+- [`methodology.md`](./methodology.md)—how the pieces fit. The layered overview of the architecture. *(Session 2 skeleton; filled across Sessions 3-5.)*
 - [`metrics.md`](./metrics.md)—the operational dashboard. Four metrics, baseline 2026-07-06.
 
 ### Case studies
@@ -56,7 +56,7 @@ Keep relative links so the repo is browseable on github.com without configuratio
 
 - [`retrospection.md`](./retrospection.md)—synthesis: what the system needed from day one. *(Session 5.)*
 - [`surprises.md`](./surprises.md)—two surprises from the work. *(Session 5.)*
-- [`for-pms-reusing.md`](./for-pms-reusing.md)—the "how to build similar" path for fellow PMs. *(Session 5 or 6 per CLAUDE.md §6.)*
+- [`for-pms-reusing.md`](./for-pms-reusing.md)—the "how to build similar" path for fellow PMs. *(Session 5.)*
 
 ### Redacted artifacts
 
@@ -95,5 +95,5 @@ This portfolio is a curated showcase derived from a private source folder; the o
 
 ---
 
-**Sources:** `~/aios/projects/ai-operating-system/CLAUDE.md` (§5 architecture); `~/aios/projects/ai-operating-system/inputs/interview-material.md` (manifesto opener).
-**Last refreshed:** 2026-05-08
+**Sources:** `~/aios/projects/ai-operating-system/CLAUDE.md` §5 (the v1.0 repo skeleton—historical; it was not updated for v2.0 and no longer lists CS#5, `orchestrate-skill.md`, or `sample-enforcement-hook.sh`); `~/aios/projects/ai-operating-system-v2.0/CLAUDE.md` §3 (the v2.0 additions, which is what this page's Contents now reflects); `~/aios/projects/ai-operating-system/inputs/interview-material.md` (manifesto opener).
+**Last refreshed:** 2026-08-22
