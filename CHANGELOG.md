@@ -12,6 +12,37 @@ The portfolio's source of truth is `~/aios/`. Updates flow `~/aios/` → portfol
 
 ---
 
+## [2.0.4]—2026-08-28—Hook count corrected to thirteen; a redaction category for verbatim postings; four falsehoods removed from Case Study #4
+
+A PATCH release, and an unusual one: it bundles several maintenance sessions' work that had accumulated uncommitted in the working tree, so the dated sub-headings below matter more than usual.
+
+### Added—Category 8, a redaction class for a posting's own words (2026-08-28)
+
+- **A new redaction category masks the verbatim strings of a public job posting**, as ten registry rows (`jd-001`–`010`) plus six sanity-grep flag rows (`sg-032`–`037`). The existing categories mask an employer's *name* (Category 2) and the facts that *triangulate* to it (Category 7); this one masks the posting itself, because an exact published string is an index key back to the employer by literal search rather than inference. The controls are tested by reintroduction. That brings the registry to eight categories.
+- **Case Study #2's job-description excerpt was rebuilt to share no five-gram with the source posting.** It had been published since v1.0 (2026-05-09) across six releases, and this release is what closes it. A first repair attempt on the same day **failed and was caught**: it masked only the spans a reader would call identifying and left four verbatim runs standing, including the company's own boilerplate self-description with the specialty swapped out—the stronger key of the two. The excerpt now replaces every block with a bracketed description of what it contained, and says so in the surrounding prose. The lesson is recorded in the case study itself, because it is that chapter's own subject: a fix tested only against what it changed cannot detect what it missed. `case-studies/**` has no artifact-map row, so nothing re-derives it mechanically; these two registry categories are its only automated controls.
+
+### Corrected—Rows 8 and 55 (2026-08-28)
+
+- **The hook count corrected from twelve to thirteen, and the observe/enforce split from 9/3 to 10/3**, swept atomically across every site: Case Study #4 (prose, the section heading, the Cowork-parity subset, the Sources footer, and **one new observe subsection**), `methodology.md` twice, the `metrics.md` named inventory, and both artifact-tier port headers. The new hook is `post-tool-use-observe-bash-writes.sh`, which closes the commitment log's blind spot: the log `/end-session` audits against, and the completion gate blocks on, was written only by the `Write|Edit` hook, so any file changed through a shell command was invisible to both. It is deliberately an attribution recorder rather than a detector—the workspace's own detector-design rules name mtime as the first bad proxy for anything that *decides*, and this surface decides nothing.
+- **`policies/` corrected from fourteen files to sixteen**, at all three publishing sites. `closing-verifier.md` and `post-close-addendum.md` were missing from both enumerations. Ten still port to the artifact tier, so Case Study #1's source-side remainder goes from four to six.
+
+### Corrected—Case Study #4, four claims falsified against source (2026-08-28)
+
+Found by verifier rounds during the sweep above, not by any walker—each is a sentence, and a claim-register row can hold a number, never a sentence.
+
+- **The Cowork degrade branch was published as a live behavior six weeks after it was deleted.** The chapter said the general-purpose guards "degrade to the same non-blocking `additionalContext` warning until an out-of-session probe settles it." The probe settled it on 2026-07-17: Cowork both runs plugin hooks and honors their blocks, *and* the degrade had never fired even once—it keyed on a `/mnt/` segment the resolved workspace root does not contain on Cowork. The branch and its environment-variable override were deleted rather than left dormant. The rewrite also states what survives, because the first correction over-claimed in the other direction: two environment-variable overrides remain, and one of them—the unit-scope guard's `report-only` mode—is a degrade of exactly the deleted shape, which its own source labels "parity with guard-paths." It is retained only because nothing can switch it on unasked.
+- **The Cowork install route and the packaged filename were both wrong.** The plugin is written as `frontier-hooks.plugin`, not `.zip`, and is uploaded through Customize → Personal Plugin; the published "Organization Settings → Plugins" path does not exist on personal accounts. Both were already stated correctly in a redacted artifact sitting in this same repo, so the case study had been contradicting it.
+- **"The newest hook ships to Claude Code and not to Cowork" stopped being true when the thirteenth hook landed.** `pre-tool-use-prewrite-checks.sh` is still the one hook absent from the Cowork packager, but it is no longer the newest: the hook added 2026-08-25 went into both install lists, and the drift the paragraph warns about did not recur that time.
+
+### Notes
+
+- **Case Study #4's `Last refreshed` stamp is deliberately held at 2026-08-23.** The hook inventory and the `policies/` count were re-derived on 2026-08-28; `CLAUDE.md` and `policies/file-delivery.md`, the footer's other two declared sources, were not re-read against this chapter's claims about them. A partial re-read does not earn the stamp, and the footer says so inline.
+- **Three claim-register rows remain in DRIFT and ship with this release**: the eval count publishes 46 against a live 47, and two `corrections-log` line counts publish 630 and 1,842 against 655 and 1,867. They are queued rather than fixed here, and are named so the release record does not imply a clean walker.
+- **The artifact tier is accepted at 844 drift lines across five of nineteen artifacts** (disposition (b)). Draining it is a multi-session programme, not a publish-time fix. The five are `artifacts/policies/memory-architecture.md`, `sample-enforcement-hook.sh`, `artifacts/CLAUDE.md`, and the two install scripts.
+- **A register note was corrected, not just its value.** Row 8 had recorded that the artifact-tier install script "carries the claim twice—header and ported body." It does not; the count lives in the port-time header alone. Row 8 also gained a hook-count site it had never listed.
+
+---
+
 ## [2.0.3]—2026-08-24—Hook count corrected; Cowork/Claude Code hook-set divergence disclosed
 
 A PATCH release. Produced by Activation 4b of the maintenance project, in two sessions: A4b-1 (the workspace-tree cluster) and the Row 8 unit. Unlike v2.0.2, **the acceptance bar here is the re-read evidence, not a clean walker run**—every footer date below moved only in the same edit that recorded what was re-read against it.

@@ -1,7 +1,7 @@
 <!-- AUTHOR'S NOTE—this header is appended at port time; the original file does not contain it. -->
 
 > **Designed by Craig—runtime: Claude (Sonnet/Opus).**
-> **What this is.** The new-project-intake workflow protocol—what `/start-project` runs when a new multi-session effort kicks off. Defines the scope-gathering interview, the folder scaffolding from `templates/`, and the MEMORY.md Active Projects registration.
+> **What this is.** The new-project-intake workflow protocol—what `/start-project` runs when a new multi-session effort kicks off. Defines the scope-gathering interview, the folder scaffolding from `templates/`, the run-order back-pointer for sequenced projects, and the plan-confirmation gate before substantive work.
 > **What was redacted.** Nothing—the registry sweep produced zero substitutions.
 > **Why it's included.** Backs the case-study claim that multi-session work is structured up front: every project folder under `projects/` exists because this protocol ran on it at kickoff.
 
@@ -22,10 +22,11 @@ When Craig signals a new project (says "new project," describes a new multi-sess
    - **Sequencing**: What order should things be built/done? What's the first milestone?
 3. **Create the project folder** at `projects/[name]/` with:
    - `CLAUDE.md` — the project plan: goals, constraints, architecture decisions, non-negotiables, quality standards. This is prescriptive and stable — it changes only when Craig makes a deliberate strategic decision. **Scaffold from `templates/project-CLAUDE-md.template`.**
-   - `CONTEXT.md` — initialized with the first session's status and next steps. This is descriptive and temporal — it updates every session. **Scaffold from `templates/project-CONTEXT-md.template`.** Authoritative size budget is ≤1,800 cl100k for an active project (`policies/memory-architecture.md` §3.2); ~80 lines is a cheap proxy pre-screen, not the budget itself. Older session entries archive to `log.md`.
+   - `CONTEXT.md` — initialized with the first session's status and next steps. This is descriptive and temporal — it updates every session. **Scaffold from `templates/project-CONTEXT-md.template`.** Authoritative size budget is ≤2,400 cl100k for an active project (`policies/memory-architecture.md` §3.2); ~80 lines is a cheap proxy pre-screen, not the budget itself. Older session entries archive to `log.md`.
    - `log.md` — the full session log (one entry per session, append-only). Entries follow `templates/session-log-entry.template`. Created when the first session log entry is written.
    - `inputs/` — if the project has source materials (data files, specs, images, reference docs), create this directory and document what's in it in the project CLAUDE.md under a "Key Files" section.
    - `outputs/` — created when the first deliverable is produced.
+3.5. **Wire to the OS-execution-sequence tracker — if this project is sequenced.** Check whether the new project's name appears in `outputs/os-execution-sequence.md` (the OS-improvement run-order — e.g. `memory-hardening`, `enforcement-hardening`, `constitution-hardening`, `verification-hardening`, `environment-contract-hardening`, or any later-added entry). If it does: add a one-line back-pointer to the new `CONTEXT.md` Source-of-truth pointers (`Run-order: outputs/os-execution-sequence.md — this project is sequenced there; move its pointer at each /end-session`), and if this intake *is* the session that file's pointer names, advance the pointer. **No-op** if the project is not listed.
 4. **Confirm the plan** with Craig before starting substantive work. The project CLAUDE.md is the contract — get alignment before building.
 
 **Adapt questions to project type.** A full-stack product needs tech stack, data model, and deployment questions. A research project needs scope, sources, and deliverable format. A skill-building effort needs workflow, eval criteria, and reference material questions. Use Craig's overview to determine which areas matter most and skip what's irrelevant.
@@ -35,7 +36,7 @@ When Craig signals a new project (says "new project," describes a new multi-sess
 The `templates/` folder contains scaffolds for the standard artifacts new projects produce:
 
 - `templates/project-CLAUDE-md.template` — 12-section project plan (goal / diagnosis / scope / non-negotiables / architecture / sequencing / quality bar / working practices / source-of-truth / what-this-plan-does-not-do / failure modes / kickoff). Use for any multi-session project.
-- `templates/project-CONTEXT-md.template` — slim status file (≤1,800 cl100k for an active project per `policies/memory-architecture.md` §3.2; ~80 lines as a proxy pre-screen): Status / Next steps / 3 most recent sessions / Source-of-truth pointers.
+- `templates/project-CONTEXT-md.template` — slim status file (≤2,400 cl100k for an active project per `policies/memory-architecture.md` §3.2; ~80 lines as a proxy pre-screen): Status / Next steps / 3 most recent sessions / Source-of-truth pointers.
 - `templates/session-log-entry.template` — full per-session entry for `log.md` (purpose / actions / acceptance check / state at close / open items). The `log.md` is append-only; CONTEXT.md only carries 1-2 line summaries of the 3 most recent.
 - `templates/eval-template.md` — skill eval format (preamble / JD summary / mastery angles / key decisions / iteration log / verification / rules spawned / cross-references). Lives in `skills/[name]/evals/`.
 - `templates/correction-entry.template` — single corrections-log.md entry (failure mode / WRONG / RIGHT / why-checks-missed-it / rule spawned / severity / provenance / cross-refs).

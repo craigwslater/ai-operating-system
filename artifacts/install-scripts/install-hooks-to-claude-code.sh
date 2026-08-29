@@ -4,8 +4,8 @@
 # Designed by Craig—runtime: Claude (Sonnet/Opus).
 #
 # What this is. The Claude Code install script for the ~/aios hook
-# layer. Wires all twelve hooks—across five event types (PreToolUse, PostToolUse,
-# SessionStart, Stop, SessionEnd), nine that observe and three that enforce—
+# layer. Wires all thirteen hooks—across five event types (PreToolUse, PostToolUse,
+# SessionStart, Stop, SessionEnd), ten that observe and three that enforce—
 # from ~/aios/hooks/ into ~/.claude/settings.json so they fire on every
 # Claude Code session against this workspace. Idempotent: re-running on an
 # already-wired settings.json is a no-op.
@@ -32,6 +32,8 @@
 #   - PreToolUse  (matcher "Write|Edit") → pre-tool-use-unit-scope.sh
 #   - PreToolUse  (matcher "Write|Edit") → pre-tool-use-prewrite-checks.sh
 #   - PostToolUse (matcher "Write|Edit") → post-tool-use-verify-write.sh
+#   - PostToolUse (matcher "Bash|mcp__workspace__bash")
+#                                         → post-tool-use-observe-bash-writes.sh
 #   - Stop                                → stop-verify-before-complete.sh
 #   - SessionStart                        → session-start-prune-commitment-logs.sh
 #   - SessionStart                        → session-start-drift-guard.sh
@@ -111,6 +113,7 @@ PreToolUse	Write|Edit	${HOOKS_DIR}/pre-tool-use-guard-paths.sh
 PreToolUse	Write|Edit	${HOOKS_DIR}/pre-tool-use-unit-scope.sh
 PreToolUse	Write|Edit	${HOOKS_DIR}/pre-tool-use-prewrite-checks.sh
 PostToolUse	Write|Edit	${HOOKS_DIR}/post-tool-use-verify-write.sh
+PostToolUse	Bash|mcp__workspace__bash	${HOOKS_DIR}/post-tool-use-observe-bash-writes.sh
 Stop	_NONE_	${HOOKS_DIR}/stop-verify-before-complete.sh
 SessionStart	_NONE_	${HOOKS_DIR}/session-start-prune-commitment-logs.sh
 SessionStart	_NONE_	${HOOKS_DIR}/session-start-drift-guard.sh

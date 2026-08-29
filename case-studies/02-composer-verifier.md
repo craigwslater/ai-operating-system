@@ -32,44 +32,38 @@ A pre-flight layer sits before the verifier. `scripts/preflight_check.py` runs t
 
 ## What gets fed in
 
-The system parses a JD into structured signals before the composer drafts. The eval archive shows the shape repeated 23 times. The excerpt below is one such JD, redacted for company name and clinical specialty; the structural moves the composer makes against it are the same on any input.
+The system parses a JD into structured signals before the composer drafts. The eval archive shows the shape repeated 23 times. The excerpt below is one such JD. **No sentence below is verbatim from the posting.** Every block is replaced by a bracketed description of what it contained, because an exact posting string is an index key back to the employer even when the employer's name is masked — registry Category 8's premise. ⚠️ *A first pass on 2026-08-28 masked only the strings a reader would call identifying — role scope, ownership clause, responsibilities, quals — and left four verbatim spans standing, including the company's own boilerplate self-description with just the specialty swapped out. That is the stronger key, and the paragraph here claimed the verbatim layer was gone while it was not. Corrected the same day, by a verifier that went and found the live posting. The lesson is the one this case study is about: a fix tested only against what it changed cannot detect what it missed.* What survives is the **shape**, which is the point — the structural moves the composer makes are the same on any input.
 
 ```
 Senior Product Manager
 Remote
-[REDACTED COMPANY] is a virtual [REDACTED SPECIALTY] clinic delivering
-multi-disciplinary evidence-based [REDACTED SPECIALTY] treatment
-through telemedicine. [...]
+[REDACTED COMPANY OVERVIEW — one sentence: a telehealth clinic,
+its care model, and the clinical specialty it delivers.] [...]
 
 About the Role
-We're looking for a strategic, hands-on, experienced Product
-Manager to lead Scheduling & Care Access product development at
-[REDACTED COMPANY]. Scheduling sits at the intersection of patient
-access, provider utilization, and operational scale. [...] This
-is a high-leverage role with end-to-end ownership of one of our
-most consequential product areas, including the authority to make
-build vs. buy decisions and shape the future architecture of our
-scheduling stack.
+[REDACTED ROLE FRAMING — two sentences: a "we're looking for"
+opener naming the seniority and disposition sought, the product
+area to be led, and the three competing concerns it names as
+that area's intersection.] [...] [REDACTED
+OWNERSHIP CLAUSE — end-to-end ownership over a named product
+area, explicit build-vs-buy decision authority, and architectural
+influence over the domain's systems.]
 
 What you will do
-- Develop a deep understanding of workflows across patients,
-  schedulers, patient coordinators, and providers.
-- Identify the highest-impact jobs-to-be-done to improve access
-  while reducing operational burden.
-- Lead evaluation of third-party scheduling solutions vs. in-house
-  development; prototype, test, and validate approaches grounded
-  in data and long-term architectural fit.
+- [REDACTED JD RESPONSIBILITIES — three bullets: workflow
+  discovery across four named patient-facing and clinical roles,
+  jobs-to-be-done prioritization against a two-sided
+  trade-off, and a vendor-versus-in-house evaluation judged on
+  evidence and durability.]
 
 About you
-- 7+ years of product management experience, with time on
-  scheduling or logistics products.
-- Healthcare or care delivery experience.
-- A bias for driving product decisions with metrics and analytics.
-- Comfort making and defending build vs. buy decisions, including
-  evaluating third-party vendors and integrating across systems.
+- [REDACTED JD REQUIRED QUALS — four bullets: a seniority floor
+  with domain-specific tenure, care-delivery experience, a
+  metrics-driven decision bias, and comfort defending
+  vendor-versus-in-house calls across integrated systems.]
 ```
 
-The composer extracts four structured artifacts from a JD like this one. (1) A *JD briefing* that catalogs the top 6–8 JD concepts, the JD's exact vocabulary mapped to mastery angles Craig brings, the role-type classification (in this case: Healthcare Platform + Operational-Scheduling, with build-vs-buy authority as a high-leverage signal), and the hook-angle candidate driven by the company's current moment. (2) A *company brief* that finds the inflection point the hook will anchor on—a recent product launch, a funding round, a strategic pivot, an industry condition the company is responding to. (3) A *reader model* that names the hiring manager's likely concerns and how each will be addressed across cover letter and resume—surfaced, defended, or deliberately not addressed. (4) A *Craig application JSON* that locks the canonical phrases the composer is permitted to use verbatim. Phrase-locks exist because canonical phrasings drift across sessions otherwise; the JSON is the authoritative source.
+The composer extracts four structured artifacts from a JD like this one. (1) A *JD briefing* that catalogs the top 6–8 JD concepts, the JD's exact vocabulary mapped to mastery angles Craig brings, the role-type classification (in this case a [REDACTED ROLE-TYPE] subtype, with build-vs-buy authority as a high-leverage signal), and the hook-angle candidate driven by the company's current moment. (2) A *company brief* that finds the inflection point the hook will anchor on—a recent product launch, a funding round, a strategic pivot, an industry condition the company is responding to. (3) A *reader model* that names the hiring manager's likely concerns and how each will be addressed across cover letter and resume—surfaced, defended, or deliberately not addressed. (4) A *Craig application JSON* that locks the canonical phrases the composer is permitted to use verbatim. Phrase-locks exist because canonical phrasings drift across sessions otherwise; the JSON is the authoritative source.
 
 These four artifacts feed the composer. The verifier reads them too. When the verifier flags a Medium issue and Craig disposes of it as defensible, the disposition gets logged in the eval. When the verifier flags a Blocker, composition holds and the rule that fired gets re-read.
 

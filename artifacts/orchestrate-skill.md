@@ -2,7 +2,7 @@
 
 > **Designed by Craig—runtime: Claude (Sonnet/Opus).**
 > **What this is.** The `orchestrate` skill's SKILL.md—the operator command that runs a frozen autonomous-execution plan end-to-end in quality-disciplined batches. It *wraps* the closed autonomous-execution engine and never rebuilds it. Defines the runbook pre-flight, the plan freeze/validate, batch execution with a mandatory orchestrator restart at every boundary, the decision-focused boundary review, and the Tier-1-manual / Tier-2-auto-continue gate.
-> **What was redacted.** Minimal. The pre-launch e-commerce venture's internal project name for its bounded data backlog—the skill's first-use target and its batch-size tuning example—is genericized to "a bounded, low-blast data backlog" (`inputs/redaction-registry.md` Category 6; `sanity-grep-entities.md` Category D). Framework file names and CLI paths are kept, since they carry no sensitive content and let a reader trace the wrapper against the engine it consumes. No PII, active-target-company, or third-party-individual content appears in this file.
+> **What was redacted.** Minimal. The pre-launch e-commerce venture's internal project name for its bounded data backlog—the skill's first-use target and its batch-size tuning example—is genericized to `[bounded-backlog project]` and `[bounded data]`—three substitutions across two registry rows (ape-001, ape-004; `inputs/redaction-registry.md` Category 6, with `sanity-grep-entities.md` Category D as the backstop). Framework file names and CLI paths are kept, since they carry no sensitive content and let a reader trace the wrapper against the engine it consumes. No PII, active-target-company, or third-party-individual content appears in this file.
 > **Why it's included.** Backs Case Study #5's claim that autonomous execution is operated through a disciplined, human-gated command rather than a fire-and-hope loop: the batch cadence, the mandatory restart that closes the orchestrator's own context ceiling, and the quality-trend stop armed in both tiers are all here in the skill's own words.
 
 *Where to read first.* **Peer PMs**—"The one rule that governs everything" (consume, never rebuild) and Steps 3–6 (the batch loop, the boundary review, the tier gate, the restart). **Recruiters**—[Case Study #5](../case-studies/05-autonomous-execution.md) is the lighter read on the same content.
@@ -11,14 +11,15 @@
 
 ---
 name: orchestrate
-description: Run a frozen APE execution plan (PLAN.json) end-to-end in quality-disciplined BATCHES — the operator command that wraps the CLOSED autonomous-project-execution engine and never reimplements it. Runs the RUNBOOK pre-flight, freezes/validates the plan, executes the unit queue in batches with a mandatory orchestrator restart at every boundary (closes the warm-session context ceiling), renders a decision-focused boundary review, and gates manual-in-Tier-1 / auto-continue-in-Tier-2. Invoke when Craig types /orchestrate <project>, says "orchestrate the [project] backlog" / "run [project] end-to-end" / "batch-run the units for [project]", or wants to run a bounded data backlog unattended with a stop-before-quality-declines cadence. Wraps orchestrator/lib CLIs + orchestrator-protocol.md §2; does NOT rebuild them, grant Tier 2, or run concurrent arcs.
+description: Run a frozen APE execution plan (PLAN.json) end-to-end in quality-disciplined BATCHES — the operator command that wraps the CLOSED autonomous-project-execution engine and never reimplements it. Runs the RUNBOOK pre-flight, freezes/validates the plan, executes the unit queue in batches with a mandatory orchestrator restart at every boundary (closes the warm-session context ceiling), renders a decision-focused boundary review, and gates manual-in-Tier-1 / auto-continue-in-Tier-2. Invoke ONLY when Craig types /orchestrate [project] — SLASH-ONLY as of memory-hardening MH-1 (2026-07-27); disable-model-invocation means spoken paraphrases no longer reach this skill. Wraps orchestrator/lib CLIs + orchestrator-protocol.md §2; does NOT rebuild them, grant Tier 2, or run concurrent arcs.
+disable-model-invocation: true
 ---
 
 # /orchestrate — Batch-Disciplined Autonomous Execution
 
-The operator command for running a planned multi-session project end-to-end, unattended, with **consistent quality across dozens of units** and a **"stop before quality declines"** checkpoint cadence. It **wraps the closed autonomous-project-execution (APE) orchestrator engine** — the sequential-autonomy spine (protocol + `lib/` CLIs + escalation policy + guardrail hooks) — and adds the **batch discipline** the engine deliberately left to an operator layer.
+The operator command for running a planned multi-session project end-to-end, unattended, with **consistent quality across dozens of units** and a **"stop before quality declines"** checkpoint cadence. It **wraps the closed [`autonomous-project-execution`](../../projects/autonomous-project-execution/) (APE) orchestrator engine** — the sequential-autonomy spine (protocol + `lib/` CLIs + escalation policy + guardrail hooks) — and adds the **batch discipline** the engine deliberately left to an operator layer.
 
-Lineage: **APE (engine, closed) → `/orchestrate` (this operator layer) → `concurrent-session-execution` (concurrency, later)**. This command is the sequential operator command; concurrency builds on top of it.
+Lineage: **APE (engine, closed) → `/orchestrate` (this operator layer) → `concurrent-session-execution` (concurrency, later)**. This command is the sequential operator command; CSE builds concurrency on top of it.
 
 ---
 
@@ -53,14 +54,14 @@ Confirm `$ENGINE/lib/plan.py` exists. If the engine tree is missing, STOP and te
 
 ## Step 1 — Pre-flight (RUNBOOK §1 — run EVERY launch)
 
-Re-checked per run (`escalation.md` §9.2 conditions 4–5 can regress). Each step maps to an exact action:
+Re-checked per run (`autonomy-eligibility.md` conditions 4–5 can regress). Each step maps to an exact action:
 
-1. **Pick the tier.** `python3 $ORCH/lib/boundary.py tier --project $ROOT/projects/<project>` → `{tier, gate_mode, grant}`. Cross-read `escalation.md` §9. A **new project type or new scope shape → Tier 1 (supervised)** regardless of any stale grant; only a type with a *current, recorded* `autonomy: Tier 2` grant runs fire-and-forget. *(As of 2026-07-01 nothing is Tier 2 yet.)*
+1. **Pick the tier.** `python3 $ORCH/lib/boundary.py tier --project $ROOT/projects/<project>` → `{tier, gate_mode, grant}`. Cross-read `policies/autonomy-eligibility.md`. A **new project type or new scope shape → Tier 1 (supervised)** regardless of any stale grant; only a type with a *current, recorded* `autonomy: Tier 2` grant runs fire-and-forget. *(As of 2026-07-01 nothing is Tier 2 yet.)*
 2. **Guard modes.** The **operator/orchestrator** sets these **inline per `claude -p`** (the FH hooks read them from the *unit subprocess* env; shell `export` does not persist across Bash calls — RUNBOOK §1.2/§9/§11):
    `GUARD_PATHS_MODE=block STOP_VERIFY_MODE=block UNIT_SCOPE_MODE=block claude -p …`. These are **separate from** `runner.py build-cmd --guard-directive`, which emits the *unit scope* env (`APE_UNIT_*`) + the two directives — **not** the `*_MODE` vars. The two env sets compose on the same launch; set the modes even though Claude Code already defaults them to `block`, so a stray env can't flip them (RUNBOOK §1.2).
 3. **Surface + notify.** `python3 $ENGINE/lib/surface.py detect` (expect `local`). Confirm **Remote Control connected** + `/config` push **on**, or STOP pings are desktop-only (a silent-stall risk → keep the run supervised).
-4. **Dependency pre-provision (§9.2 cond. 4).** Confirm every tool the arc needs is already installed. The loop **never** installs unattended — a missing dep mid-run is a STOP. This is a **manual** operator check.
-5. **Smoke both spines.** `bash $ENGINE/tests/smoke.sh` (expect `ALL SMOKE TESTS PASSED`) **and** `bash $ORCH/tests/smoke.sh` (expect `ALL ORCHESTRATE SMOKE TESTS PASSED`) — guards the engine contract *and* the wrapper's composition of it before a real run.
+4. **Dependency pre-provision (F7 / §9.2 cond. 4).** Confirm every tool the arc needs is already installed. The loop **never** installs unattended — a missing dep mid-run is a STOP. This is a **manual** operator check.
+5. **Smoke both spines.** `bash $ENGINE/tests/smoke.sh` (expect `ALL SMOKE TESTS PASSED`) **and** `bash $ORCH/tests/test-smoke.sh` (expect `ALL ORCHESTRATE SMOKE TESTS PASSED`) — guards the engine contract *and* the wrapper's composition of it before a real run.
 
 ## Step 2 — Freeze + validate the plan (RUNBOOK §2.1–2.2)
 
@@ -115,29 +116,29 @@ The fresh session re-enters §2 step A (idempotent answer ingest — repeat answ
 ## Step 7 — Completion & close
 
 - `arc_complete` → the engine renders the final `RUN.md` (`runstate.py render-md`) and pushes "run complete".
-- **Log the run's escalations** (warranted / missed / over-eager) + every out-of-scope write attempt — this is the **graduation evidence** a Tier-1 run needs to earn Tier 2 for the type (`escalation.md` §9.3). If it earned one, record `autonomy: Tier 2 (granted <date>; precedent <run_id>; scope-shape <…>)` in the project's `CONTEXT.md` — but **granting Tier 2 is Craig's call**, outside this command.
-- Session bookkeeping (`CONTEXT.md` / `log.md` / registry) is Craig's interactive **`/end-session`**, not the loop's — units are forbidden from parent-mutation (UNIT-CONDUCT rule 2).
+- **Log the run's escalations** (warranted / missed / over-eager) + every out-of-scope write attempt — this is the **graduation evidence** a Tier-1 run needs to earn Tier 2 for the type (`autonomy-eligibility.md`, graduation procedure). If it earned one, record `autonomy: Tier 2 (granted <date>; precedent <run_id>; scope-shape <…>)` in the project's `CONTEXT.md` — but **granting Tier 2 is Craig's call**, outside this command.
+- Session bookkeeping (`CONTEXT.md` / `log.md` / registry) is Craig's interactive **`/end-session`**, not the loop's — units are forbidden from parent-mutation (UNIT-CONDUCT rule 2 / F5).
 
 ---
 
 ## Batch size
 
-Default **3** — conservative and **provisional**. It is **not** locked: tune it from the first **Tier-1 supervised** run's real per-unit wall-clock + review cadence (skill ROADMAP), not a guess. `RUNBOOK.md` §8 (units ≈ 60–90 min each) informs the starting guess. Override: `/orchestrate <project> --batch-size N`. "Dozens-of-units reliability" is **untested** — the APE pilot ran **2 units**; the first real batch stays Tier-1 supervised and its evidence sets the thresholds.
+Default **3** — conservative and **provisional**. It is **not** locked: tune it from the first **Tier-1 supervised `[bounded-backlog project]`** run's real per-unit wall-clock + review cadence (skill ROADMAP), not a guess. `RUNBOOK.md` §8 ([bounded data] units ≈ 60–90 min each) informs the starting guess. Override: `/orchestrate <project> --batch-size N`. "Dozens-of-units reliability" is **untested** — the APE pilot ran **2 units**; the first real batch stays Tier-1 supervised and its evidence sets the thresholds.
 
-## Non-Negotiables (this command)
+## Non-Negotiables (this command — mirrors the `orchestrate-command` plan §4)
 
-1. **Consume the engine, never rebuild it.** Only `lib/boundary.py` ships, and it is read-only. The verifier confirmed no engine logic is duplicated.
-2. **Batch boundary = a mandatory checkpoint in Tier 1.** Auto-continue is unlocked *only* by a recorded Tier-2 grant; even then the quality-trend STOP guard (§3.9) stays armed.
+1. **Consume the engine, never rebuild it.** Only `lib/boundary.py` ships, and it is read-only. The S1 verifier confirmed no engine logic is duplicated.
+2. **Batch boundary = a mandatory checkpoint in Tier 1.** Auto-continue is unlocked *only* by a recorded Tier-2 grant; even then the quality-trend STOP guard (§3.9, shipped S2) stays armed.
 3. **Orchestrator restart at every boundary** (both tiers) — Ceiling 2 closed by construction.
 4. **The quality bar is inherited and inviolable.** Per-unit verifier at 100; anti-falsification (`escalation.md` §2 — never edit the data or the gate to force a pass); read-back on every write. The wrapper **tightens, never loosens**.
 5. **All global + APE primitives hold** — Scope Sizing (one non-compacting unit), the async escalation model, no-parent-mutation, no-unattended-install.
 
 ## Source of truth
 
-- **Engine (consumed, do not fork):** `$ENGINE/orchestrator-protocol.md` §2, `$ENGINE/RUNBOOK.md`, `$ENGINE/consumed-hooks.md`, `$ENGINE/lib/`, `policies/escalation.md` (§9 tiers), `projects/autonomous-project-execution/{execution-plan-format.md,run-state-ledger-schema.md}`.
-- **This command:** `skills/orchestrate/SKILL.md` (this file) · `lib/boundary.py` (read-only helper) · `tests/smoke.sh` (dry composition test).
+- **Engine (consumed, do not fork):** `$ENGINE/orchestrator-protocol.md` §2, `$ENGINE/RUNBOOK.md`, `$ENGINE/consumed-hooks.md`, `$ENGINE/lib/`, `policies/escalation.md` (runtime decision routing) + `policies/autonomy-eligibility.md` (tiers), `projects/autonomous-project-execution/{execution-plan-format.md,run-state-ledger-schema.md}`.
+- **This command:** `skills/orchestrate/SKILL.md` (this file) · `lib/boundary.py` (read-only helper) · `tests/test-smoke.sh` (dry composition test).
 - **Follow-ups:** `skills/orchestrate/ROADMAP.md`.
-- **First-use target:** the first bounded, low-blast data backlog (Tier-1 supervised batch).
+- **First-use target:** `projects/[bounded-backlog project]/` (Tier-1 supervised batch).
 
 ## What this command does NOT do
 

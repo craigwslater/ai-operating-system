@@ -25,7 +25,7 @@ All output files (Excel, PDF, Word doc, etc.) are saved within the `~/aios` fold
 **Never save output files to:**
 
 - Craig's Desktop (`~/Desktop/`)
-- The root of `~/aios/` (only CLAUDE.md, MEMORY.md, and system dirs belong there)
+- The root of `~/aios/` — the canonical root allowlist is `ROOT_ALLOWLIST` in `hooks/pre-tool-use-guard-paths.sh` (currently: CLAUDE.md, MEMORY.md, MEMORY.local.md, MEMORY.local-archive.md, INDEX.md, .gitignore), plus system dirs. That hook is the enforcement point; this line mirrors it, so read the hook if the two ever disagree. **Allowlisted ≠ writable by any tool:** since 2026-07-29 the hook's rule **D3** denies the `Write` tool on `MEMORY.local.md` and `MEMORY.local-archive.md` — the registry is edited surgically with `Edit`, one row at a time, never rewritten wholesale (concurrency mechanism `CSE-M1`).
 - Cowork's system folder (`mnt/.claude/`)
 - Temporary VM paths (`/tmp/`, `/sessions/.../` outside a mounted folder)
 

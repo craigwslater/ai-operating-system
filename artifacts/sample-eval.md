@@ -2,17 +2,17 @@
 
 > **Designed by Craig—runtime: Claude (Sonnet/Opus).**
 > **What this is.** One eval from the `job-materials` skill's eval suite—Eval 18 (a behavioral-health digital-app target). Walks the full eval framework: Hook Bench / Intersection Test / Register Match / JD-Bonus-Qual / Verifier Pass 1 / Verifier Pass 2 / Step 5.6 composer-side semantic audit / shipping decision.
-> **What was redacted.** 36 substitutions across 10 patterns. Active-target-company names (8 distinct companies) substituted to `[REDACTED COMPANY]` per the registry; one short-form variant caught as a registry gap during this Session 6 port (tgt-062). One prior-employer internal product name and one prior-employer protocol-adoption phrase substituted per registry rows prior-001 and prior-009. Prior-employer company names CentralReach, Charli Charging, Knowledge to Practice / KTP remain visible per Session 0 Q3 (LinkedIn-public).
+> **What was redacted.** 73 substitutions across 34 patterns, in four groups. (1) Active-target-company names — 9 distinct companies, 38 substitutions to `[REDACTED COMPANY]`, including one short-form variant caught as a registry gap during the Session 6 port (tgt-062). (2) One prior-employer internal product name and one prior-employer protocol-adoption phrase, per registry rows prior-001 and prior-009. (3) **Defensive margin** — 23 substitutions across 15 rows masking facts that identify a target company by triangulation rather than by name: a named payer partnership, a customer-count figure, a revenue/valuation/stage cluster, a named competitor, a productized care-model name, and the dated sources carrying them—trade-press and first-party alike (registry Category 7). Nine of those rows generalize a claim rather than swapping a named entity, so a reader sees the claim's shape and not its citation—and eight of the nine carry no `[…]` brackets, so they read as ordinary prose rather than as visible substitutions. This sentence is where a reader learns they exist at all. (4) **Job-posting identifiers**—10 substitutions across 8 rows (registry Category 8) masking strings lifted from the public posting this eval was run against: the distinctive half of the role title, the compensation band, the work-model clause, the role-type label, an internal three-team naming triple, and the required, preferred and key-responsibilities blocks entire. Category 2 masks the employer's *name* and group (3) masks facts that triangulate to it; these mask the *posting itself*—an exact title beside an exact band is recovered by a literal search rather than by any inference, so publishing them undoes the other two groups without needing them. All eight carry `[…]` brackets, so unlike most of group (3) they announce themselves. ⚠️ **Widened 2026-08-28, second pass, on Craig's explicit call and with its cost stated and accepted:** the first pass masked the title, band and work-model clause only; the closing content round found the role-type label, an internal three-team naming triple, the preferred-quals list and the whole key-responsibilities block still published; a further round then found the **required**-quals block still standing between the two that had just been masked, which is the sibling this same session had already masked in `case-studies/02` for a different employer — all of which meet this category's own "verbatim AND distinctive" test **more strongly** than the work-model clause that had been masked. The worked examples below reason against those exact clauses, so generalizing them removes material this eval's pedagogy used. That trade was Craig's to make and he made it. `HIPAA` is carried through the responsibilities replacement deliberately: it is a public-domain name the registry keeps verbatim, and a block mask must not swallow it silently. Prior-employer company names CentralReach, Charli Charging, Knowledge to Practice / KTP remain visible per Session 0 Q3 (LinkedIn-public).
 > **Why it's included.** Direct evidence of CS#3 (eval-driven correction loops): what one eval looks like end-to-end—what the framework checks, what passes, what fails, how a fix gets encoded back to source.
 
 ---
 
-# Eval 18 — [REDACTED COMPANY] (Senior Product Manager, B2B Platform & Integrations)
+# Eval 18 — [REDACTED COMPANY] (Senior Product Manager, [REDACTED ROLE SCOPE])
 
 **Date:** 2026-05-04
 **Outcome:** Shipped after 2 generation cycles. Cycle 1: Pass 1 verifier 0 Blocker / 0 High / 2 Medium / 0 Low (both Mediums dispositioned as verifier misapplications, presented to Craig); Step 5.6 quality-lens Ship verdict (Hook 4/5 GOOD-2/3 / Intersection 4/5 / Register Pass / JD bonus-qual Pass / Rule 28 CLEAR). Cycle 2: triggered by Craig review flagging the hook's "rolling out integrated offerings" framing as anchored on a 28-month-old source ([REDACTED COMPANY] business-side blog, ~2 years prior to composition). Hook + close re-anchored on [major payer partner] partnership (recent launch — 4 months old at composition) + [scale-figure] employer customer base (durable-scale carve-out). Final mechanical checks: Phrase Lock 5/5 verbatim, pre-flight 0/0/1/0 (PL #1 advisory), canonical_diff 0 DRIFT / 7 CLEAN / 3 SKIP. Application materials in `projects/job-search/outputs/Slater, Craig - {Resume,Cover Letter} ([REDACTED COMPANY]).{docx,pdf}`.
 
-**Role type:** Healthcare Platform + Integrations (custom subtype of Healthcare Platform + Analytics) — Senior PM owning and scaling the platform capabilities (eligibility infrastructure, APIs, onboarding tooling, admin/configuration tools) that power [REDACTED COMPANY]'s B2B business across employers and health plans, with launch orchestration responsibility across Platform / Activation / Engagement teams.
+**Role type:** [REDACTED ROLE-TYPE] (custom subtype of Healthcare Platform + Analytics) — Senior PM owning and scaling the platform capabilities (eligibility infrastructure, APIs, onboarding tooling, admin/configuration tools) that power [REDACTED COMPANY]'s B2B business across employers and health plans, with launch orchestration responsibility across [set-of-named-internal-teams].
 
 **Significance:** Surfaced **two related rule-enforcement gaps** that shipped past three verification layers (pre-flight + rule-violation verifier Pass 1 + Step 5.6 quality-lens) and were caught only by Craig's review during post-delivery walkthrough. Both spawned new disciplines codified across four skill source files. Failure mode is NEW (Brief-fact currency + role-relevance discipline did not exist as a rule) — distinct from [REDACTED COMPANY]'s composer-drift-on-existing-rules pattern. Does NOT count as the second instance for the v4 reopen trigger.
 
@@ -20,13 +20,13 @@
 
 ## 1. JD Summary
 
-[REDACTED COMPANY] — Senior Product Manager, B2B Platform & Integrations. Pay range $122,000-$195,000 + equity + benefits. Remote unless SF area (hybrid 3 days/week).
+[REDACTED COMPANY] — Senior Product Manager, [REDACTED ROLE SCOPE]. [REDACTED PAY BAND]. [REDACTED WORK MODEL].
 
-Required (4+ years PM): platform/APIs/infrastructure products experience; end-to-end delivery of complex cross-functional initiatives or launches; building and scaling platform capabilities or integration-heavy systems; working closely with engineering teams on API design, data systems, or backend infrastructure; systems thinking; cross-functional environment experience; communication.
+Required: [REDACTED JD REQUIRED QUALS — a tenure floor plus seven clauses spanning platform/API/infrastructure product experience, end-to-end delivery of cross-functional launches, scaling platform and integration-heavy systems, close engineering collaboration on API and data design, systems thinking, cross-functional-environment experience, and communication].
 
-Preferred: Healthcare/B2B2C/regulated environment experience; eligibility systems / data integrations / interoperability (HIEs, payer systems); B2B or enterprise onboarding workflows; admin tools / configuration systems / platform UX; passion for mental health.
+Preferred: [REDACTED JD PREFERRED QUALS — five clauses spanning regulated-healthcare experience, eligibility and interoperability systems, enterprise onboarding workflows, admin and configuration tooling, and a domain-passion clause].
 
-Key Responsibilities (the JD's explicit emphasis): Platform Strategy & Roadmap (B2B partner platform, scalable onboarding, integrations, partner lifecycle management across employers and health plans); Launch Orchestration (across Platform, Activation, and Engagement teams); Platform Systems Ownership (eligibility infrastructure, APIs — eligibility, referrals, reporting; admin/configuration tools); Onboarding Infrastructure (build and scale reusable onboarding capabilities); Cross-Team Collaboration (Engineering, Design, Data, Clinical, Sales, Customer Success); Compliance & Data Governance (HIPAA); Success Measurement (time to launch new partners + platform reliability — eligibility accuracy, access, system performance).
+Key Responsibilities (the JD's explicit emphasis): [REDACTED JD RESPONSIBILITIES — seven headings spanning platform strategy and roadmap, launch orchestration across internal teams, platform systems ownership, onboarding infrastructure, cross-team collaboration, compliance and data governance (HIPAA), and success measurement].
 
 JD-Gate-2 hits Craig's mastery genuinely covers: "platform" (responsibility + role title), "APIs" (responsibility), "eligibility infrastructure," "onboarding tooling" / "B2B partner onboarding workflows" (preferred), "admin/configuration tools" (responsibility + preferred), "data integrations" / "interoperability" (preferred), "HIPAA," "B2B2C" (preferred), "Compliance & Data Governance," "systems thinking" (required).
 
@@ -57,7 +57,7 @@ JD does NOT hook: AI/ML by name (no AI/ML/LLM/agentic/GenAI references); FHIR/HL
 
 Cycle 1 hook: anchored on "[scale-figure] employer customers" + "rolling out integrated offerings across partner network." Surface fact-trace passed (Brief-sourced; Step 4d + 4e cleared); failed under Craig review when the supporting source for "rolling out" ([REDACTED COMPANY] business-side blog, ~2 years prior to composition) was identified as 28 months old.
 
-Cycle 2 hook (final): anchored on "[REDACTED COMPANY]'s tailored [major payer partner] experience now live atop a B2B platform serving [scale-figure] employer customers." [partner launch] supports "now live" with a 4-month-old source ([trade-press release announcing partner go-live]). [scale-figure] employer customer base applies the durable-scale carve-out (current marketing language re-verified at composition time). Both Rule 23 dual-specificity tests pass cleanly (competitor-swap: [direct competitor] doesn't have [major-partner partnership] of this scale or [scale-figure] employer base; current-moment: [partner launch] is the named recent event).
+Cycle 2 hook (final): anchored on "[REDACTED COMPANY]'s tailored [major payer partner] experience now live atop a B2B platform serving [scale-figure] employer customers." [partner launch] supports "now live" with a 4-month-old source (trade-press release announcing partner go-live). [scale-figure] employer customer base applies the durable-scale carve-out (current marketing language re-verified at composition time). Both Rule 23 dual-specificity tests pass cleanly (competitor-swap: [direct competitor] doesn't have [major-partner partnership] of this scale or [scale-figure] employer base; current-moment: [partner launch] is the named recent event).
 
 ### AI/ML framing decision
 
@@ -83,7 +83,7 @@ Hiring manager persona: Senior Director / VP of Product. Company stage Growth �
 - Step 4 mechanical checks: 4a Phrase-Lock PASS 5/5; 4b bolding within caps; 4c pre-flight 0/0/1/0 (PL #1 advisory); 4d Hook Source-URL Audit PASS; 4e Interpretive-Claim Sourcing Audit PASS (word-by-word); 4f canonical_diff against pre-generation JSON returned MISSING flags due to known JSON-loader bug (script does not iterate the `paragraphs` list under `cover_letter`) — re-ran post-generation against generated .docx, returned 0 DRIFT / 7 CLEAN / 3 SKIP.
 - Step 5 Pass 1 verifier: 0 Blocker / 0 High / 2 Medium / 0 Low. Both Mediums dispositioned as verifier misapplications and presented to Craig: (a) Check #35 procedural flag for "stripped source comments" — but SKILL.md Step 4e mandates stripping the inline comments and preserving the audit table in composer_notes.md, which was done; (b) Check #36 apposition consistency — verifier misclassified "the company's first proprietary platform" as an apposition (it's the object of "built," not a descriptor; Charli is introduced bare matching [REDACTED COMPANY]/[REDACTED COMPANY]/[REDACTED COMPANY] canonical pattern under metrics-dense Rule 10 form).
 - Step 5.6 quality-lens verifier: Ship verdict (Hook 4/5 GOOD-2/GOOD-3 / Intersection 4/5 / Register Pass / JD bonus-qual Pass / Rule 28 CLEAR — zero unsourced strategic claims; word-by-word audit confirmed).
-- **Cycle 2 (post-delivery Craig review):** Craig flagged the Jan 2024 source date for the partner-network rollout claim. Composer revised hook + close, regenerated documents, re-routed to archive. Re-ran mechanical checks: PL 5/5 verbatim; pre-flight 0/0/1/0; canonical_diff 0 DRIFT / 7 CLEAN / 3 SKIP. No verifier re-spawn (material change was hook-fact substitution, preserving canonical [REDACTED COMPANY] structure + all 5 PLs + canonical bridge/evidence/fit/close).
+- **Cycle 2 (post-delivery Craig review):** Craig flagged the early-2024 source date for the partner-network rollout claim. Composer revised hook + close, regenerated documents, re-routed to archive. Re-ran mechanical checks: PL 5/5 verbatim; pre-flight 0/0/1/0; canonical_diff 0 DRIFT / 7 CLEAN / 3 SKIP. No verifier re-spawn (material change was hook-fact substitution, preserving canonical [REDACTED COMPANY] structure + all 5 PLs + canonical bridge/evidence/fit/close).
 
 ## 5. Findings
 
@@ -95,7 +95,7 @@ This is parallel to but distinct from the [REDACTED COMPANY] "Rule 17 tail-phras
 
 ### Finding 2 — Brief-fact role-relevance gap
 
-After Craig flagged the currency issue, the composer's first revision attempt anchored on the [care-model framing] rollout (Jan 2026) — current ✓ but clinical-product-team-led, not B2B Platform & Integrations team's work. Craig flagged: signal must be both current AND directly relevant to the role. A clinical-product launch fails role-relevance for a platform-PM role's hook even when current.
+After Craig flagged the currency issue, the composer's first revision attempt anchored on the [care-model framing] rollout (early 2026) — current ✓ but clinical-product-team-led, not [REDACTED ROLE SCOPE] team's work. Craig flagged: signal must be both current AND directly relevant to the role. A clinical-product launch fails role-relevance for a platform-PM role's hook even when current.
 
 This is also a NEW discipline gap. The dual-specificity test (Rule 23 competitor-swap + current-moment) tests [REDACTED COMPANY]-specificity and current-moment-coding, but doesn't test role-relevance from the hiring manager's seat. A current company-true fact can still misfire for the specific role.
 
@@ -135,3 +135,44 @@ Four-file update encoding both new disciplines:
 Eval 18 = first live application post-[REDACTED COMPANY]. Spawned two new disciplines (Brief-fact currency + role-relevance) caught only by Craig's post-delivery review across three verification layers. Codified across 4 files (+206 lines). Failure mode distinct from [REDACTED COMPANY]'s composer-drift-on-existing-rules; v4 reopen counter remains 1 of 2.
 
 Application shipped clean: Phrase Lock 5/5 verbatim, canonical_diff 0 DRIFT, Step 5.6 Ship verdict (Hook 4/5 / Intersection 4/5 / Register Pass / JD bonus-qual Pass / Rule 28 CLEAR), 2 Pass-1 Mediums dispositioned as verifier misapplications.
+
+
+---
+
+## Cover-Letter Bridge Verbatim — extracted v6 S3 (2026-05-15)
+
+Added as v6 S3 Item 3 closure of the Bridge Verbatim Evidence Gap carryforward (per `projects/job-materials-v6/CLAUDE.md` §6 Session 3). Bridge sentence verbatim extracted from the delivered cover letter docx via `python-docx`; Gate H sub-checks (a/b.i/b.ii/b.iii/c) re-run against the extracted bridge per the Gate H spec at `references/qa-checklist.md`.
+
+**Source docx:** `projects/job-search/outputs/Slater, Craig - Cover Letter ([REDACTED COMPANY]).docx`
+
+### P2 paragraph (verbatim)
+
+> That work has centered on building the multi-tenant data foundations and partner-facing surfaces B2B platforms run on — and turning each new partner launch into something the platform team can repeat without rebuilding it from scratch.
+
+### Bridge sentence (P2 S1, verbatim)
+
+> That work has centered on building the multi-tenant data foundations and partner-facing surfaces B2B platforms run on — and turning each new partner launch into something the platform team can repeat without rebuilding it from scratch.
+
+### Bridge-sentence noun phrases under scrutiny
+
+- "multi-tenant data foundations"
+- "partner-facing surfaces"
+- "B2B platforms"
+- "each new partner launch"
+- "the platform team"
+
+### Gate H sub-check verdicts
+
+- **(a) Angles-of-Mastery traceability:** PASS-with-note — "multi-tenant data foundations" → Multi-tenant SaaS + Data product. "B2B platforms" → B2B + Platform product. "Partner-facing surfaces / partner launch" — softer anchor. Craig has multi-tenant customers (KTP hospitals, CentralReach providers, Consulting practices) but explicit "partner-launch / channel-onboarding" is not in his Angles list. Closest mapping is "multi-tenant SaaS" treating each new tenant as a new partner. Translation is thin — Medium-flag-worthy as a calibration note (does NOT fail Gate H per spec).
+- **(b.i) plurality check:** PASS — "B2B platforms" plural: KTP + CentralReach + Charli + Consulting. "Partner-facing surfaces" plural: KTP hospital admin + CentralReach enterprise customer surface + Consulting client surfaces.
+- **(b.ii) specialty-vs-generalized check:** PASS — no narrow specialty descriptor.
+- **(b.iii) structural-framing match check:** PASS — [REDACTED COMPANY] is B2B2C (employer-sold, consumer-used). The bridge stays on the B2B/platform/partner-launch side and does NOT claim consumer-facing surfaces. Avoids the eval-24 [REDACTED COMPANY]-style B2B2C overreach. Framing matches [REDACTED COMPANY]'s B2B-platform-for-employers/health-plans side cleanly.
+- **(c) Generalization-overreach (compound):** PASS — partner-launch translation is thin but does not also impose an incompatible structural pattern; partial-anchor + scope-accurate framing is not a compound failure.
+
+### Verdict
+
+**PASS with Medium-flag-worthy calibration note on "partner-facing surfaces / partner launch" requiring tenant→partner translation by reader.**
+
+### Notes
+
+Calibration carryforward — should the Angles of Mastery list add an explicit "Partner/channel onboarding" or "Multi-tenant tenant-launch motion" angle to anchor B2B2C-platform JD vocabulary cleanly? Currently each new tenant in Craig's multi-tenant work IS a partner-launch, but the angle isn't named that way. Speculative carryforward; activate-on-recurrence per §4 NN #4.
